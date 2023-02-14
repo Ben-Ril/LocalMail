@@ -1,0 +1,45 @@
+body{
+    background-position: center;
+    background-attachment: fixed;
+    background-image: url("../img/backgroundAuthentification.webp");
+    background-color: #cccccc;
+}
+
+#formulaire{
+    width: 350px;
+
+}
+#email,#password{
+    padding-right: 0px
+}
+/*--------*/
+.glass-button {
+    display: inline-block;
+    padding: 24px 32px;
+    border: 0;
+    text-decoration: none;
+    border-radius: 15px;
+    background-color: rgba(255,255,255,0.1);
+    border: 1px solid rgba(255,255,255,0.1);
+    backdrop-filter: blur(30px);
+    color: rgba(255,255,255,0.8);
+    font-size: 14px;
+    letter-spacing: 2px;
+    cursor: pointer;
+    text-transform: uppercase;
+  }
+ 
+  .glass-button:hover {
+    background-color: rgba(255,255,255,0.2);
+  }
+  .glass-panel {
+    color: #ffffff;
+    margin: 20px auto;
+    background-color: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.1);
+    width: 90%;
+    border-radius: 15px;
+    padding: 32px;
+    backdrop-filter: blur(10px);
+  }
+  
