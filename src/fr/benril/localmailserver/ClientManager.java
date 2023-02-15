@@ -9,7 +9,7 @@ import java.io.*;
 import java.net.Socket;
 
 public class ClientManager implements Runnable {
-    private Socket client;
+    private final Socket client;
 
     public ClientManager(Socket client){
         this.client = client;

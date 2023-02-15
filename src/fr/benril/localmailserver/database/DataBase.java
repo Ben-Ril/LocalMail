@@ -5,14 +5,13 @@ import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.sql.*;
+import java.util.Random;
 import java.util.Scanner;
 
 public class DataBase {
     private String dbURL;
     public String getDbURL() {return dbURL;}
 
-    private String dbUser;
-    private String dbPassword;
     private static DataBase instance;
     public static DataBase getInstance() {return instance;}
 
@@ -34,8 +33,8 @@ public class DataBase {
             }
             Scanner scan = new Scanner(configDBFile);
             this.dbURL = scan.nextLine();
-            this.dbUser = scan.nextLine();
-            this.dbPassword = scan.nextLine();
+            String dbUser = scan.nextLine();
+            String dbPassword = scan.nextLine();
 
             Class.forName("com.mysql.jdbc.Driver");
             con = DriverManager.getConnection(dbURL, dbUser, dbPassword);
@@ -46,9 +45,7 @@ public class DataBase {
             connected = false;
             instance = null;
             sqle.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            throw new RuntimeException(e);
-        } catch (FileNotFoundException e) {
+        } catch (ClassNotFoundException | FileNotFoundException e) {
             throw new RuntimeException(e);
         }
     }
@@ -124,6 +121,8 @@ public class DataBase {
         ResultSet resultSet = executeQueryCond("mails", "uuid", uuid);
         StringBuilder inlineMailBuilder = new StringBuilder();
         try {
+            if(resultSet == null || !resultSet.next()){return "ERROR";}
+
             inlineMailBuilder.append(resultSet.getString("uuid\n"));
             inlineMailBuilder.append(resultSet.getString("receivers\n"));
             inlineMailBuilder.append(resultSet.getString("object\n"));
@@ -140,6 +139,8 @@ public class DataBase {
         ResultSet resultSet = executeQueryCond("users", "uuid", uuid);
         StringBuilder userInlineBuilder = new StringBuilder();
         try{
+            if(resultSet == null || !resultSet.next()){return "ERROR";}
+
             userInlineBuilder.append(resultSet.getString("uuid\n"));
             userInlineBuilder.append(resultSet.getString("name\n"));
             userInlineBuilder.append(resultSet.getString("firstname\n"));
@@ -154,7 +155,8 @@ public class DataBase {
     public String getUserByName(String name, String firstName){
         ResultSet resultSet = executeQueryCond("users", "name", name);
         try{
-            assert resultSet != null;
+            if(resultSet == null || !resultSet.next()){return "ERROR";}
+
             while(resultSet.next()){
                 if(resultSet.getString("firstname").equals(firstName)){
                     return getUserByUUID(resultSet.getString("uuid"));
@@ -169,8 +171,10 @@ public class DataBase {
     public String getGroups(){
         ResultSet resultSet = executeQuery("grps");
         StringBuilder builder = new StringBuilder();
-        assert resultSet != null;
+
         try{
+            if(resultSet == null || !resultSet.next()){return "ERROR";}
+
             while(resultSet.next()){
                 builder.append(resultSet.getString("name")).append("\n");
             }
@@ -184,10 +188,11 @@ public class DataBase {
     public String getMails(String userUUID, boolean isSended){
         if(getUserByUUID(userUUID).equals("ERROR")){return "ERROR";}
 
-        ResultSet resultSet = executeQueryCond(userUUID + "Mails", "isSended", String.valueOf(isSended));
+        ResultSet resultSet = executeQueryCond(userUUID + "Mails", "isSended", isSended?"1":"0");
         StringBuilder allMails = new StringBuilder();
-        assert resultSet != null;
         try {
+            if(resultSet == null || !resultSet.next()){return "ERROR";}
+
             while (resultSet.next()) {
                 allMails.append(getMail(resultSet.getString("uuid"))).append("\n");
             }
@@ -203,8 +208,9 @@ public class DataBase {
         }
         ResultSet resultSet = executeQueryCond("users", "grp", group);
         StringBuilder allUsers = new StringBuilder();
-        assert resultSet != null;
         try{
+            if(resultSet == null || !resultSet.next()){return "ERROR";}
+
             while (resultSet.next()){
                 allUsers.append(getUserByUUID(resultSet.getString("uuid"))).append("\n");
             }
@@ -212,6 +218,86 @@ public class DataBase {
         }catch (SQLException sqle){
             return "ERROR";
         }
+    }
+
+    public void createUser(String name, String firstname, String password, String group, boolean isAdmin){
+        password = new Hasher().hash(password);
+        String uuid = generateUserUUID();
+        executeStatement("INSERT INTO users VALUES ('" + uuid + "', '" + name + "', '" + firstname + "', '" + password + "', '" + group + "', 1, " + (isAdmin?"1":"0") + ")");
+        executeStatement("CREATE TABLE " + uuid + "Mails (date TEXT, mailUUID CHAR(9), sended BOOL)");
+    }
+
+    public void createGroup(String name){
+        executeStatement("INSERT INTO grps VALUES ('" + name + "')");
+    }
+
+    public void createMail(String senderUUID, String[] receiversUUIDs, String object, String content, String date, String[] attachment){
+        if(getUserByUUID(senderUUID).equals("ERROR")){return;}
+
+        String uuid = generateMailUUID();
+
+        executeStatement("INSERT INTO " + senderUUID + "Mails VALUES ('" + date + "', '" + uuid + "', 1)");
+
+        StringBuilder receivers = new StringBuilder();
+        for(String receiver : receiversUUIDs){
+            if(getUserByUUID(receiver).equals("ERRROR")){continue;}
+            receivers.append(receiver).append("<->");
+            executeStatement("INSERT INTO " + receiver + "Mails VALUES ('" + date + "', '" + uuid + "', 0)");
+        }
+        StringBuilder attachments = new StringBuilder();
+        for(String att : attachment){
+            attachments.append(att).append("<->");
+        }
+        executeStatement("INSERT INTO mails VALUES('" + uuid + "', '" + senderUUID + "', '" + receivers + "', '" + object + "', '" + content + "', '" + date + "', '" + attachments + "')");
+    }
+
+    public void deleteUser(String uuid){
+        if(getUserByUUID(uuid).equals("ERROR")){return;}
+        executeStatement("DELETE FROM users WHERE uuid='" + uuid + "'");
+        executeStatement("DROP TABLE " + uuid + "Mails");
+    }
+
+    public void deleteGroup(String groupName){
+        if(!getGroups().contains(groupName)){return;}
+        executeStatement("DELETE FROM grps WHERE name='" + groupName + "'");
+    }
+
+    public void modifyUser(String uuid, String name, String firstName, String password, String group, boolean isAdmin){
+        if(getUserByUUID(uuid).equalsIgnoreCase("ERROR")){return;}
+        executeStatement("UPDATE users SET name='" + name  + "', fistname='" + firstName + "', password='" + new Hasher().hash(password) + "', grp='" + group + "', admin=" + (isAdmin?1:0));
+    }
+
+    public void modifyDataBase(String url, String username, String password){
+        try {
+            File configDBFile = new File("./db");
+            if(configDBFile.exists()){configDBFile.delete();}
+            configDBFile.createNewFile();
+            FileWriter writer = new FileWriter(configDBFile);
+            writer.write(url + "\n" + username + "\n" + password);
+            writer.flush();
+            con.close();
+            new DataBase();
+        }catch (IOException | SQLException ignored){}
+    }
+
+    private String generateUserUUID(){
+        String uuid = generateUUID();
+        while(!getUserByUUID(uuid).equalsIgnoreCase("ERROR")){uuid = generateUUID();}
+        return uuid;
+    }
+
+    private String generateMailUUID(){
+        String uuid = generateUUID();
+        while(!getMail(uuid).equalsIgnoreCase("ERROR")){uuid = generateUUID();}
+        return uuid;
+    }
+
+    private String generateUUID(){
+        StringBuilder uuid = new StringBuilder();
+        for(int i = 0 ; i < 9 ; i++){
+            uuid.append(new Random().nextInt(10));
+        }
+        return uuid.toString();
     }
 
     public boolean isConnected() {return connected;}

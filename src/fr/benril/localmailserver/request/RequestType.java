@@ -6,6 +6,7 @@ public enum RequestType {
     MAIL,
     MAILS,
     LANG,
+    GROUP,
     GROUPS,
     DATABASE
 }
