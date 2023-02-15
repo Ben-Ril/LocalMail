@@ -2,7 +2,6 @@
 function onload(){
     let screenSizeHeight=window.innerHeight;
     let screenSizeWidth=window.innerWidth;
-    console.log(screenSizeWidth,screenSizeHeight)
     let sectionSizeWidth=document.getElementById("formulaire").scrollWidth;
     let sectionSizeHeight=document.getElementById("formulaire").scrollHeight;
     document.getElementById("formulaire").style.marginTop =  screenSizeHeight/2-sectionSizeHeight/2+"px";
