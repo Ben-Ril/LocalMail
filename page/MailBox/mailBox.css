@@ -1,0 +1,25 @@
+body{
+    background-color: rgb(8, 8, 122);
+    
+}
+#grid{
+    display: grid;
+    grid-template-columns: repeat(2, 0.5fr 5fr);
+    grid-template-rows: repeat(1,auto);
+    grid-gap: 40px;
+}
+#mailSender{
+    display: grid;
+    grid-template-columns: repeat(1,0);
+    position:   fixed;
+    bottom: 0;
+    right: 0;
+
+
+
+
+}
+
+
+  
+

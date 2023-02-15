@@ -1,29 +1,30 @@
 <!DOCTYPE html>
+<link href="mailBox.css" rel="stylesheet" type="text/css">
+<script src="mailBox.js" type="text/javascript"></script>
 <html>
-    <body>
-        <section id="navMenu">
-            <button id="newMailButton">Nouveau message</button>
-            <button id="mailReceiveButton">Boîte de réception</button>
-            <button id="mailSendButton">Boîte d'envoi</button>
+    <body id="body" onload="onload()" onresize="onload()">
+        <section id="grid">
+            <section id="navMenu">
+                <button id="newMailButton" onclick="newMailButton(this)">NEWMESSAGE</button>
+                <button id="mailReceiveButton">RECEPTIONBOX</button>
+                <button id="mailSendButton">SENDBOX</button>
 
+            </section>
+
+            <section id="search" >
+                <input type="text" name="searchBar" id="searchBar" placeholder="SEARCH" oninput="getRickRoll()">
+            </section>
+
+            <section id="mailList">
+                <div class="mailBox">
+
+                </div>
+            </section>
         </section>
-
-        <section id="search">
-            <input type="text" name="searchBar" id="searchBar" placeholder="Recherche">
-        </section>
-
-        <section id="mailList">
-            <div class="mailBox">
-
-            </div>
-        </section>
-
         <section id="mailSender">
-            <div id="mailSenderFrame">
-                <input type="text" name="receiver" id="receiver" placeholder="Destinataire">
-                <input type="text" name="object" id="object" placeholder="Objet">
-                <input type="text" name="content" id="content" placeholder="Contenu du mail">
-            </div>
+                <input type="text" name="receiver" id="receiver" placeholder="RECEIVER">
+                <input type="text" name="object" id="object" placeholder="OBJECT">
+                <textarea type="text" name="content" id="content" placeholder="MAILCONTENT" rows="unset" cols="unset"></textarea>
         </section>
 
     </body>
