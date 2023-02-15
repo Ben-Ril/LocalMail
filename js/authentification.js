@@ -5,7 +5,8 @@ document.getElementById("sendButton").onclick = function(){
     
     httpRequest.open("POST", url);
     httpRequest.responseType = "text";
-    httpRequest.send(email+";"+password);
+    xhr.setRequestHeader('Content-type', 'text; charset=UTF-8')
+    httpRequest.send("email="+email+"&password="+password);
     httpRequest.onload = function(){
         if(httpRequest.status===201){
             console.log("Post réussi")
