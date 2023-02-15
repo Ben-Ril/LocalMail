@@ -4,15 +4,15 @@
 <html>
     <body id="body" onload="onload()" onresize="onload()">
         <section id="grid">
-            <section id="navMenu">
-                <button id="newMailButton" onclick="newMailButton(this)">NEWMESSAGE</button>
-                <button id="mailReceiveButton">RECEPTIONBOX</button>
-                <button id="mailSendButton">SENDBOX</button>
+            <section id="navMenu" class="glass-panel">
+                <button class="glass-button" id="newMailButton" onclick="newMailButton(this)">NEWMESSAGE</button>
+                <button class="glass-button" id="mailReceiveButton">RECEPTIONBOX</button>
+                <button class="glass-button" id="mailSendButton">SENDBOX</button>
 
             </section>
 
             <section id="search" >
-                <input type="text" name="searchBar" id="searchBar" placeholder="SEARCH" oninput="getRickRoll()">
+                <input class="glass-panel" type="text" name="searchBar" id="searchBar" placeholder="SEARCH" oninput="getRickRoll(this)">
             </section>
 
             <section id="mailList">

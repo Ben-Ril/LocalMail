@@ -11,10 +11,17 @@ function onload(){
     document.getElementById("content").style.width = windowWidthSize*0.35+"px";
     document.getElementById("content").style.height = windowHeightSize*0.35+"px";
     
-    //document.getElementById("mailSender").style.bottom = "0px"
-    //document.getElementById("mailSender").style.right = windowWidthSize/2+"px"
-    //console.log(windowWidthSize)
+    document.getElementById("mailSender").style.bottom = "0px";
+    document.getElementById("mailSender").style.left = windowWidthSize/2+"px";
+
+    document.getElementById("navMenu").style.width = windowWidthSize*0.2+"px";
+    document.getElementById("newMailButton").style.width = windowWidthSize*0.2+"px";
+    document.getElementById("mailReceiveButton").style.width = windowWidthSize*0.2+"px";
+    document.getElementById("mailSendButton").style.width = windowWidthSize*0.2+"px";
+
+    document.getElementById("searchBar").style.width = windowWidthSize*0.5+"px"
 }
+
 function newMailButton(button){
     if ( document.getElementById("mailSender").style.display == "none"){
         document.getElementById("mailSender").style.display = "inline";
@@ -24,6 +31,8 @@ function newMailButton(button){
     }
 
 }
-function getRickRoll(){
-    window.open('https://youtu.be/eR3fLy8d1PU', '_blank');
+function getRickRoll(content){
+    if (content.value == "rickroll") {
+        window.open('https://youtu.be/eR3fLy8d1PU', '_blank');
+    }
 }
