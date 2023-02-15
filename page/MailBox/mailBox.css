@@ -1,12 +1,13 @@
 body{
-    background-color: rgb(8, 8, 122);
-    
+    background: linear-gradient(to bottom right, rgb(5, 5, 202),10%,rgb(61, 2, 95) );
 }
-#grid{
+#mainGrid{
     display: grid;
     grid-template-columns: repeat(2, 0.5fr 5fr);
-    grid-template-rows: repeat(1,auto);
     grid-gap: 40px;
+}
+#searchAndListGrid{
+    grid-template-columns: repeat(1,auto);
 }
 #mailSender{
     display: grid;
@@ -17,6 +18,18 @@ body{
 #newMailButton,#mailReceiveButton,#mailSendButton{
     min-width: 200px;
     max-width: 200px;
+}
+#mailList{
+    padding-top: 40px;
+}
+#receptionBox{
+    display: inline; 
+}
+#sendBox{
+    display: none;
+}
+#content{
+    resize: none;
 }
 .glass-button {
     margin-bottom: 20px;
