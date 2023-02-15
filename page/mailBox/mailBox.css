@@ -31,6 +31,9 @@ body{
 #content{
     resize: none;
 }
+#navMenu{
+    max-width: 230px;
+}
 .glass-button {
     margin-bottom: 20px;
     display: inline-block;
