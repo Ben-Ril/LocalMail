@@ -1,39 +1,38 @@
 <?php
 
 class SocketManager{
-    function __construct(){
+    private $socket;
+    private $error = false;
+    public function isError(): bool {return $this->error;}
+
+    function __construct() {
         $host = "127.0.0.1";
         $port = 15935;
 
-        // Création du socket
-        $socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
-        if ($socket === false) {
-            echo "Erreur : socket_create() a échoué : " . socket_strerror(socket_last_error()) . "\n";
-            exit();
+        $this->socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+        if ($this->socket === false) {
+            $this->error = true;
+            return;
         }
 
-        // Connexion au serveur Java
-        $result = socket_connect($socket, $host, $port);
+        $result = socket_connect($this->socket, $host, $port);
         if ($result === false) {
-            echo "Erreur : socket_connect() a échoué : " . socket_strerror(socket_last_error()) . "\n";
-            exit();
+            $this->error = true;
         }
+    }
 
-        $message = "GET LANG\n";
-        socket_write($socket, $message, strlen($message));
+    public function sendMessage(string $message){
+        if($this->isError()){return;}
+        socket_write($this->socket, $message, strlen($message));
+    }
 
-        /*$in = socket_read($socket, 4);
-        $length = unpack("N", $in)[1];
-        $data = socket_read($socket, $length);*/
-        $in = socket_read($socket, 2048);
-        echo "Reçut: " . $in;
+    public function readMessage(int $linesNumber): string{
+        if($this->isError() || $linesNumber <= 0){return "ERROR";}
 
-        $message = "CLOSE\n";
-        socket_write($socket, $message, strlen($message));
-        echo "msg envoyé";
-
-        // Fermeture du socket
-        socket_close($socket);
-        echo "</br>Socket Fermé";
+        $message = "";
+        foreach (range(0, $linesNumber) as $lineNumber){
+            $message .= "\n" . socket_read($this->socket, 16384);
+        }
+        return $message;
     }
 }
