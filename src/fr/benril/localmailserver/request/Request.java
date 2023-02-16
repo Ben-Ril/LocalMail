@@ -6,7 +6,7 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 
 public class Request {
-    private DataBase db = DataBase.getInstance();
+    private final DataBase db = DataBase.getInstance();
     private final RequestType type;
     private final String command;
     private final DataOutputStream writer;
@@ -32,7 +32,7 @@ public class Request {
     }
 
     private void get(){
-        String[] infos = (command.contains(" ") ? command.split(" ") : null);
+        String[] infos = (command.contains(" +<->+ ") ? command.split(" +<->+ ") : null);
         String way;
         switch (type){
             case LANG:
@@ -96,8 +96,8 @@ public class Request {
     }
 
     private void create() {
-        String[] infos = command.split(" +<->+ ");
-        if(infos.length == 0){
+        String[] infos = (command.contains(" +<->+ ") ? command.split(" +<->+ ") : null);
+        if(infos == null || infos.length == 0){
             sendMessage("ERROR");
             return;
         }
@@ -121,8 +121,8 @@ public class Request {
     }
 
     private void delete() {
-        String[] infos = command.split(" ");
-        if(infos.length != 1){return;}
+        String[] infos = (command.contains(" +<->+ ") ? command.split(" +<->+ ") : null);
+        if(infos == null || infos.length != 1){return;}
         switch (type){
             case USER:
                 db.deleteUser(infos[0]);
@@ -135,27 +135,27 @@ public class Request {
     }
 
     private void modify() {
-        String[] infos = command.split(" ");
-        if(infos.length != 1){return;}
+        String[] infos = (command.contains(" +<->+ ") ? command.split(" +<->+ ") : null);
+        if(infos == null){return;}
         switch (type){
             case LANG:
                 if(infos[0].length() != 2){return;}
                 db.setLang(infos[0]);
                 break;
             case USER:
-                String[] userInfo = infos[0].split(" +<->+ ");
-                if(userInfo.length != 6){return;}
-                db.modifyUser(userInfo[0], userInfo[1], userInfo[2], userInfo[3], userInfo[4], userInfo[5].equalsIgnoreCase("true"));
+                if(infos.length != 6){return;}
+                db.modifyUser(infos[0], infos[1], infos[2], infos[3], infos[4], infos[5].equalsIgnoreCase("true"));
                 break;
             case DATABASE:
-
+                if(infos.length != 3){return;}
+                db.modifyDataBase(infos[0], infos[1], infos[2]);
                 break;
         }
     }
 
     private void sendMessage(String message){
         try {
-            writer.writeUTF(message);
+            writer.writeUTF(message + "\n");
             writer.flush();
         }catch (IOException ignored){}
     }

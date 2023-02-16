@@ -5,23 +5,26 @@ import fr.benril.localmailserver.database.DataBase;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
 
 public class Server {
     private static Server instance;
     public static Server getInstance(){return instance;};
     private ServerSocket serverSocket;
-    private List<Thread> clientList = new ArrayList<>();
-    public List<Thread> getClientList() {return clientList;}
-    public boolean addClient(Thread clientThread) {return clientList.add(clientThread);}
-    public void removeClient(Thread clientThread) {clientList.remove(clientThread);}
+    private HashMap<ClientManager, Thread> clientList = new HashMap<>();
+    public HashMap<ClientManager, Thread> getClientList() {return clientList;}
+    public void addClient(ClientManager clientManager, Thread clientThread) {clientList.put(clientManager, clientThread);}
+    public void removeClient(ClientManager clientManager) {clientList.remove(clientManager);}
 
     public Server(){
         instance = this;
         try {
             serverSocket = new ServerSocket(15935);
-            DataBase db = new DataBase();
+            new DataBase();
+            while(!serverSocket.isClosed()){
+                acceptClient();
+                verifyClientConnected();
+            }
         }catch (IOException ioe){
             ioe.printStackTrace();
         }
@@ -29,22 +32,32 @@ public class Server {
 
     public void acceptClient(){
         new Thread(() -> {
-            while(!serverSocket.isClosed()){
-                try {
-                    Socket client = serverSocket.accept();
+            try {
+                Socket client = serverSocket.accept();
 
-                    if(!client.getInetAddress().getHostAddress().equals("127.0.0.1")){
-                        client.close();
-                        continue;
-                    }
-
-                    Thread clientManagerThread = new Thread(new ClientManager(client));
-                    clientManagerThread.start();
-                    addClient(clientManagerThread);
-                }catch (IOException ioe){
-                    ioe.printStackTrace();
+                if(!client.getInetAddress().getHostAddress().equals("127.0.0.1")){
+                    client.close();
+                    return;
                 }
+
+                ClientManager clientManager = new ClientManager(client);
+                Thread clientManagerThread = new Thread(clientManager);
+                clientManagerThread.start();
+                addClient(clientManager, clientManagerThread);
+            }catch (IOException ioe){
+                ioe.printStackTrace();
             }
         }).start();
+    }
+
+    private void verifyClientConnected(){
+        new Thread(() -> {
+            for(ClientManager clientManager : getClientList().keySet()){
+                if(!clientManager.isConnected()){
+                    getClientList().get(clientManager).stop();
+                    getClientList().remove(clientManager);
+                }
+            }
+        });
     }
 }

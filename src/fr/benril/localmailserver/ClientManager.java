@@ -17,41 +17,42 @@ public class ClientManager implements Runnable {
 
     @Override
     public void run() {
-        while(client.isConnected()){
-            try{
-                if(client.isClosed()){
-                    Server.getInstance().removeClient(Thread.currentThread());
-                    return;
-                }
-
-                DataOutputStream writer = new DataOutputStream(client.getOutputStream());
-                DataInputStream reader = new DataInputStream(client.getInputStream());
-
-                if(!DataBase.getInstance().isConnected()){
-                    writer.writeUTF("noDB");
-                    writer.flush();
-                    writer.close();
-                    client.close();
-                    return;
-                }
-                String message = reader.readUTF();
-                String[] request = message.split(" ");
-
-                if(request.length < 2){continue;}
-
-                String action = request[0].toUpperCase();
-                String type = request[1].toUpperCase();
-                String info;
-                if(request.length == 2){
-                    info = "";
-                }else{
-                    info = message.replace(type + " " + action + " ", "");
-                }
-
-                Request req = new Request(RequestAction.valueOf(action), RequestType.valueOf(type), info, writer);
-            }catch (IOException ioe){
-                continue;
+        try{
+            if(client.isClosed()){
+                Server.getInstance().removeClient(this);
+                return;
             }
-        }
+
+            DataOutputStream writer = new DataOutputStream(client.getOutputStream());
+            DataInputStream reader = new DataInputStream(client.getInputStream());
+
+            if(!DataBase.getInstance().isConnected()){
+                writer.writeUTF("noDB\n");
+                writer.flush();
+                writer.close();
+                client.close();
+                return;
+            }
+            String message = reader.readUTF();
+            String[] request = message.split(" ");
+
+            if(request.length < 2){run();}
+
+            String action = request[0].toUpperCase();
+            String type = request[1].toUpperCase();
+            String info;
+            if(request.length == 2){
+                info = "";
+            }else{
+                info = message.replace(type + " " + action + " ", "");
+            }
+
+            new Request(RequestAction.valueOf(action), RequestType.valueOf(type), info, writer);
+        }catch (IOException ignore){}
+        run();
+    }
+
+    public boolean isConnected(){
+        return !client.isClosed() && client.isConnected();
     }
 }

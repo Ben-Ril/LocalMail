@@ -64,6 +64,16 @@ public class DataBase {
         return allGood;
     }
 
+    public static boolean areDBInfoCorrect(String url, String user, String password){
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+            Connection con = DriverManager.getConnection(url, user, password);
+            return true;
+        }catch (ClassNotFoundException | RuntimeException | SQLException e) {
+            return false;
+        }
+    }
+
     private boolean executeStatement(String toExecute){
         try {
             con.createStatement().executeUpdate(toExecute);
