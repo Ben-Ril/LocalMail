@@ -1,5 +1,5 @@
 
-function onload(){
+/*function dd(){
     let screenSizeHeight=window.innerHeight;
     let screenSizeWidth=window.innerWidth;
     console.log(screenSizeWidth,screenSizeHeight)
@@ -18,5 +18,24 @@ function onload(){
     let inputWidth = document.getElementById("email").scrollWidth
     let sendButtonWidth = document.getElementById("sendButton").scrollWidth
     document.getElementById("sendButton").style.marginLeft = inputWidth/2-sendButtonWidth/2+"px"
-}
+}*/
 
+function onload(){
+    const screenWidth = window.innerWidth;
+    const screenHeight = window.innerHeight;
+
+    let form = document.getElementById("form");
+    const formWidth = screenWidth/4;
+    const formHeight = screenHeight/4;
+    form.style.width = formWidth + "px";
+    form.style.height = formHeight + "px";
+
+    form.style.top = screenHeight/2-formHeight/2 + "px";
+    form.style.left = screenWidth/2-formWidth/2 + "px";
+
+
+    let mailInput = document.getElementById("mailInput");
+    mailInput.style.width = formWidth*0.8 + "px";
+    let passwordInput = document.getElementById("passwordInput");
+    passwordInput.style.width = formWidth*0.8 + "px";
+}
