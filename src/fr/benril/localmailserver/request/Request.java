@@ -1,6 +1,6 @@
 package fr.benril.localmailserver.request;
 
-import fr.benril.localmailserver.database.DataBase;
+import fr.benril.localmailserver.database.*;
 
 import java.io.DataOutputStream;
 import java.io.IOException;
@@ -36,12 +36,12 @@ public class Request {
         String way;
         switch (type){
             case LANG:
-                sendMessage(db.getLang());
+                sendMessage(new Config().getLang());
                 break;
             case MAIL:
                 assert infos != null;
                 String uuid = infos[0];
-                sendMessage(db.getMail(uuid));
+                sendMessage(new Mails().getMail(uuid));
                 break;
             case USER:
                 assert infos != null;
@@ -52,7 +52,7 @@ public class Request {
                         sendMessage("ERROR");
                         return;
                     }
-                    sendMessage(db.getUserByName(infos[1], infos[2]));
+                    sendMessage(new Users().getUserByName(infos[1], infos[2]));
                     return;
                 }
                 if(way.equals("UUID")){
@@ -60,14 +60,14 @@ public class Request {
                         sendMessage("ERROR");
                         return;
                     }
-                    sendMessage(db.getUserByUUID(infos[1]));
+                    sendMessage(new Users().getUserByUUID(infos[1]));
                     return;
                 }
 
                 sendMessage("ERROR");
                 break;
             case GROUPS:
-                sendMessage(db.getGroups());
+                sendMessage(new Groups().getGroups());
                 break;
             case MAILS:
                 assert infos != null;
@@ -76,15 +76,15 @@ public class Request {
                     return;
                 }
 
-                sendMessage(db.getMails(infos[1], (infos[0].equalsIgnoreCase("SENDER"))));
+                sendMessage(new Mails().getMails(infos[1], (infos[0].equalsIgnoreCase("SENDER"))));
                 break;
             case USERS:
                 assert infos != null;
-                if(infos.length != 1 || !db.getGroups().contains(infos[0])){
+                if(infos.length != 1 || !new Groups().getGroups().contains(infos[0])){
                     sendMessage("ERROR");
                     return;
                 }
-                sendMessage(db.getUsers(infos[0]));
+                sendMessage(new Users().getUsers(infos[0]));
                 break;
             case DATABASE:
                 sendMessage(db.getDbURL());
@@ -104,15 +104,15 @@ public class Request {
         switch (type){
             case USER:
                 if(infos.length != 5){return;}
-                db.createUser(infos[0], infos[1], infos[2], infos[3], infos[4].equalsIgnoreCase("true"));
+                new Users().createUser(infos[0], infos[1], infos[2], infos[3], infos[4].equalsIgnoreCase("true"));
                 break;
             case GROUP:
                 if(infos.length != 1){return;}
-                db.createGroup(infos[0]);
+                new Groups().createGroup(infos[0]);
                 break;
             case MAIL:
                 if(infos.length != 6){return;}
-                sendMessage(db.createMail(
+                sendMessage(new Mails().createMail(
                         infos[0],
                         (infos[1].contains("<-->") ? infos[1].split("<-->") : new String[]{infos[1]}),
                         infos[2],
@@ -132,10 +132,10 @@ public class Request {
         if(infos == null || infos.length != 1){return;}
         switch (type){
             case USER:
-                db.deleteUser(infos[0]);
+                new Users().deleteUser(infos[0]);
                 break;
             case GROUP:
-                db.deleteGroup(infos[0]);
+                new Groups().deleteGroup(infos[0]);
                 break;
 
         }
@@ -147,15 +147,15 @@ public class Request {
         switch (type){
             case LANG:
                 if(infos[0].length() != 2){return;}
-                db.setLang(infos[0]);
+                new Config().setLang(infos[0]);
                 break;
             case USER:
                 if(infos.length != 6){return;}
-                db.modifyUser(infos[0], infos[1], infos[2], infos[3], infos[4], infos[5].equalsIgnoreCase("true"));
+                new Users().modifyUser(infos[0], infos[1], infos[2], infos[3], infos[4], infos[5].equalsIgnoreCase("true"));
                 break;
             case DATABASE:
                 if(infos.length != 3){return;}
-                db.modifyDataBase(infos[0], infos[1], infos[2]);
+                new Config().modifyDataBase(infos[0], infos[1], infos[2]);
                 break;
         }
     }

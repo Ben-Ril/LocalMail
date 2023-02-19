@@ -1,0 +1,83 @@
+package fr.benril.localmailserver.database;
+
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
+public class Users {
+    private final DataBase db;
+
+    public Users(){this.db = DataBase.getInstance();}
+
+    public String getUserByUUID(String uuid){
+        ResultSet resultSet = db.executeQueryCond("users", "uuid", uuid);
+        StringBuilder userInlineBuilder = new StringBuilder();
+        try{
+            if(resultSet == null || !resultSet.next()){return "ERROR";}
+
+            userInlineBuilder.append(resultSet.getString("uuid")).append("\n");
+            userInlineBuilder.append(resultSet.getString("name")).append("\n");
+            userInlineBuilder.append(resultSet.getString("firstname")).append("\n");
+            userInlineBuilder.append(resultSet.getString("password")).append("\n");
+            userInlineBuilder.append(resultSet.getString("grps")).append("\n");
+            userInlineBuilder.append(resultSet.getBoolean("admin"));
+            return userInlineBuilder.toString();
+        }catch (SQLException sqle){
+            return "ERROR";
+        }
+    }
+
+    public String getUserByName(String name, String firstName){
+        ResultSet resultSet = db.executeQueryCond("users", "name", name);
+        try{
+            if(resultSet == null || !resultSet.next()){return "ERROR";}
+
+            while(resultSet.next()){
+                if(resultSet.getString("firstname").equals(firstName)){
+                    return getUserByUUID(resultSet.getString("uuid"));
+                }
+            }
+            return "ERROR";
+        }catch (SQLException sqle){
+            return "ERROR";
+        }
+    }
+
+    public String getUsers(String group){
+        ResultSet resultSet = db.executeQueryCond("users", "grp", group);
+        StringBuilder allUsers = new StringBuilder();
+        try{
+            if(resultSet == null || !resultSet.next()){return "ERROR";}
+
+            while (resultSet.next()){
+                allUsers.append(getUserByUUID(resultSet.getString("uuid"))).append("\n");
+            }
+            return allUsers.toString();
+        }catch (SQLException sqle){
+            return "ERROR";
+        }
+    }
+
+    public void createUser(String name, String firstname, String password, String group, boolean isAdmin){
+        password = new Hasher().hash(password);
+        String uuid = generateUserUUID();
+        db.executeStatement("INSERT INTO users VALUES ('" + uuid + "', '" + name + "', '" + firstname + "', '" + password + "', '" + group + "', 1, " + (isAdmin?"1":"0") + ")");
+        db.executeStatement("CREATE TABLE " + uuid + "Mails (date TEXT, mailUUID CHAR(9), sended BOOL)");
+    }
+
+    public void deleteUser(String uuid){
+        if(getUserByUUID(uuid).equals("ERROR")){return;}
+        db.executeStatement("DELETE FROM users WHERE uuid='" + uuid + "'");
+        db.executeStatement("DROP TABLE " + uuid + "Mails");
+    }
+
+    public void modifyUser(String uuid, String name, String firstName, String password, String group, boolean isAdmin){
+        if(getUserByUUID(uuid).equalsIgnoreCase("ERROR")){return;}
+        db.executeStatement("UPDATE users SET name='" + name  + "', fistname='" + firstName + "', password='" + new Hasher().hash(password) + "', grp='" + group + "', admin=" + (isAdmin?1:0));
+    }
+
+    private String generateUserUUID(){
+        String uuid = db.generateUUID();
+        while(!getUserByUUID(uuid).equalsIgnoreCase("ERROR")){uuid = db.generateUUID();}
+        return uuid;
+    }
+}

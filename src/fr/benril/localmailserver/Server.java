@@ -9,9 +9,9 @@ import java.util.HashMap;
 
 public class Server {
     private static Server instance;
-    public static Server getInstance(){return instance;};
+    public static Server getInstance(){return instance;}
     private ServerSocket serverSocket;
-    private HashMap<ClientManager, Thread> clientList = new HashMap<>();
+    private final HashMap<ClientManager, Thread> clientList = new HashMap<>();
     public HashMap<ClientManager, Thread> getClientList() {return clientList;}
     public void addClient(ClientManager clientManager, Thread clientThread) {clientList.put(clientManager, clientThread);}
     public void removeClient(ClientManager clientManager) {clientList.remove(clientManager);}
