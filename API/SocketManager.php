@@ -1,10 +1,18 @@
 <?php
 
 use managers\UserManager;
+use managers\MailManager;
+use managers\GroupManager;
 
 class SocketManager{
     private UserManager $userManager;
     public function getUserManager(): UserManager{return $this->userManager;}
+
+    private MailManager $mailManager;
+    public function getMailManager(): MailManager{return $this->mailManager;}
+
+    private GroupManager $groupManager;
+    public function getGroupManager(): GroupManager{return $this->groupManager;}
 
     private $socket;
     private bool $error = false;
@@ -27,6 +35,8 @@ class SocketManager{
         }
 
         $this->userManager = new UserManager($this);
+        $this->mailManager = new MailManager($this);
+        $this->groupManager = new GroupManager($this);
     }
 
     public function sendMessage(string $message): void {
