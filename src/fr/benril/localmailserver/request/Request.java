@@ -80,7 +80,7 @@ public class Request {
                 break;
             case USERS:
                 assert infos != null;
-                if(infos.length != 1){
+                if(infos.length != 1 || !db.getGroups().contains(infos[0])){
                     sendMessage("ERROR");
                     return;
                 }
@@ -112,14 +112,14 @@ public class Request {
                 break;
             case MAIL:
                 if(infos.length != 6){return;}
-                db.createMail(
+                sendMessage(db.createMail(
                         infos[0],
                         (infos[1].contains("<-->") ? infos[1].split("<-->") : new String[]{infos[1]}),
                         infos[2],
                         infos[3],
                         infos[4],
                         (infos[5].contains("<-->") ? infos[5].split("<-->") : new String[]{infos[5]})
-                );
+                ));
                 break;
             default:
                 sendMessage("ERROR");

@@ -134,7 +134,8 @@ public class DataBase {
             if(resultSet == null || !resultSet.next()){return "ERROR";}
 
             inlineMailBuilder.append(resultSet.getString("uuid\n"));
-            inlineMailBuilder.append(resultSet.getString("receivers\n"));
+            inlineMailBuilder.append(resultSet.getString("senderUUID"));
+            inlineMailBuilder.append(resultSet.getString("receiversUUID\n"));
             inlineMailBuilder.append(resultSet.getString("object\n"));
             inlineMailBuilder.append(resultSet.getString("content\n"));
             inlineMailBuilder.append(resultSet.getString("date\n"));
@@ -151,10 +152,11 @@ public class DataBase {
         try{
             if(resultSet == null || !resultSet.next()){return "ERROR";}
 
-            userInlineBuilder.append(resultSet.getString("uuid\n"));
-            userInlineBuilder.append(resultSet.getString("name\n"));
-            userInlineBuilder.append(resultSet.getString("firstname\n"));
-            userInlineBuilder.append(resultSet.getString("grps\n"));
+            userInlineBuilder.append(resultSet.getString("uuid")).append("\n");
+            userInlineBuilder.append(resultSet.getString("name")).append("\n");
+            userInlineBuilder.append(resultSet.getString("firstname")).append("\n");
+            userInlineBuilder.append(resultSet.getString("password")).append("\n");
+            userInlineBuilder.append(resultSet.getString("grps")).append("\n");
             userInlineBuilder.append(resultSet.getBoolean("admin"));
             return userInlineBuilder.toString();
         }catch (SQLException sqle){
@@ -186,7 +188,8 @@ public class DataBase {
             if(resultSet == null || !resultSet.next()){return "ERROR";}
 
             while(resultSet.next()){
-                builder.append(resultSet.getString("name")).append("\n");
+                String groupName = resultSet.getString("name");
+                builder.append(groupName).append(" ").append(getUsers(groupName).split("\n").length).append(" +<->+ ");
             }
             String allGroups = builder.toString();
             return allGroups.substring(0, allGroups.length()-5);
@@ -203,19 +206,19 @@ public class DataBase {
         try {
             if(resultSet == null || !resultSet.next()){return "ERROR";}
 
+            int mailNumber = 0;
+
             while (resultSet.next()) {
                 allMails.append(getMail(resultSet.getString("uuid"))).append("\n");
+                mailNumber++;
             }
-            return allMails.toString();
+            return mailNumber + "\n" + allMails;
         }catch (SQLException sqle){
             return "ERROR";
         }
     }
 
     public String getUsers(String group){
-        if(!getGroups().contains(group)){
-            return "ERROR";
-        }
         ResultSet resultSet = executeQueryCond("users", "grp", group);
         StringBuilder allUsers = new StringBuilder();
         try{
@@ -241,8 +244,8 @@ public class DataBase {
         executeStatement("INSERT INTO grps VALUES ('" + name + "')");
     }
 
-    public void createMail(String senderUUID, String[] receiversUUIDs, String object, String content, String date, String[] attachment){
-        if(getUserByUUID(senderUUID).equals("ERROR")){return;}
+    public String createMail(String senderUUID, String[] receiversUUIDs, String object, String content, String date, String[] attachment){
+        if(getUserByUUID(senderUUID).equals("ERROR")){return "ERROR";}
 
         String uuid = generateMailUUID();
 
@@ -259,6 +262,7 @@ public class DataBase {
             attachments.append(att).append("<->");
         }
         executeStatement("INSERT INTO mails VALUES('" + uuid + "', '" + senderUUID + "', '" + receivers + "', '" + object + "', '" + content + "', '" + date + "', '" + attachments + "')");
+        return uuid;
     }
 
     public void deleteUser(String uuid){
@@ -270,6 +274,7 @@ public class DataBase {
     public void deleteGroup(String groupName){
         if(!getGroups().contains(groupName)){return;}
         executeStatement("DELETE FROM grps WHERE name='" + groupName + "'");
+        executeStatement("UPDATE users SET grp='none' WHERE grp='" + groupName + "'");
     }
 
     public void modifyUser(String uuid, String name, String firstName, String password, String group, boolean isAdmin){
