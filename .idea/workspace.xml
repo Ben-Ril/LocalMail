@@ -10,11 +10,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="11cb73a4-c87b-43c0-9ae3-5405ecae9108" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/fr/benril/localmailserver/database/Config.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/fr/benril/localmailserver/database/Groups.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/fr/benril/localmailserver/database/Mails.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/fr/benril/localmailserver/database/Users.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/discord.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/discord.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/fr/benril/localmailserver/database/DataBase.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/fr/benril/localmailserver/database/DataBase.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/fr/benril/localmailserver/request/Request.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/fr/benril/localmailserver/request/Request.java" afterDir="false" />
@@ -24,13 +20,6 @@
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
-  <component name="FileTemplateManagerImpl">
-    <option name="RECENT_TEMPLATES">
-      <list>
-        <option value="Class" />
-      </list>
-    </option>
-  </component>
   <component name="Git.Settings">
     <option name="PREVIOUS_COMMIT_AUTHORS">
       <list>
@@ -39,24 +28,20 @@
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="HighlightingSettingsPerFile">
-    <setting file="file://$PROJECT_DIR$/src/fr/benril/localmailserver/request/Request.java" root0="SKIP_INSPECTION" />
-  </component>
   <component name="ProjectId" id="2LlBBpHx1hbVgGXOTKn4alYw7zF" />
   <component name="ProjectViewState">
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "last_opened_file_path": "C:/Program Files (x86)/MySQL/Connector J 8.0/mysql-connector-j-8.0.32.jar",
-    "project.structure.last.edited": "Artifacts",
-    "project.structure.proportion": "0.15",
-    "project.structure.side.proportion": "0.2"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Program Files (x86)/MySQL/Connector J 8.0/mysql-connector-j-8.0.32.jar&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Artifacts&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;
   }
-}]]></component>
+}</component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
@@ -73,19 +58,11 @@
       <option name="project" value="LOCAL" />
       <updated>1676435778728</updated>
     </task>
-    <task id="LOCAL-00002" summary="Modify Requests Responses">
-      <created>1676837718412</created>
-      <option name="number" value="00002" />
-      <option name="presentableId" value="LOCAL-00002" />
-      <option name="project" value="LOCAL" />
-      <updated>1676837718412</updated>
-    </task>
-    <option name="localTasksCounter" value="3" />
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value=".idea" />
-    <MESSAGE value="Modify Requests Responses" />
-    <option name="LAST_COMMIT_MESSAGE" value="Modify Requests Responses" />
+    <option name="LAST_COMMIT_MESSAGE" value=".idea" />
   </component>
 </project>
