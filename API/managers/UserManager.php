@@ -62,7 +62,8 @@ class UserManager{
                 $entryNumber = intval(explode(" ", $group)[1]);
                 if($entryNumber == 0){return $users;}
                 $this->socketManager->sendMessage("GET USERS " . explode(" ", $group)[0]);
-                for($i = 0 ; $i < $entryNumber ; $i++){$users[] = $this->getBackUser();}
+                $usersUUID = $this->socketManager->readMessage($entryNumber);
+                foreach ($usersUUID as $userUUID) {$users[] = $this->getUserByID($userUUID);}
                 return $users;
             }
         }
