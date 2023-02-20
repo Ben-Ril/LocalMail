@@ -31,6 +31,12 @@ body{
   transition: border-color 0.4s;
 }
 
+.glass-panel-input:focus{
+  outline: none;
+  border-color: rgba(187, 187, 187, 0.4);
+  transition: border-color 0.4s;
+}
+
 
 .glass-button {
   border-radius: 100px;
@@ -45,6 +51,12 @@ body{
 }
 
 .glass-button:hover {
+  background-color: rgba(255,255,255,0.2);
+  transition: background-color 0.3s;
+}
+
+.glass-button:focus{
+  outline: none;
   background-color: rgba(255,255,255,0.2);
   transition: background-color 0.3s;
 }
