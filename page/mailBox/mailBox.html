@@ -7,7 +7,7 @@
             <section id="navMenu" class="glass-panel">
                 <button class="glass-button" id="newMailButton" onclick="newMailButton(this)">NEWMESSAGE</button>
                 <button class="glass-button" id="mailReceiveButton" onclick="changeBoxButtons(this)">RECEPTIONBOX</button>
-                <button class="glass-button" id="mailSendButton" onclick="changeBoxButtons(this)">SENDBOX</button>
+                <button class="glass-button" id="mailSendedButton" onclick="changeBoxButtons(this)">SENDBOX</button>
 
             </section>
             <section id="searchAndListGrid">
@@ -21,7 +21,7 @@
                             <td class="mail"></td>
                         </tr>
                     </section>
-                    <section id="sendBox" class="glass-panel">
+                    <section id="sendedBox" class="glass-panel">
                         <tr>
                             
                         </tr>
@@ -31,9 +31,9 @@
             </section>
         </section>
         <section id="mailSender">
-                <input type="text" name="receiver" id="receiver" placeholder="RECEIVER" class="glass-panel">
-                <input type="text" name="object" id="object" placeholder="OBJECT" class="glass-panel">
-                <textarea type="text" name="content" id="content" placeholder="MAILCONTENT" rows="unset" cols="unset" class="glass-panel"></textarea>
+                <input type="text" name="receiver" id="mailReceiver" placeholder="RECEIVER" class="glass-panel">
+                <input type="text" name="object" id="mailObject" placeholder="OBJECT" class="glass-panel">
+                <textarea type="text" name="content" id="mailContent" placeholder="MAILCONTENT" rows="unset" cols="unset" class="glass-panel"></textarea>
         </section>
 
     </body>
