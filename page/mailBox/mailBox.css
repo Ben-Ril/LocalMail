@@ -1,67 +1,72 @@
 body{
-    background: linear-gradient(to bottom right, rgb(5, 5, 202),10%,rgb(61, 2, 95) );
+    background: linear-gradient(to bottom right, rgb(5, 5, 202),7%,rgb(61, 2, 95) );
 }
-#mainGrid{
-    display: grid;
-    grid-template-columns: repeat(2, 0.5fr 5fr);
-    grid-gap: 40px;
+#menuSearchContainer{
+    display: flex;
+    flex-direction: row;
 }
-#searchAndListGrid{
-    grid-template-columns: repeat(1,auto);
+#navMenuButton{
+  margin-left: 5px;
 }
-#mailSender{
-    display: grid;
-    grid-template-columns: repeat(1,0);
-    position:   fixed;
-    min-width: 200px;
+
+#navMenu{
+  visibility: hidden;
+
 }
-#newMailButton,#mailReceiveButton,#mailSendButton{
-    min-width: 200px;
-    max-width: 200px;
+#newMailButton{
+  visibility: hidden;
+  position: fixed;
+  bottom: 10px;
+  right: 10px;
 }
-#mailList{
-    padding-top: 40px;
-}
-#receptionBox{
-    display: inline; 
-}
-#sendBox{
-    display: none;
-}
-#content{
-    resize: none;
-}
-.glass-button {
-    margin-bottom: 20px;
-    display: inline-block;
-    padding: 24px 32px;
-    border: 0;
-    text-decoration: none;
-    border-radius: 15px;
-    background-color: rgba(255,255,255,0.1);
+
+
+
+.glass-panel {
+    background-color: rgba(255,255,255,0.07);
     border: 1px solid rgba(255,255,255,0.1);
+  }
+  
+  
+  .glass-panel-input {
+    border: 1px solid;
+    border-color: rgba(255, 255, 255, 0);
+    border-radius: 100px;
+    transition: border-color 0.2s;
+    text-align: center;
+  }
+  
+  .glass-panel-input:hover {
+    border-color: rgba(187, 187, 187, 0.4);
+    transition: border-color 0.4s;
+  }
+  
+  .glass-panel-input:focus{
+    outline: none;
+    border-color: rgba(187, 187, 187, 0.4);
+    transition: border-color 0.4s;
+  }
+  
+  
+  .glass-button {
+    border-radius: 100px;
+    background-color: rgba(255,255,255,0.1);
+    border: 0px;
     backdrop-filter: blur(30px);
     color: rgba(255,255,255,0.8);
-    font-size: 14px;
     letter-spacing: 2px;
     cursor: pointer;
     text-transform: uppercase;
+    transition: background-color 0.6s;
   }
- 
+  
   .glass-button:hover {
     background-color: rgba(255,255,255,0.2);
+    transition: background-color 0.3s;
   }
-
-  .glass-panel {
-    min-width: 200px;
-    color: #ffffff;
-    background-color: rgba(255,255,255,0.06);
-    border: 1px solid rgba(255,255,255,0.1);
-    width: 200px;
-    border-radius: 15px;
-    padding: 32px;
-    backdrop-filter: blur(10px);
-  }
-
   
-
+  .glass-button:focus{
+    outline: none;
+    background-color: rgba(255,255,255,0.2);
+    transition: background-color 0.3s;
+  }
