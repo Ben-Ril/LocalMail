@@ -8,7 +8,7 @@
         <section>
             <section class="glass-panel" id="menuSearchContainer">
                 <div>
-                    <button class="glass-button" id="navMenuButton" onclick="navMenuButton(this)">MENU</button>
+                    <button class="glass-button" id="MenuButton" onclick="navMenuButton(this)">MENU</button>
                 </div>
 
                 <div>
@@ -18,18 +18,18 @@
             </section>
 
             <section id="mailBox" >
-                <section id="receptionBox">
+                <section id="receptionBox" class="glass-panel">
 
                 </section>
 
-                <section id="sendedBox">
+                <section id="sendedBox" class="glass-panel">
 
                 </section>
 
             </section>
 
-            <section id="newMailButton">
-                <button class="glass-button" onclick="newMailButton(this)">NEW</button>
+            <section id="newMailButtonContainer">
+                <button class="glass-button" id="newMailButton">NEW</button>
             </section>
 
             <section id="navMenu" class="glass-panel">
@@ -37,21 +37,21 @@
                     <p>WELCOME USER</p>
                 </section>
 
-                <section>
+                <section id="navMenubuttonContainer">
                     <div>
-                        <button class="glass-button">NEW</button>
+                        <button class="glass-button" id="navMenuButtonNew">NEW</button>
                     </div>
 
                     <div>
-                        <button class="glass-button">RECEIVED</button>
+                        <button class="glass-button" id="navMenuButtonReceived">RECEIVED</button>
                     </div>
 
                     <div>
-                        <button class="glass-button">SENDED</button>
+                        <button class="glass-button" id="navMenuButtonSended">SENDED</button>
                     </div>
 
                     <div>
-                        <button class="glass-button">ADMIN_PANEL</button>
+                        <button class="glass-button" id="navMenuButtonAdmin">ADMIN_PANEL</button>
                     </div>
                 </section>
             </section>

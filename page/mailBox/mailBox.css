@@ -5,7 +5,7 @@ body{
     display: flex;
     flex-direction: row;
 }
-#navMenuButton{
+#MenuButton{
   margin-left: 5px;
 }
 
@@ -13,12 +13,13 @@ body{
   visibility: hidden;
 
 }
-#newMailButton{
+#newMailButtonContainer{
   visibility: hidden;
   position: fixed;
   bottom: 10px;
   right: 10px;
 }
+
 
 
 
@@ -58,6 +59,7 @@ body{
     cursor: pointer;
     text-transform: uppercase;
     transition: background-color 0.6s;
+    margin: 10px;
   }
   
   .glass-button:hover {
