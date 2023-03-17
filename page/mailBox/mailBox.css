@@ -11,18 +11,49 @@ body{
 
 #navMenu{
   visibility: hidden;
-
+  margin: 5px;
 }
 #newMailButtonContainer{
   visibility: hidden;
   position: fixed;
-  bottom: 10px;
+  bottom: 40px;
   right: 10px;
 }
+#receptionBox{
+  position: absolute;
+  margin: 5px;
+  visibility: visible;
+}
+#sendedBox{
+  position: absolute;
+  margin: 5px;
+  visibility: hidden;
+}
+#menuSearchContainer{
+  margin: 5px;
+}
+#newMail{
+  margin: 5px;
+  position: absolute;
+  bottom: 8px;
+  right: 25px;
+  visibility: hidden;
+}
+#message{
+  border-radius: 5px;
+}
+#newMailRecipientClose{
+  display: flex;
+  flex-direction: row;
+}
 
-
-
-
+textarea{
+  resize: none;
+}
+.newMailClass{
+  margin: 3px;
+  margin-left: 7px;
+}
 .glass-panel {
     background-color: rgba(255,255,255,0.07);
     border: 1px solid rgba(255,255,255,0.1);

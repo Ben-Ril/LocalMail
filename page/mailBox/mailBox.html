@@ -4,7 +4,7 @@
     <script src="mailBox.js" type="text/javascript"></script>
 </head>
 <html>
-    <body id="body" onload="onload()">
+    <body id="body">
         <section>
             <section class="glass-panel" id="menuSearchContainer">
                 <div>
@@ -19,54 +19,51 @@
 
             <section id="mailBox" >
                 <section id="receptionBox" class="glass-panel">
-
+                    <p>je suis recep</p>
                 </section>
 
                 <section id="sendedBox" class="glass-panel">
-
+                    <p>je suis sended</p>
                 </section>
 
             </section>
 
             <section id="newMailButtonContainer">
-                <button class="glass-button" id="newMailButton">NEW</button>
+                <button class="glass-button" id="newMailButton" onclick="newMailButton(this)">NEW</button>
             </section>
 
             <section id="navMenu" class="glass-panel">
-                <section id="welcomeUser">
-                    <p>WELCOME USER</p>
-                </section>
-
                 <section id="navMenubuttonContainer">
                     <div>
-                        <button class="glass-button" id="navMenuButtonNew">NEW</button>
+                        <button class="glass-button navMenuButtons" id="navMenuButtonNew" onclick="newMailButton(this)">NEW</button>
                     </div>
 
                     <div>
-                        <button class="glass-button" id="navMenuButtonReceived">RECEIVED</button>
+                        <button class="glass-button navMenuButtons" id="navMenuButtonReceived" onclick="mailBoxButton(this)">RECEIVED</button>
                     </div>
 
                     <div>
-                        <button class="glass-button" id="navMenuButtonSended">SENDED</button>
+                        <button class="glass-button navMenuButtons" id="navMenuButtonSended" onclick="mailBoxButton(this)">SENDED</button>
                     </div>
 
                     <div>
-                        <button class="glass-button" id="navMenuButtonAdmin">ADMIN_PANEL</button>
+                        <button class="glass-button navMenuButtons" id="navMenuButtonAdmin">ADMIN_PANEL</button>
                     </div>
                 </section>
             </section>
 
-            <section id="newMail">
-                <div>
-
+            <section id="newMail" class="glass-panel">
+                <div id="newMailRecipientClose">
+                    <input class="glass-panel glass-panel-input newMailClass" type="text" name="recipient" id="recipient" placeholder="RECIPIENT">
+                    <button class="glass-button" id="closeButton" onclick="newMailButton(this)">X</button>
                 </div>
 
                 <div>
-
+                    <input class="glass-panel glass-panel-input newMailClass" type="text" name="object" id="object" placeholder="OBJECT">
                 </div>
 
                 <div>
-
+                    <textarea class="glass-panel glass-panel-input newMailClass" name="message" id="message" placeholder="MESSAGE"></textarea>
                 </div>
             </section>
 
