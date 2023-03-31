@@ -1,15 +1,15 @@
-document.getElementById("sendButton").onclick = function(){
-    var httpRequest = new XMLHttpRequest();
-    var email = document.getElementById("email").value;
-    var password = document.getElementById("password").value
-    
-    httpRequest.open("POST", url);
-    httpRequest.responseType = "text";
-    xhr.setRequestHeader('Content-type', 'text; charset=UTF-8')
-    httpRequest.send("email="+email+"&password="+password);
-    httpRequest.onload = function(){
-        if(httpRequest.status===201){
-            console.log("Post réussi")
+function requestInfo(str){
+    if (str.length == 0) {
+      document.getElementById("txtHint").innerHTML = "";
+      return;
+    } else {
+      var xmlhttp = new XMLHttpRequest();
+      xmlhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+          alert(this.responseText);
         }
+      };
+      xmlhttp.open("GET", url + "&mail=&" + document.getElementById("mailInput").value+"&password"+ document.getElementById("passwordInput").value, true);
+      xmlhttp.send();
     }
-}
+  }
