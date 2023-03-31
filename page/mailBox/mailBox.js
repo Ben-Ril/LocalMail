@@ -29,7 +29,7 @@ function onWindowResize(){
     let body = document.getElementById("body");
     let menuSearchContainer = document.getElementById("menuSearchContainer");
     let navMenu = document.getElementById("navMenu");
-    let MenuButton = document.getElementById("MenuButton");
+    let menuButton = document.getElementById("menuButton");
     let newMailButtonContainer = document.getElementById("newMailButtonContainer");
     let newMailButton = document.getElementById("newMailButton");
     let searchBar = document.getElementById("searchBar");
@@ -38,18 +38,18 @@ function onWindowResize(){
     let message = document.getElementById("message");
     let navMenuButtons = document.getElementsByClassName("navMenuButtons");
     let closeButton = document.getElementById("closeButton");
-
     let receptionBox = document.getElementById("receptionBox");
     let sendedBox = document.getElementById("sendedBox");
     
-    body.style.height = screenHeight-16+"px";
+    body.style.screenWidth = screenWidth + "px";
+    body.style.height = screenHeight+"px";
 
     menuSearchContainer.style.width = menuSearchContainerWidth+"px";
     menuSearchContainer.style.height = menuSearchContainerHeight+"px";
 
-    MenuButton.style.height = searchBarHeight + "px";
-    MenuButton.style.marginTop = (menuSearchContainerHeight-searchBarHeight)/2+"px";
-    MenuButton.style.fontSize = menuFontSize + "px";
+    menuButton.style.height = searchBarHeight + "px";
+    menuButton.style.marginTop = (menuSearchContainerHeight-searchBarHeight)/2+"px";
+    menuButton.style.fontSize = menuFontSize + "px";
 
     searchBar.style.width = searchBarWidth+"px";
     searchBar.style.height = searchBarHeight+"px";
@@ -88,7 +88,7 @@ function onWindowResize(){
     sendedBox.style.height = mailBoxHeight+"px";
 }
 
-function navMenuButton(button){
+function navMenuButton(){
     let navMenu = document.getElementById("navMenu");
     const isVisible = navMenu.style.visibility == "visible";
 
