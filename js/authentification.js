@@ -1,15 +1,21 @@
-document.getElementById("sendButton").onclick = function(){
-    var httpRequest = new XMLHttpRequest();
-    var email = document.getElementById("email").value;
-    var password = document.getElementById("password").value
-    
-    httpRequest.open("POST", url);
-    httpRequest.responseType = "text";
-    xhr.setRequestHeader('Content-type', 'text; charset=UTF-8')
-    httpRequest.send("email="+email+"&password="+password);
-    httpRequest.onload = function(){
-        if(httpRequest.status===201){
-            console.log("Post réussi")
+function requestInfo(str){
+    if (str.length == 0) {
+      document.getElementById("txtHint").innerHTML = "";
+      return;
+    } else {
+      var xmlhttp = new XMLHttpRequest();
+      xmlhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+          alert(this.responseText);
         }
+      };
+
+      let mail = document.getElementById("mailInput").value;
+      let array = mail.split("@");
+      let userName = array[0].split(".")[0];
+      let userFirstName = array[0].split(".")[1];
+      
+      xmlhttp.open("GET", "../php/authentification.php?" + "userName="+ userName + "&userFirstName=" + userFirstName +"&password"+ document.getElementById("passwordInput").value, true);
+      xmlhttp.send();
     }
-}
+  }
