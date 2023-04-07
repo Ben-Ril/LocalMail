@@ -9,7 +9,13 @@ function requestInfo(str){
           alert(this.responseText);
         }
       };
-      xmlhttp.open("GET", url + "&mail=&" + document.getElementById("mailInput").value+"&password"+ document.getElementById("passwordInput").value, true);
+
+      let mail = document.getElementById("mailInput").value;
+      let array = mail.split("@");
+      let userName = array[0].split(".")[0];
+      let userFirstName = array[0].split(".")[1];
+      
+      xmlhttp.open("GET", "../php/authentification.php?" + "userName="+ userName + "&userFirstName=" + userFirstName +"&password"+ document.getElementById("passwordInput").value, true);
       xmlhttp.send();
     }
   }
