@@ -1,125 +1,128 @@
-window.addEventListener("load", onWindowLoad);
-window.addEventListener("resize", onWindowResize);
+window.addEventListener("load", place);
+window.addEventListener("resize", place);
 
-function onWindowLoad() {
-  onWindowResize();
-}
-function onWindowResize(){
-    const screenHeight = window.innerHeight;
-    const screenWidth = window.innerWidth;
-    const isHorizontal = screenHeight < screenWidth;
-    const menuSearchContainerWidth = screenWidth*(isHorizontal? 0.6:0.98);
-    const menuSearchContainerHeight = screenHeight*(isHorizontal? 0.08:0.05);
-    const searchBarWidth = menuSearchContainerWidth*(isHorizontal? 0.75:0.8);
-    const searchBarHeight = menuSearchContainerHeight*0.6;
-    const navMenuWidth = screenWidth*(isHorizontal? 0.3:0.7);
-    const navMenuHeight = screenHeight*(isHorizontal? 0.37:0.16);
-    const menuFontSize = searchBarHeight*0.8;
-    const navMenuButtonWidth = navMenuWidth*0.6;
-    const newMailButtonWidth = screenWidth*0.3;
-    const mailBoxWidth = screenWidth*0.97;
-    const mailBoxHeight = screenHeight*(isHorizontal?0.87:0.93);
-    const newMailWidth = screenWidth*(isHorizontal?0.4:0.7);
-    const newMailheight = screenHeight*(isHorizontal?0.6:0.7);
-    const newMailClassWidth = newMailWidth * 0.97;
-    const messageHeight = newMailheight*(isHorizontal?0.7:0.86);
-    const closeButtonWitdh = newMailClassWidth*0.15
+var isMenuOpen = false;
 
+function place(){
+    const windowsHeight = window.innerHeight;
+    const windowsWidth = window.innerWidth;
+    const isHorizontal = windowsWidth >= windowsHeight;
+
+    const headerHeight = windowsHeight*0.08;
+    const headerContentHeight = headerHeight*0.64;
+    const headerImageContentHeight = headerContentHeight*0.8;
+    const headerPadding = (headerHeight-headerContentHeight)/2;
+    const headerImageMargin = (headerContentHeight-headerImageContentHeight)/2;
+
+    const contentHeight = windowsHeight-headerHeight;
+
+    const navMenuIconMargin = headerImageContentHeight/2;
+    const navMenuWidth = headerImageContentHeight+navMenuIconMargin*2;
 
     let body = document.getElementById("body");
-    let menuSearchContainer = document.getElementById("menuSearchContainer");
+
+    let header = document.getElementById("header");
+    let headerIcon = document.getElementsByClassName("headerIcon");
+    let searchInput = document.getElementById("searchInput");
+
+    let contentSection = document.getElementById("contentSection");
     let navMenu = document.getElementById("navMenu");
-    let menuButton = document.getElementById("menuButton");
-    let newMailButtonContainer = document.getElementById("newMailButtonContainer");
-    let newMailButton = document.getElementById("newMailButton");
-    let searchBar = document.getElementById("searchBar");
-    let newMail = document.getElementById("newMail");
-    let newMailClass = document.getElementsByClassName("newMailClass");
-    let message = document.getElementById("message");
-    let navMenuButtons = document.getElementsByClassName("navMenuButtons");
-    let closeButton = document.getElementById("closeButton");
-    let receptionBox = document.getElementById("receptionBox");
-    let sendedBox = document.getElementById("sendedBox");
+    let navMenuIcon = document.getElementsByClassName("navMenuIcon");
+    let navMenuListNameElements = document.getElementsByClassName("navMenuListNameElement");
+    let mails = document.getElementsByClassName("mail");
     
-    body.style.screenWidth = screenWidth + "px";
-    body.style.height = screenHeight+"px";
+    body.style.width = windowsWidth + "px";
+    body.style.height = windowsHeight + "px";
 
-    menuSearchContainer.style.width = menuSearchContainerWidth+"px";
-    menuSearchContainer.style.height = menuSearchContainerHeight+"px";
-
-    menuButton.style.height = searchBarHeight + "px";
-    menuButton.style.marginTop = (menuSearchContainerHeight-searchBarHeight)/2+"px";
-    menuButton.style.fontSize = menuFontSize + "px";
-
-    searchBar.style.width = searchBarWidth+"px";
-    searchBar.style.height = searchBarHeight+"px";
-    searchBar.style.marginTop = (menuSearchContainerHeight-searchBarHeight)/2-1+"px";
-    searchBar.style.fontSize = menuFontSize + "px";
-
-    navMenu.style.width = navMenuWidth+"px";
-    navMenu.style.height = navMenuHeight+"px";
-    navMenu.style.fontSize = menuFontSize+"px";
-    Array.prototype.forEach.call(navMenuButtons, function(elem){
-        elem.style.width = navMenuButtonWidth+"px";
-        elem.style.fontSize = menuFontSize+"px";
-        elem.style.marginLeft = navMenuWidth/2-navMenuButtonWidth/2+"px";
+    header.style.width = windowsWidth + "px";
+    header.style.height = headerHeight-headerPadding*2 + "px";
+    header.style.paddingTop = headerPadding + "px";
+    header.style.paddingBottom = headerPadding + "px";
+    searchInput.style.height = headerContentHeight + "px";
+    Array.prototype.forEach.call(headerIcon, function(icon) {
+        icon.style.height = headerImageContentHeight + "px";
+        icon.style.marginTop = headerImageMargin + "px";
+        icon.style.marginBottom = icon.style.marginTop;
+        icon.style.marginLeft = navMenuIconMargin + "px";
+        icon.style.marginRight = icon.style.marginLeft;
     });
 
-    newMailButtonContainer.style.visibility = (isHorizontal? "hidden":"visible");
-    
-    newMailButton.style.width = newMailButtonWidth+"px";
-    newMailButton.style.fontSize = menuFontSize+"px";
-
-    newMail.style.width = newMailWidth+"px";
-    newMail.style.height = newMailheight+"px";
-    Array.prototype.forEach.call(newMailClass, function(elem) {
-        elem.style.fontSize = menuFontSize+"px";
-        elem.style.width = newMailClassWidth+"px" ;
+    contentSection.style.widows = windowsWidth + "px";
+    contentSection.style.height = contentHeight + "px";
+    navMenu.style.width = (!isMenuOpen ? navMenuWidth : navMenuWidth*3.5) + "px";
+    navMenu.style.height = contentHeight + "px";
+    Array.prototype.forEach.call(navMenuIcon, function(icon) {
+        icon.style.height = headerImageContentHeight + "px";
+        icon.style.margin = navMenuIconMargin + "px";
     });
-    message.style.height = messageHeight+"px";
-    closeButton.style.width = closeButtonWitdh+"px";
-    closeButton.style.fontSize = menuFontSize+"px";
+    Array.prototype.forEach.call(navMenuListNameElements, function(elem){
+        elem.style.display = (isMenuOpen ? "block": "none");
+        elem.style.height = headerImageContentHeight/2 + "px";
+        elem.style.fontSize = headerImageContentHeight/2 + "px";
+        elem.style.marginTop = navMenuIconMargin + headerImageContentHeight/4 + "px";
+    });
 
+    //mailListSection.style.height = windowsWidth - Number(navMenu.style.width.split("p")[0]) + "px";
 
-    receptionBox.style.width = mailBoxWidth+"px";
-    receptionBox.style.height = mailBoxHeight+"px";
-
-    sendedBox.style.width = mailBoxWidth+"px";
-    sendedBox.style.height = mailBoxHeight+"px";
+    Array.prototype.forEach.call(mails, function(mail){
+        mail.style.width = windowsWidth - Number(navMenu.style.width.split("p")[0]) + "px";
+    });
 }
 
-function navMenuButton(){
+function menuPressed(){
+    isMenuOpen = !isMenuOpen;
+
+    let navMenuListNameElements = document.getElementsByClassName("navMenuListNameElement");
     let navMenu = document.getElementById("navMenu");
-    const isVisible = navMenu.style.visibility == "visible";
+    let menuImageButton = document.getElementById("menuImageButton");
+    let mails = document.getElementsByClassName("mail");
 
-    navMenu.style.visibility = (isVisible? "hidden":"visible");
-}
+    const navMenuDefaultWidth = Number(navMenu.style.width.split("p")[0]);
+    const newMailsWidth = (isMenuOpen ? Number(mails[0].style.width.split("p")[0]) - navMenuDefaultWidth*2.5 : Number(mails[0].style.width.split("p")[0]) + (navMenuDefaultWidth - navMenuDefaultWidth/3.5)) + "px";
+    if(isMenuOpen){
+        Array.prototype.forEach.call(navMenuListNameElements, function(elem){
+            elem.style.display = "block";
+            elem.animate({
+                    opacity: [0,1],
+                    color: ["#fff", "#000"]
+            }, 200);
+        });
 
-function newMailButton(button){
-    let newMail = document.getElementById("newMail");
-    let newMailButtonContainer = document.getElementById("newMailButtonContainer");
-    const isVisible = newMail.style.visibility == "visible";
-    const screenHeight = window.innerHeight;
-    const screenWidth = window.innerWidth;
-    const isHorizontal = screenHeight < screenWidth;
+        navMenu.animate({
+            width: [navMenuDefaultWidth + "px", navMenuDefaultWidth*3.5 + "px"]
+        }, 200);
 
-    newMail.style.visibility = (isVisible? "hidden":"visible");
-    newMailButtonContainer.style.visibility = (isVisible? "visible":"hidden");
-    newMailButtonContainer.style.visibility = (isHorizontal? "hidden":"visible");
-}
+        menuImageButton.setAttribute("src", "../image/close_menu_icon.png");
 
-function mailBoxButton(button){
-    let receptionBox = document.getElementById("receptionBox");
-    let sendedBox = document.getElementById("sendedBox");
-    
-    switch(button.id){
-        case "navMenuButtonReceived": 
-            sendedBox.style.visibility = "hidden";
-            receptionBox.style.visibility = "visible";
-            break
-        case "navMenuButtonSended":
-            receptionBox.style.visibility = "hidden";
-            sendedBox.style.visibility = "visible";
+        navMenu.style.width = navMenuDefaultWidth*3.5 + "px";
+
+        Array.prototype.forEach.call(mails, function(mail){
+            mail.animate({
+                width: [mail.style.width, newMailsWidth]
+            }, 200);
+
+            mail.style.width = newMailsWidth;
+        })
+
+    }else{
+        Array.prototype.forEach.call(navMenuListNameElements, function(elem){
+            elem.style.display = "none";
+        });
+
+        navMenu.animate({
+            width: [navMenuDefaultWidth + "px", navMenuDefaultWidth/3.5 + "px"]
+        }, 200);
+
+        menuImageButton.setAttribute("src", "../image/menu_icon.png");
+
+        navMenu.style.width = navMenuDefaultWidth/3.5 + "px";
+
+        Array.prototype.forEach.call(mails, function(mail){
+            mail.animate({
+                width: [mail.style.width, newMailsWidth]
+            }, 200);
+
+            mail.style.width = newMailsWidth;
+        })
     }
 }
-
