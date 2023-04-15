@@ -38,7 +38,7 @@ section#mailListSection {
   background-color: blue;
 }
 
-section.mail {
+section.mail section {
   display: inline-flex;
 }
 
