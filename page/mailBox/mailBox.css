@@ -19,8 +19,12 @@ input#searchInput {
 }
 
 section#contentSection {
-  background-color: aqua;
+  background-color: blue;
   display: inline-flex;
+}
+
+section#navMenu {
+  background-color: aqua;
 }
 
 ul#navMenuList {
@@ -35,15 +39,36 @@ li.navMenuListElement section {
 }
 
 section#mailListSection {
-  background-color: blue;
+  
 }
 
 section.mail section {
   display: inline-flex;
 }
 
+.mailP {
+  margin: 0px;
+  margin-right: 5px;
+}
+
 section#newMailSection {
   position: absolute;
   bottom: 0px;
   right: 0px;
+}
+
+.newMailChild {
+  margin: 0px;
+  padding: 0px;
+  border: 0px;
+}
+
+#newMailSection img {
+  position: absolute;
+  bottom: 0px;
+  right: 0px;
+}
+
+#newMailMessageContent {
+  resize: none;
 }

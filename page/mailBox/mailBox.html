@@ -52,19 +52,20 @@
             <section id="mailListSection">
                 <section class="mail">
                     <section>
-                        <p class="mailObject">MAIL_OBJECT</p>
-                        <p class="senderMail">SENDER_MAIL</p>
-                        <p class="mailDate">DATE</p>
+                        <p class="mailObject mailP">MAIL_OBJECT</p>
+                        <p class="senderMail mailP">SENDER_MAIL</p>
+                        <p class="mailDate mailP">DATE</p>
                     </section>
                     
-                    <p class="mailContentPreview">MAIL_CONTENT_PREVIEW</p>
+                    <p class="mailContentPreview mailP">MAIL_CONTENT_PREVIEW</p>
                 </section>
             </section>
 
             <section id="newMailSection">
-                <input type="text" name="destinatorInput" id="destinatorInput" placeholder="DESTINATOR">
-                <input type="text" name="objectInput" id="objectInput" placeholder="OBJECT">
-                <textarea name="messageContent" id="messageContent" placeholder="MESSAGE_CONTENT"></textarea>
+                <input type="text" name="destinatorInput" class="newMailChild" id="destinatorInput" placeholder="DESTINATOR">
+                <input type="text" name="objectInput" class="newMailChild" id="objectInput" placeholder="OBJECT">
+                <textarea name="newMailMessageContent" class="newMailChild" id="newMailMessageContent" placeholder="NEW_MAIL_MESSAGE_CONTENT"></textarea>
+                <img src="../image/sendbox_icon.png" class="iconImage navMenuIcon" alt="SEND">
             </section>
         </section>
     </body>

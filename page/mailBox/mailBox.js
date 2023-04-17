@@ -19,6 +19,8 @@ function place(){
     const navMenuIconMargin = headerImageContentHeight/2;
     const navMenuWidth = headerImageContentHeight+navMenuIconMargin*2;
 
+    const mailListPaddingLeft = headerImageContentHeight/3;
+
     let body = document.getElementById("body");
 
     let header = document.getElementById("header");
@@ -30,6 +32,10 @@ function place(){
     let navMenuIcon = document.getElementsByClassName("navMenuIcon");
     let navMenuListNameElements = document.getElementsByClassName("navMenuListNameElement");
     let mails = document.getElementsByClassName("mail");
+
+    let newMailSection = document.getElementById("newMailSection");
+    let newMailChilds = document.getElementsByClassName("newMailChild");
+    let newMailMessageContent = document.getElementById("newMailMessageContent");
     
     body.style.width = windowsWidth + "px";
     body.style.height = windowsHeight + "px";
@@ -62,11 +68,18 @@ function place(){
         elem.style.marginTop = navMenuIconMargin + headerImageContentHeight/4 + "px";
     });
 
-    //mailListSection.style.height = windowsWidth - Number(navMenu.style.width.split("p")[0]) + "px";
-
     Array.prototype.forEach.call(mails, function(mail){
-        mail.style.width = windowsWidth - Number(navMenu.style.width.split("p")[0]) + "px";
+        mail.style.padding = mailListPaddingLeft + "px";
+        mail.style.width = windowsWidth - Number(navMenu.style.width.split("p")[0]) - mailListPaddingLeft*2 + "px";
     });
+
+    newMailSection.style.width = windowsWidth/4 + "px";
+    newMailSection.style.height = windowsHeight/2 + "px";
+    Array.prototype.forEach.call(newMailChilds, function(newMailChild) {
+        newMailChild.style.width = newMailSection.style.width;
+    });
+
+    
 }
 
 function menuPressed(){
