@@ -1,45 +1,62 @@
 body{
     background-position: center;
     background-attachment: fixed;
-    background-image: url("../image/backgroundAuthentification.webp");
     background-color: #cccccc;
 }
 
-#formulaire{
-    width: 350px;
+#form{
+  position: absolute;
+  color: #ffffff;
+  border-radius: 5px;
+  backdrop-filter: blur(10px);
+  text-align: center;
+}
 
+.glass-panel {
+  background-color: rgba(255,255,255,0.07);
+  border: 1px solid rgba(255,255,255,0.1);
 }
-#email,#password{
-    padding-right: 0px
+
+
+.glass-panel-input {
+  border: 1px solid;
+  border-color: rgba(255, 255, 255, 0);
+  border-radius: 100px;
+  transition: border-color 0.2s;
+  text-align: center;
 }
-/*--------*/
+
+.glass-panel-input:hover {
+  border-color: rgba(187, 187, 187, 0.4);
+  transition: border-color 0.4s;
+}
+
+.glass-panel-input:focus{
+  outline: none;
+  border-color: rgba(187, 187, 187, 0.4);
+  transition: border-color 0.4s;
+}
+
+
 .glass-button {
-    display: inline-block;
-    padding: 24px 32px;
-    border: 0;
-    text-decoration: none;
-    border-radius: 15px;
-    background-color: rgba(255,255,255,0.1);
-    border: 1px solid rgba(255,255,255,0.1);
-    backdrop-filter: blur(30px);
-    color: rgba(255,255,255,0.8);
-    font-size: 14px;
-    letter-spacing: 2px;
-    cursor: pointer;
-    text-transform: uppercase;
-  }
- 
-  .glass-button:hover {
-    background-color: rgba(255,255,255,0.2);
-  }
-  .glass-panel {
-    color: #ffffff;
-    margin: 20px auto;
-    background-color: rgba(255,255,255,0.06);
-    border: 1px solid rgba(255,255,255,0.1);
-    width: 90%;
-    border-radius: 15px;
-    padding: 32px;
-    backdrop-filter: blur(10px);
-  }
-  
+  border-radius: 100px;
+  background-color: rgba(255,255,255,0.1);
+  border: 0px;
+  backdrop-filter: blur(30px);
+  color: rgba(255,255,255,0.8);
+  letter-spacing: 2px;
+  cursor: pointer;
+  text-transform: uppercase;
+  transition: background-color 0.6s;
+}
+
+.glass-button:hover {
+  background-color: rgba(255,255,255,0.2);
+  transition: background-color 0.3s;
+}
+
+.glass-button:focus{
+  outline: none;
+  background-color: rgba(255,255,255,0.2);
+  transition: background-color 0.3s;
+}
