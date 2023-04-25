@@ -40,11 +40,13 @@ function place(){
     body.style.width = windowsWidth + "px";
     body.style.height = windowsHeight + "px";
 
-    header.style.width = windowsWidth + "px";
+    const headerPaddingLeft = (windowsWidth-(headerImageContentHeight*2+navMenuIconMargin*4+windowsWidth/2))/2;
     header.style.height = headerHeight-headerPadding*2 + "px";
     header.style.paddingTop = headerPadding + "px";
     header.style.paddingBottom = headerPadding + "px";
+    header.style.paddingLeft = headerPaddingLeft + "px";
     searchInput.style.height = headerContentHeight + "px";
+    searchInput.style.width = windowsWidth/2 + "px";
     Array.prototype.forEach.call(headerIcon, function(icon) {
         icon.style.height = headerImageContentHeight + "px";
         icon.style.marginTop = headerImageMargin + "px";
@@ -52,6 +54,8 @@ function place(){
         icon.style.marginLeft = navMenuIconMargin + "px";
         icon.style.marginRight = icon.style.marginLeft;
     });
+    
+    
 
     contentSection.style.widows = windowsWidth + "px";
     contentSection.style.height = contentHeight + "px";
@@ -77,9 +81,10 @@ function place(){
     newMailSection.style.height = windowsHeight/2 + "px";
     Array.prototype.forEach.call(newMailChilds, function(newMailChild) {
         newMailChild.style.width = newMailSection.style.width;
+        newMailChild.style.height = windowsHeight/16 + "px";
     });
 
-    
+    newMailMessageContent.style.height = windowsHeight/2 - 2*windowsHeight/16 + "px";
 }
 
 function menuPressed(){

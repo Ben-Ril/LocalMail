@@ -9,6 +9,7 @@ img.iconImage {
 
 header {
   display: flex;
+  text-align: center;
 }
 
 input#searchInput {
@@ -53,7 +54,7 @@ section.mail section {
 
 section#newMailSection {
   position: absolute;
-  bottom: 0px;
+  bottom: 4px;
   right: 0px;
 }
 
@@ -69,6 +70,15 @@ section#newMailSection {
   right: 0px;
 }
 
+.newMailChild:focus {
+  outline: none;
+}
+
 #newMailMessageContent {
   resize: none;
+  border: none;
+}
+
+textarea:enabled {
+  outline: none;
 }
