@@ -14,8 +14,8 @@ function onresize(){
     const inputPadding = height/20;
     const marginTop = height/20;
 
-    document.getElementById("body").style.backgroundImage = (isHorizontal? "url('../image/backgroundAuthentification.webp')" : "url('../image/backgroundAuthentificationRotated.webp')");
-
+    document.getElementById("body").style.backgroundImage = (isHorizontal? "url('./image/backgroundAuthentification.webp')" : "url('./image/backgroundAuthentificationRotated.webp')");
+    
     let form = document.getElementById("form");
     let mailInput = document.getElementById("mailInput");
     let passwordInput = document.getElementById("passwordInput");
