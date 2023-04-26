@@ -1,15 +1,15 @@
 <?php
 include 'API.phar';
 require './LanguageManager.php';
-//$socketManager = new SocketManager();
+$socketManager = new SocketManager();
 $languageManager = new LanguageManager();
 session_start();
 
-//if(!$socketManager->isDBConnected()){
-//    include('page/unavailable/unavailable.html');
-//}
+if(!$socketManager->isDBConnected()){
+    include('page/unavailable/unavailable.html');
+}
 
-//$userManager = $socketManager->getUserManager();
+$userManager = $socketManager->getUserManager();
 
 $_SESSION["connected"] = true;
 $_SESSION["uuid"] = "ffe";
@@ -40,10 +40,16 @@ if(isset($_SESSION["connected"]) && isset($_SESSION["uuid"]) && $_SESSION["conne
     
     fclose($file);
 }else{
-    include("page/authentification/authentification.html");
+    $file = fopen("page/authentification/authentification.html", "r");
+    $var = array(
+        array("AUTHENTIFICATION", "authentification"),
+        array("MAIL", "mail"),
+        array("PASSWORD", "password"),
+        array("LOGIN", "login")
+    );
 }
 
-/*if($_SERVER["REQUEST_METHOD"] == "POST"){
+if($_SERVER["REQUEST_METHOD"] == "POST"){
     if(isset($_POST["mail"]) && isset($_POST["password"])){
         $mail = explode(".", $_POST["mail"]);
         $name = $mail[0];
@@ -64,5 +70,5 @@ if(isset($_SESSION["connected"]) && isset($_SESSION["uuid"]) && $_SESSION["conne
             header("location: mailbox.php");
         }
     }
-}*/
+}
 ?>
