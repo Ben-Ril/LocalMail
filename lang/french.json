@@ -1,0 +1,16 @@
+{
+    "mailbox": "Boite Mail",
+    "username": "Nom d'utilisateur",
+    "password": "Mot de passe",
+    "login": "Connexion",
+    "logout": "Déconnexion",
+    "mail": "Mail",
+    "search": "Rechercher",
+    "newMail": "Nouveau Mail",
+    "sendedMail": "Mails Envoyés",
+    "receivedMail": "Mail Reçu",
+    "destinator": "Destinataire",
+    "mailObject": "Objet du Mail",
+    "mailContent": "Ecrivez ce que vous rêvez d'envoyer",
+    "send": "Envoyer"
+}

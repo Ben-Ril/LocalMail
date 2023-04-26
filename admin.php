@@ -1,7 +1,7 @@
 <?php
 session_start();
 
-$adminAcces = fopen("adminAcces.php", "a+");
+$adminAcces = fopen("../adminAcces", "a+");
 if(filesize("adminAcces.php") == 0){die("Please use the installer to config the admin user");}
 $content = explode("\\+-+\\", fread($adminAcces, filesize("adminAcces.php")));
 if(empty($content)){die("Please use the installer to config the admin user");}
