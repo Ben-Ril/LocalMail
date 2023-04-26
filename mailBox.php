@@ -1,5 +1,5 @@
 <?php
-include 'API.phar';
+include 'phar://API.phar/SocketManager.php';
 require './LanguageManager.php';
 $socketManager = new SocketManager();
 $languageManager = new LanguageManager();
