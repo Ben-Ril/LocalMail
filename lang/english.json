@@ -1,0 +1,17 @@
+{
+    "mailbox": "Mailbox",
+    "authentification": "Authentification",
+    "username": "Username",
+    "password": "Password",
+    "login": "Login",
+    "logout": "Logout",
+    "mail": "E-Mail",
+    "search": "Search",
+    "newMail": "New E-Mail",
+    "sendedMail": "Sended E-Mails",
+    "receivedMail": "Received E-Mails",
+    "destinator": "Destinator",
+    "mailObject": "E-Mail's Object",
+    "mailContent": "Write something to send",
+    "send": "Send"
+}
