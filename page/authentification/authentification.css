@@ -6,7 +6,6 @@ body{
 
 #form{
   position: absolute;
-  color: #ffffff;
   border-radius: 5px;
   backdrop-filter: blur(10px);
   text-align: center;
