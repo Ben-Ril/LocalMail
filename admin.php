@@ -2,9 +2,9 @@
 session_start();
 
 $adminAcces = fopen("../adminAcces", "a+");
-if(filesize("adminAcces.php") == 0){die("Please use the installer to config the admin user");}
+if(filesize("../adminAcces") == 0){die("<h2>Please use the installer to config the admin user</h2>");}
 $content = explode("\\+-+\\", fread($adminAcces, filesize("adminAcces.php")));
-if(empty($content)){die("Please use the installer to config the admin user");}
+if(empty($content)){die("<h2>Please use the installer to config the admin user</h2>");}
 
 $adminUser = null;
 $adminPassword = null;
@@ -19,7 +19,7 @@ foreach($content as $line){
     }
 }
 
-if($adminUser == null || $adminUser == ""){die("Please use the installer to config the admin user :3");}
+if($adminUser == null || $adminUser == ""){die("<h2>Please use the installer to config the admin user</h2>");}
 
 if(isset($_SESSION["adminConn"]) && $_SESSION["adminConn"] == ($adminUser . $adminPassword)){
     include("page/admin/panel.html");
