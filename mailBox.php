@@ -3,10 +3,9 @@ include 'API.phar';
 $socketManager = new SocketManager();
 session_start();
 
-/* VERIF DB PAS DOWN
-// if(DOWN){
-    PAGE 'INDISPONNIBLE' 
-}*/
+if(!$socketManager->isDBConnected()){
+    include('page/unavailable/unavailable.html');
+}
 
 $userManager = $socketManager->getUserManager();
 
