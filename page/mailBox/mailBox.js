@@ -110,7 +110,7 @@ function menuPressed(){
             width: [navMenuDefaultWidth + "px", navMenuDefaultWidth*3.5 + "px"]
         }, 200);
 
-        menuImageButton.setAttribute("src", "../image/close_menu_icon.png");
+        menuImageButton.setAttribute("src", "./image/close_menu_icon.png");
 
         navMenu.style.width = navMenuDefaultWidth*3.5 + "px";
 
@@ -131,7 +131,7 @@ function menuPressed(){
             width: [navMenuDefaultWidth + "px", navMenuDefaultWidth/3.5 + "px"]
         }, 200);
 
-        menuImageButton.setAttribute("src", "../image/menu_icon.png");
+        menuImageButton.setAttribute("src", "./image/menu_icon.png");
 
         navMenu.style.width = navMenuDefaultWidth/3.5 + "px";
 

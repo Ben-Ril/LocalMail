@@ -4,11 +4,19 @@
     <head>
         <title>ADMIN PANEL CONNECTION</title>
         <meta charset="utf-8">
-        <script src="./connection.js"></script>
     </head>
     <body>
-        <input type="text" name="username" id="username" placeholder="USERNAME">
-        <input type="password" name="password" id="password" placeholder="PASSWORD">
-        <button type="submit" onclick="connect()">CONNECT</button>
+        <form name="login" action="admin.php" method="POST">
+            <section>
+                <label>USERNAME</label>
+                <input type="text" id="username" name="username" placeholder="USERNAME"/>
+            </section>
+            <section>
+                <label>PASSWORD</label>
+                <input type="password" id="password" name="password" placeholder="PASSWORD"/>
+            </section>
+
+            <input type="submit" id="connect" name="connect" value="CONNECT"/>
+        </form>
     </body>
 </html>

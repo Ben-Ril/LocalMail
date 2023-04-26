@@ -2,15 +2,15 @@
 <html>
     <head>
         <title>LocalMail - MailBox</title>
-        <link href="mailBox.css" rel="stylesheet" type="text/css">
-        <script src="mailBox.js" type="text/javascript"></script>
+        <link href="./page/mailBox/mailBox.css" rel="stylesheet" type="text/css">
+        <script src="./page/mailBox/mailBox.js" type="text/javascript"></script>
         <meta charset="utf-8">
     </head>
     <body id="body">
         <header id="header">
-            <img id="menuImageButton" class="iconImage headerIcon" src="../image/menu_icon.png" alt="menu" onclick="menuPressed()">
+            <img id="menuImageButton" class="iconImage headerIcon" src="./image/menu_icon.png" alt="menu" onclick="menuPressed()">
             <input type="text" name="searchInput" id="searchInput" placeholder="SEARCH">
-            <img class="iconImage headerIcon" src="../image/reload_icon.png" alt="reload" onclick="">
+            <img class="iconImage headerIcon" src="./image/reload_icon.png" alt="reload" onclick="">
         </header>
 
         <section id="contentSection">
@@ -18,25 +18,25 @@
                 <ul id="navMenuList">
                     <li class="navMenuListElement" onclick="">
                         <section>
-                            <img class="iconImage navMenuIcon" src="../image/new_mail_icon.png" alt="NEW_MAIL">
+                            <img class="iconImage navMenuIcon" src="./image/new_mail_icon.png" alt="NEW_MAIL">
                             <p class="navMenuListNameElement">NEW_MAIL</p>
                         </section>
                     </li>
                     <li class="navMenuListElement" onclick="">
                         <section>
-                            <img class="iconImage navMenuIcon" src="../image/sendbox_icon.png" alt="SENDED_MAIL">
+                            <img class="iconImage navMenuIcon" src="./image/sendbox_icon.png" alt="SENDED_MAIL">
                             <p class="navMenuListNameElement">SENDED_MAIL</p>
                         </section>
                     </li>
                     <li class="navMenuListElement" onclick="">
                         <section>
-                            <img class="iconImage navMenuIcon" src="../image/receivebox_icon.png" alt="RECEIVED_MAIL">
+                            <img class="iconImage navMenuIcon" src="./image/receivebox_icon.png" alt="RECEIVED_MAIL">
                             <p class="navMenuListNameElement">RECEIVED_MAIL</p>
                         </section>
                     </li>
                     <li class="navMenuListElement" onclick="">
                         <section>
-                            <img class="iconImage navMenuIcon" src="../image/logout_icon.png" alt="LOGOUT">
+                            <img class="iconImage navMenuIcon" src="./image/logout_icon.png" alt="LOGOUT">
                             <p class="navMenuListNameElement">LOGOUT</p>
                         </section>
                     </li>
@@ -59,7 +59,7 @@
                 <input type="text" name="destinatorInput" class="newMailChild" id="destinatorInput" placeholder="DESTINATOR">
                 <input type="text" name="objectInput" class="newMailChild" id="objectInput" placeholder="OBJECT">
                 <textarea name="newMailMessageContent" class="newMailChild" id="newMailMessageContent" placeholder="NEW_MAIL_MESSAGE_CONTENT"></textarea>
-                <img src="../image/sendbox_icon.png" class="iconImage navMenuIcon" alt="SEND">
+                <img src="./image/sendbox_icon.png" class="iconImage navMenuIcon" alt="SEND">
             </section>
         </section>
     </body>
