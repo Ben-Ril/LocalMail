@@ -53,7 +53,7 @@ public class DataBase {
     private boolean init(){
         String request = "CREATE TABLE IF NOT EXISTS TABLEINFO;";
         String configTable = "config (name TEXT, val TEXT)";
-        String userTable = "users (uuid CHAR(9), name TEXT, firstname TEXT, password TEXT, grp TEXT, fistConnection BOOL, admin BOOL)";
+        String userTable = "users (uuid CHAR(9), name TEXT, firstname TEXT, password TEXT, grp TEXT, fistConnection BOOL)";
         String mailTable = "mails (uuid CHAR(9), senderUUID CHAR(9), receiversUUID TEXT, object TEXT, content TEXT, date TEXT, attachment TEXT)";
         String groupTable = "grps (name TEXT)";
 
