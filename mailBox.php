@@ -11,11 +11,7 @@ if(!$socketManager->isDBConnected()){
 
 $userManager = $socketManager->getUserManager();
 
-$_SESSION["connected"] = true;
-$_SESSION["uuid"] = "ffe";
-
-if(isset($_SESSION["connected"]) && isset($_SESSION["uuid"]) && $_SESSION["connected"] === true /*&& $userManager->getUserByID($_SESSION["uuid"]) != null*/){
-    //include('page/mailBox/mailBox.html');
+if(isset($_SESSION["connected"]) && isset($_SESSION["uuid"]) && $_SESSION["connected"] === true && $userManager->getUserByID($_SESSION["uuid"]) != null){
     $file = fopen("page/mailBox/mailBox.html","r");
     $var = array(
         array("OMAILBOX", "mailbox"),
@@ -58,7 +54,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 
         $user = $userManager->getUserByName($name, $firstname);
         if($user === null){
-            // Utilisateur innexistant
+            // Inexistant user
             header("location: mailbox.php");
         }
     
