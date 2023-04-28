@@ -2,66 +2,57 @@ package fr.benril.localmailserver.database;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileWriter;
-import java.io.IOException;
 import java.sql.*;
 import java.util.Random;
 import java.util.Scanner;
 
 public class DataBase {
-    private String dbURL;
+    private String dbURL = null;
     public String getDbURL() {return dbURL;}
 
     private static DataBase instance;
     public static DataBase getInstance() {return instance;}
 
     private Connection con;
-    private boolean connected;
 
     public DataBase(){
+        instance = this;
         try{
             File configDBFile = new File("./db");
             if(!configDBFile.exists()){
-                try {
-                    configDBFile.createNewFile();
-                    FileWriter writer = new FileWriter(configDBFile);
-                    writer.append("DataBase URL\n").append("DataBase Username\n").append("DataBase Password");
-                    writer.flush();
-                }catch (IOException ioe){
-                    ioe.printStackTrace();
-                }
+                System.out.println("The installation of LocalMail is incomplete");
+                System.exit(0);
             }
             Scanner scan = new Scanner(configDBFile);
-            this.dbURL = scan.nextLine();
-            String dbUser = scan.nextLine();
-            String dbPassword = scan.nextLine();
+            String dbUser = null;
+            String dbPassword = "";
+            while(scan.hasNextLine()){
+                String line = scan.nextLine();
+                if(line.startsWith("url=")){this.dbURL = line.replace("url=", "");}
+                if(line.startsWith("username=")){dbUser = line.replace("username=", "");}
+                if(line.startsWith("password=")){dbPassword = line.replace("password=", "");}
+            }
+
+            if(dbUser == null || this.dbURL == null || dbUser.equals("") || this.dbURL.equals("")){
+                System.out.println("The installation of LocalMail is invalid");
+            }
 
             Class.forName("com.mysql.jdbc.Driver");
             con = DriverManager.getConnection(dbURL, dbUser, dbPassword);
-            System.out.println("Connecté DB");
-            connected = init();
-            instance = (isConnected() ? this : null);
-        }catch (SQLException sqle){
-            connected = false;
-            instance = null;
-            sqle.printStackTrace();
-        } catch (ClassNotFoundException | FileNotFoundException e) {
-            throw new RuntimeException(e);
-        }
+            System.out.println("Connected to the DB");
+            init();
+        }catch (SQLException | ClassNotFoundException | FileNotFoundException ignored){}
     }
 
-    private boolean init(){
+    private void init(){
         String request = "CREATE TABLE IF NOT EXISTS TABLEINFO;";
-        String configTable = "config (name TEXT, val TEXT)";
         String userTable = "users (uuid CHAR(9), name TEXT, firstname TEXT, password TEXT, grp TEXT, fistConnection BOOL)";
         String mailTable = "mails (uuid CHAR(9), senderUUID CHAR(9), receiversUUID TEXT, object TEXT, content TEXT, date TEXT, attachment TEXT)";
         String groupTable = "grps (name TEXT)";
 
-        boolean allGood = executeStatement(request.replace("TABLEINFO", configTable));
-        allGood = (allGood && executeStatement(request.replace("TABLEINFO", userTable)));
-        allGood = (allGood && executeStatement(request.replace("TABLEINFO", mailTable)));
-        allGood = (allGood && executeStatement(request.replace("TABLEINFO", groupTable)));
-        return allGood;
+        executeStatement(request.replace("TABLEINFO", userTable));
+        executeStatement(request.replace("TABLEINFO", mailTable));
+        executeStatement(request.replace("TABLEINFO", groupTable));
     }
 
     public boolean executeStatement(String toExecute){
@@ -106,6 +97,8 @@ public class DataBase {
         return uuid.toString();
     }
 
-    public boolean isConnected() {return connected;}
+    public boolean isConnected() {
+        try{return !con.isClosed();}catch (SQLException ignored){return false;}
+    }
     public void closeDBCon() throws SQLException {con.close();}
 }

@@ -18,13 +18,9 @@ public class Server {
 
     public Server(){
         instance = this;
+        new DataBase();
         try {
             serverSocket = new ServerSocket(15935);
-            new DataBase();
-            while(!serverSocket.isClosed()){
-                acceptClient();
-                verifyClientConnected();
-            }
         }catch (IOException ioe){
             ioe.printStackTrace();
         }
@@ -50,7 +46,7 @@ public class Server {
         }).start();
     }
 
-    private void verifyClientConnected(){
+    public void verifyConnectedClients(){
         new Thread(() -> {
             for(ClientManager clientManager : getClientList().keySet()){
                 if(!clientManager.isConnected()){

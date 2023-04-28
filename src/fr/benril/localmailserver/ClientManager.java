@@ -18,7 +18,7 @@ public class ClientManager implements Runnable {
     @Override
     public void run() {
         try{
-            if(client.isClosed()){
+            if(isConnected()){
                 Server.getInstance().removeClient(this);
                 return;
             }
@@ -31,7 +31,7 @@ public class ClientManager implements Runnable {
                 String message = reader.readUTF();
 
                 if(message.equalsIgnoreCase("IS DB CONNECTED")){
-                    writer.writeUTF((isConnected() ? "YES" : "NO"));
+                    writer.writeUTF((DataBase.getInstance().isConnected() ? "YES" : "NO"));
                     writer.flush();
                 }else if(message.equalsIgnoreCase("RECONNECT")){
                     new DataBase();
