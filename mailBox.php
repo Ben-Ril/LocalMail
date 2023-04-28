@@ -1,8 +1,10 @@
 <?php
+use managers\MailManager;
 include 'phar://API.phar/SocketManager.php';
 require './LanguageManager.php';
 $socketManager = new SocketManager();
 $languageManager = new LanguageManager();
+$mailManager = $socketManager->getMailManager();
 session_start();
 
 if(!$socketManager->isDBConnected()){
@@ -66,5 +68,26 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
             header("location: mailbox.php");
         }
     }
+}
+if($_SERVER["REQUEST_METHOD" == "GET"] && $_GET["sendMail" == true]){
+    $receiversInput = $_GET["receiver"];
+    $receiversOutput = explode(",", $receiversInput);
+    $receiversUUID = array();
+    foreach($receiversOutput as $i){
+        $i = explode("@", $i);
+        $i = explode(".", $i[0]);
+        $receiverUUID= $userManager->getUserByName($i[0],$i[1]);
+        array_push($receiversUUID, $receiverUUID);
+    }
+    foreach($receiversUUID as $i){
+        if($i==null){
+            echo("invalid receiver");
+        }
+    }
+    $senderUUID = $_SESSION["uuid"];
+    $object = $_GET["object"];
+    $content = $_GET["mailContent"];
+
+    $mail = $mailManager->createMail($senderUUID, $receiversUUID, $object, $content);
 }
 ?>
