@@ -39,6 +39,12 @@ class SocketManager{
         $this->groupManager = new GroupManager($this);
     }
 
+    public function isDBConnected(): bool {
+        $this->sendMessage("IS DB CONNECTED");
+        $response = $this->readMessage(1);
+        return $response == "YES";
+    }
+
     public function sendMessage(string $message): void {
         if($this->isError()){return;}
         socket_write($this->socket, $message, strlen($message));

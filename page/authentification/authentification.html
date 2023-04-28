@@ -1,13 +1,20 @@
 <!DOCTYPE html>
-<link href="../page/authentification/authentification.css" rel="stylesheet" type="text/css">
-<script type="text/javascript" src="../page/authentification/authentification.js"></script>
-<script type="text/javascript" src="../js/authentification.js"></script>
 <html>
-    <body id="body" onload="onload()" onresize="onload()">
-         <section id="formulaire" class="glass-panel">
-            <input class="glass-panel" type="text" name="email" id="email" placeholder="Email">
-            <input class="glass-panel" type="password" name="password" id="password" placeholder="Mot de passe">
-            <button id="sendButton" class="glass-button">Envoyer</button>
-        </section>
+    <head>
+        <title>AUTHENTIFICATION</title>
+        <link href="./page/authentification/authentification.css" rel="stylesheet" type="text/css">
+        <script type="text/javascript" src="./page/authentification/authentification.js"></script>
+    </head>
+    <body id="body" onload="onload()" onresize="onresize()">
+        <form name="login" action="mailbox.php" method="POST" id="form" class="glass-panel">
+            <section>
+                <input class="glass-panel glass-panel-input" id="mailInput" type="text" name="mail" placeholder="MAIL"/>
+            </section>
+            <section>
+                <input class="glass-panel glass-panel-input" id="passwordInput" type="password" name="password" placeholder="PASSWORD"/>
+            </section>
+
+            <input class="glass-button" id="connectButton" type="submit" id="login" name="login" value="LOGIN"/>
+        </form>
     </body>
 </html>
