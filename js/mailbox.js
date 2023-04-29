@@ -6,12 +6,12 @@ function received(){
     sendStatus("received");
 }
 
-function sendStatus(boxStatus){
+function sendStatus(status){
     var xmlhttp = new XMLHttpRequest();
     xmlhttp.onreadystatechange = function() {
-    if (this.readyState == 4 && this.status == 200) {
-        alert(this.responseText);
-    }
+        if (this.readyState == 4 && this.status == 200) {
+            alert(this.responseText);
+        }
     };
 
     let boxStatus = str;
@@ -27,9 +27,9 @@ function sendMail(){
 
     var xmlhttp = new XMLHttpRequest();
     xmlhttp.onreadystatechange = function() {
-    if (this.readyState == 4 && this.status == 200) {
-        alert(this.responseText);
-    }
+        if (this.readyState == 4 && this.status == 200) {
+            alert(this.responseText);
+        }
     };
     xmlhttp.onload = function(){
         let isSent = this.responseText;
@@ -42,4 +42,5 @@ function disconnect(){
     var xmlhttp = new XMLHttpRequest();
     xmlhttp.open("GET", "mailbox.php?disconnect=true", true);
     xmlhttp.send();
+    location.reload();
 }
