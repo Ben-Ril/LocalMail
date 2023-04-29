@@ -31,7 +31,7 @@ class UserManager{
     }
 
     public function getUserByName(string $name, string $firstname): User|null{
-        $this->socketManager->sendMessage("GET USER UUID +<->+ " . $name . " +<->+ " . $firstname);
+        $this->socketManager->sendMessage("GET USER NAME //<->// " . $name . " //<->// " . $firstname);
         return $this->getBackUser();
     }
 
@@ -52,27 +52,9 @@ class UserManager{
         return $usersArray;
     }
 
-    public function getUsersByGroup(string $groupName): array|null{
-        $groups = $this->socketManager->getGroupManager()->getGroups();
-        if($groups == null){return null;}
-
-        foreach($groups as $group){
-            if(str_contains($group, $groupName)){
-                $users = array();
-                $entryNumber = intval(explode(" ", $group)[1]);
-                if($entryNumber == 0){return $users;}
-                $this->socketManager->sendMessage("GET USERS " . explode(" ", $group)[0]);
-                $usersUUID = $this->socketManager->readMessage($entryNumber);
-                foreach ($usersUUID as $userUUID) {$users[] = $this->getUserByID($userUUID);}
-                return $users;
-            }
-        }
-        return null;
-    }
-
     private function getBackUser(): User|null{
-        $userInfo = $this->socketManager->readMessage(6);
+        $userInfo = $this->socketManager->readMessage(5);
         if($userInfo == "ERROR"){return null;}
-        return new User($userInfo[0], $userInfo[1], $userInfo[2], $userInfo[3], (strtoupper($userInfo[4]) == "TRUE"), ((strtoupper($userInfo[5]) == "TRUE")));
+        return new User($userInfo[0], $userInfo[1], $userInfo[2], $userInfo[3], $userInfo[4]);
     }
 }
