@@ -14,12 +14,11 @@ public class Users {
         try{
             if(resultSet == null || !resultSet.next()){return "ERROR";}
 
-            userInlineBuilder.append(resultSet.getString("uuid")).append("\n");
-            userInlineBuilder.append(resultSet.getString("name")).append("\n");
-            userInlineBuilder.append(resultSet.getString("firstname")).append("\n");
-            userInlineBuilder.append(resultSet.getString("password")).append("\n");
-            userInlineBuilder.append(resultSet.getString("grps")).append("\n");
-            userInlineBuilder.append(resultSet.getBoolean("admin"));
+            userInlineBuilder.append(resultSet.getString("uuid")).append("//<->//");
+            userInlineBuilder.append(resultSet.getString("name")).append("//<->//");
+            userInlineBuilder.append(resultSet.getString("firstname")).append("//<->//");
+            userInlineBuilder.append(resultSet.getString("password")).append("//<->//");
+            userInlineBuilder.append(resultSet.getString("grp"));
             return userInlineBuilder.toString();
         }catch (SQLException sqle){
             return "ERROR";
@@ -29,15 +28,15 @@ public class Users {
     public String getUserByName(String name, String firstName){
         ResultSet resultSet = db.executeQueryCond("users", "name", name);
         try{
-            if(resultSet == null || !resultSet.next()){return "ERROR";}
-
+            if(resultSet == null){return "ERROR";}
             while(resultSet.next()){
-                if(resultSet.getString("firstname").equals(firstName)){
+                if(resultSet.getString("firstname").equalsIgnoreCase(firstName)){
                     return getUserByUUID(resultSet.getString("uuid"));
                 }
             }
             return "ERROR";
         }catch (SQLException sqle){
+            sqle.printStackTrace();
             return "ERROR";
         }
     }
@@ -49,7 +48,7 @@ public class Users {
             if(resultSet == null || !resultSet.next()){return "ERROR";}
 
             while (resultSet.next()){
-                allUsers.append(getUserByUUID(resultSet.getString("uuid"))).append("\n");
+                allUsers.append(getUserByUUID(resultSet.getString("uuid"))).append("<-->");
             }
             return allUsers.toString();
         }catch (SQLException sqle){
@@ -57,10 +56,9 @@ public class Users {
         }
     }
 
-    public void createUser(String name, String firstname, String password, String group, boolean isAdmin){
-        password = new Hasher().hash(password);
+    public void createUser(String name, String firstname, String password, String group){
         String uuid = generateUserUUID();
-        db.executeStatement("INSERT INTO users VALUES ('" + uuid + "', '" + name + "', '" + firstname + "', '" + password + "', '" + group + "', 1, " + (isAdmin?"1":"0") + ")");
+        db.executeStatement("INSERT INTO users VALUES ('" + uuid + "', '" + name + "', '" + firstname + "', '" + password + "', '" + group + "', 1)");
         db.executeStatement("CREATE TABLE " + uuid + "Mails (date TEXT, mailUUID CHAR(9), sended BOOL)");
     }
 
@@ -70,9 +68,9 @@ public class Users {
         db.executeStatement("DROP TABLE " + uuid + "Mails");
     }
 
-    public void modifyUser(String uuid, String name, String firstName, String password, String group, boolean isAdmin){
+    public void modifyUser(String uuid, String name, String firstName, String password, String group){
         if(getUserByUUID(uuid).equalsIgnoreCase("ERROR")){return;}
-        db.executeStatement("UPDATE users SET name='" + name  + "', fistname='" + firstName + "', password='" + new Hasher().hash(password) + "', grp='" + group + "', admin=" + (isAdmin?1:0));
+        db.executeStatement("UPDATE users SET name='" + name  + "', fistname='" + firstName + "', password='" + password + "', grp='" + group + "'");
     }
 
     private String generateUserUUID(){

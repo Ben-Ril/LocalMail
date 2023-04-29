@@ -40,6 +40,7 @@ public class Server {
                 Thread clientManagerThread = new Thread(clientManager);
                 clientManagerThread.start();
                 addClient(clientManager, clientManagerThread);
+                acceptClient();
             }catch (IOException ioe){
                 ioe.printStackTrace();
             }

@@ -14,6 +14,7 @@ public class DataBase {
     public static DataBase getInstance() {return instance;}
 
     private Connection con;
+    public Connection getCon() {return con;}
 
     public DataBase(){
         instance = this;
@@ -44,7 +45,7 @@ public class DataBase {
         }catch (SQLException | ClassNotFoundException | FileNotFoundException ignored){}
     }
 
-    private void init(){
+    private void init() throws SQLException {
         String request = "CREATE TABLE IF NOT EXISTS TABLEINFO;";
         String userTable = "users (uuid CHAR(9), name TEXT, firstname TEXT, password TEXT, grp TEXT, fistConnection BOOL)";
         String mailTable = "mails (uuid CHAR(9), senderUUID CHAR(9), receiversUUID TEXT, object TEXT, content TEXT, date TEXT, attachment TEXT)";
@@ -68,7 +69,7 @@ public class DataBase {
     public ResultSet executeQuery(String table){
         try{
             Statement statement = con.createStatement();
-            return statement.executeQuery("SELECT * FROM " + table);
+            return statement.executeQuery("SELECT * FROM " + table + ";");
         }catch (SQLException sqle){
             sqle.printStackTrace();
             return null;
@@ -78,7 +79,7 @@ public class DataBase {
     public ResultSet executeQueryCond(String table, String column, String value){
         try{
             Statement statement = con.createStatement();
-            return statement.executeQuery("SELECT * FROM " + table + " WHERE " + column + "='" + value + "'");
+            return statement.executeQuery("SELECT * FROM " + table + " WHERE " + column + "='" + value + "';");
         }catch (SQLException sqle){
             sqle.printStackTrace();
             return null;
@@ -86,7 +87,7 @@ public class DataBase {
     }
 
     public void updateValue(String table, String keyCond, String valueCond, String keyModify, String valueModify){
-        executeStatement("UPDATE " + table + " SET " + keyModify + "='" + valueModify + "' WHERE " + keyCond + "='" + valueCond + "'");
+        executeStatement("UPDATE " + table + " SET " + keyModify + "='" + valueModify + "' WHERE " + keyCond + "='" + valueCond + "';");
     }
 
     public String generateUUID(){

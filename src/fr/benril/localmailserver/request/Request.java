@@ -1,20 +1,18 @@
 package fr.benril.localmailserver.request;
 
+import fr.benril.localmailserver.ClientManager;
 import fr.benril.localmailserver.database.*;
-
-import java.io.DataOutputStream;
-import java.io.IOException;
 
 public class Request {
     private final DataBase db = DataBase.getInstance();
     private final RequestType type;
     private final String command;
-    private final DataOutputStream writer;
+    private final ClientManager client;
 
-    public Request(RequestAction action, RequestType type, String command, DataOutputStream writer){
+    public Request(RequestAction action, RequestType type, String command, ClientManager client){
         this.type = type;
         this.command = command;
-        this.writer = writer;
+        this.client = client;
         switch (action) {
             case GET:
                 get();
@@ -32,79 +30,80 @@ public class Request {
     }
 
     private void get(){
-        String[] infos = (command.contains(" +<->+ ") ? command.split(" +<->+ ") : null);
-        String way;
+        String[] infos = (command.contains(" //<->// ") ? command.split(" //<->// ") : command.split(" "));
+        String way = infos[0].toUpperCase();
         switch (type){
             case LANG:
-                sendMessage(new Config().getLang());
+                this.client.sendMessage(new Config().getLang());
                 break;
             case MAIL:
-                assert infos != null;
                 String uuid = infos[0];
-                sendMessage(new Mails().getMail(uuid));
+                this.client.sendMessage(new Mails().getMail(uuid));
                 break;
             case USER:
-                assert infos != null;
-                way = infos[0].toUpperCase();
-
                 if(way.equals("NAME")){
                     if(infos.length != 3){
-                        sendMessage("ERROR");
+                        this.client.sendMessage("ERROR");
                         return;
                     }
-                    sendMessage(new Users().getUserByName(infos[1], infos[2]));
+                    String[] parts =  new Users().getUserByName(infos[1], infos[2]).split("//<->//");
+                    for(String p : parts){this.client.sendMessage(p);}
                     return;
                 }
                 if(way.equals("UUID")){
                     if(infos.length != 2){
-                        sendMessage("ERROR");
+                        this.client.sendMessage("ERROR");
                         return;
                     }
-                    sendMessage(new Users().getUserByUUID(infos[1]));
+                    String[] parts = new Users().getUserByUUID(infos[1]).split("//<->//");
+                    for(String p : parts){this.client.sendMessage(p);}
                     return;
                 }
 
-                sendMessage("ERROR");
+                this.client.sendMessage("ERROR");
                 break;
             case GROUPS:
-                sendMessage(new Groups().getGroups());
+                this.client.sendMessage(new Groups().getGroups());
                 break;
             case MAILS:
-                assert infos != null;
                 if(infos.length != 2 || (!infos[0].equalsIgnoreCase("SENDER") && !infos[0].equalsIgnoreCase("RECEIVER"))){
-                    sendMessage("ERROR");
+                    this.client.sendMessage("ERROR");
                     return;
                 }
 
-                sendMessage(new Mails().getMails(infos[1], (infos[0].equalsIgnoreCase("SENDER"))));
+                this.client.sendMessage(new Mails().getMails(infos[1], (infos[0].equalsIgnoreCase("SENDER"))));
                 break;
             case USERS:
-                assert infos != null;
                 if(infos.length != 1 || !new Groups().getGroups().contains(infos[0])){
-                    sendMessage("ERROR");
+                    this.client.sendMessage("ERROR");
                     return;
                 }
-                sendMessage(new Users().getUsers(infos[0]));
+                String[] usersPart = new Users().getUsers(infos[0]).split("<-->");
+                for(String user : usersPart){
+                    for(String part : user.split("//<->//")){
+                        this.client.sendMessage(part);
+                    }
+                }
                 break;
             case DATABASE:
-                sendMessage(db.getDbURL());
+                this.client.sendMessage(db.getDbURL());
                 break;
             default:
-                sendMessage("ERROR");
+                this.client.sendMessage("ERROR");
                 break;
         }
     }
 
     private void create() {
-        String[] infos = (command.contains(" +<->+ ") ? command.split(" +<->+ ") : null);
+        String[] infos = (command.contains(" //<->// ") ? command.split(" //<->// ") : null);
         if(infos == null || infos.length == 0){
-            sendMessage("ERROR");
+            this.client.sendMessage("ERROR");
             return;
         }
         switch (type){
             case USER:
-                if(infos.length != 5){return;}
-                new Users().createUser(infos[0], infos[1], infos[2], infos[3], infos[4].equalsIgnoreCase("true"));
+                if(infos.length != 4){return;}
+                new Users().createUser(infos[0], infos[1], infos[2], infos[3]);
                 break;
             case GROUP:
                 if(infos.length != 1){return;}
@@ -112,7 +111,7 @@ public class Request {
                 break;
             case MAIL:
                 if(infos.length != 6){return;}
-                sendMessage(new Mails().createMail(
+                this.client.sendMessage(new Mails().createMail(
                         infos[0],
                         (infos[1].contains("<-->") ? infos[1].split("<-->") : new String[]{infos[1]}),
                         infos[2],
@@ -122,13 +121,13 @@ public class Request {
                 ));
                 break;
             default:
-                sendMessage("ERROR");
+                this.client.sendMessage("ERROR");
                 break;
         }
     }
 
     private void delete() {
-        String[] infos = (command.contains(" +<->+ ") ? command.split(" +<->+ ") : null);
+        String[] infos = (command.contains(" //<->// ") ? command.split(" //<->// ") : null);
         if(infos == null || infos.length != 1){return;}
         switch (type){
             case USER:
@@ -142,7 +141,7 @@ public class Request {
     }
 
     private void modify() {
-        String[] infos = (command.contains(" +<->+ ") ? command.split(" +<->+ ") : null);
+        String[] infos = (command.contains(" //<->// ") ? command.split(" //<->// ") : null);
         if(infos == null){return;}
         switch (type){
             case LANG:
@@ -150,20 +149,13 @@ public class Request {
                 new Config().setLang(infos[0]);
                 break;
             case USER:
-                if(infos.length != 6){return;}
-                new Users().modifyUser(infos[0], infos[1], infos[2], infos[3], infos[4], infos[5].equalsIgnoreCase("true"));
+                if(infos.length != 5){return;}
+                new Users().modifyUser(infos[0], infos[1], infos[2], infos[3], infos[4]);
                 break;
             case DATABASE:
                 if(infos.length != 3){return;}
                 new Config().modifyDataBase(infos[0], infos[1], infos[2]);
                 break;
         }
-    }
-
-    private void sendMessage(String message){
-        try {
-            writer.writeUTF(message + "\n");
-            writer.flush();
-        }catch (IOException ignored){}
     }
 }
