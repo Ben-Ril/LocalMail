@@ -14,10 +14,6 @@ if(!$socketManager->isDBConnected()){
 while($socketManager->getUserManager() == null){$i = 0;}
 $userManager = $socketManager->getUserManager();
 
-if(!isset($_SESSION["connected"]) || !isset($_SESSION["uuid"])){
-    echo "null";
-}
-
 if(isset($_SESSION["connected"]) && isset($_SESSION["uuid"]) && $_SESSION["connected"] === true && $userManager->getUserByID($_SESSION["uuid"]) != null){
     $file = fopen("page/mailBox/mailBox.html","r");
     $var = array(
