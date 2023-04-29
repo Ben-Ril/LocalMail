@@ -14,13 +14,13 @@ public class Mails {
         try {
             if(resultSet == null || !resultSet.next()){return "ERROR";}
 
-            inlineMailBuilder.append(resultSet.getString("uuid\n"));
-            inlineMailBuilder.append(resultSet.getString("senderUUID"));
-            inlineMailBuilder.append(resultSet.getString("receiversUUID\n"));
-            inlineMailBuilder.append(resultSet.getString("object\n"));
-            inlineMailBuilder.append(resultSet.getString("content\n"));
-            inlineMailBuilder.append(resultSet.getString("date\n"));
-            inlineMailBuilder.append(resultSet.getString("attachment"));
+            inlineMailBuilder.append(resultSet.getString("uuid")).append("//<->//");
+            inlineMailBuilder.append(resultSet.getString("senderUUID")).append("//<->//");
+            inlineMailBuilder.append(resultSet.getString("receiversUUID")).append("//<->//");
+            inlineMailBuilder.append(resultSet.getString("object")).append("//<->//");
+            inlineMailBuilder.append(resultSet.getString("content")).append("//<->//");
+            inlineMailBuilder.append(resultSet.getString("date")).append("//<->//");
+            inlineMailBuilder.append(resultSet.getString("attachment")).append("//<->//");
             return inlineMailBuilder.toString();
         }catch (SQLException sqle){
             return "ERROR";
@@ -38,7 +38,7 @@ public class Mails {
             int mailNumber = 0;
 
             while (resultSet.next()) {
-                allMails.append(getMail(resultSet.getString("uuid"))).append("\n");
+                allMails.append(getMail(resultSet.getString("uuid"))).append("<-->");
                 mailNumber++;
             }
             return mailNumber + "\n" + allMails;

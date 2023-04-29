@@ -41,21 +41,6 @@ public class Users {
         }
     }
 
-    public String getUsers(String group){
-        ResultSet resultSet = db.executeQueryCond("users", "grp", group);
-        StringBuilder allUsers = new StringBuilder();
-        try{
-            if(resultSet == null || !resultSet.next()){return "ERROR";}
-
-            while (resultSet.next()){
-                allUsers.append(getUserByUUID(resultSet.getString("uuid"))).append("<-->");
-            }
-            return allUsers.toString();
-        }catch (SQLException sqle){
-            return "ERROR";
-        }
-    }
-
     public void createUser(String name, String firstname, String password, String group){
         String uuid = generateUserUUID();
         db.executeStatement("INSERT INTO users VALUES ('" + uuid + "', '" + name + "', '" + firstname + "', '" + password + "', '" + group + "', 1)");

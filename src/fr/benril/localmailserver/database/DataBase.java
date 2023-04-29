@@ -2,6 +2,8 @@ package fr.benril.localmailserver.database;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.sql.*;
 import java.util.Random;
 import java.util.Scanner;
@@ -49,11 +51,9 @@ public class DataBase {
         String request = "CREATE TABLE IF NOT EXISTS TABLEINFO;";
         String userTable = "users (uuid CHAR(9), name TEXT, firstname TEXT, password TEXT, grp TEXT, fistConnection BOOL)";
         String mailTable = "mails (uuid CHAR(9), senderUUID CHAR(9), receiversUUID TEXT, object TEXT, content TEXT, date TEXT, attachment TEXT)";
-        String groupTable = "grps (name TEXT)";
 
         executeStatement(request.replace("TABLEINFO", userTable));
         executeStatement(request.replace("TABLEINFO", mailTable));
-        executeStatement(request.replace("TABLEINFO", groupTable));
     }
 
     public boolean executeStatement(String toExecute){
@@ -101,5 +101,18 @@ public class DataBase {
     public boolean isConnected() {
         try{return !con.isClosed();}catch (SQLException ignored){return false;}
     }
-    public void closeDBCon() throws SQLException {con.close();}
+    public void closeDBCon() {try{con.close();}catch (SQLException ignored){}}
+
+    public void modifyDB(String url, String username, String password){
+        String toWrite = "url=" + url + "\nusername=" + username + "\npassword=" + password;
+        try{
+            File configDBFile = new File("./db");
+            if(!configDBFile.exists()){configDBFile.createNewFile();}
+            FileWriter fw = new FileWriter(configDBFile);
+            fw.write(toWrite);
+            fw.flush();
+            fw.close();
+        }catch (IOException ignored){}
+
+    }
 }

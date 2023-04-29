@@ -32,13 +32,12 @@ public class Request {
     private void get(){
         String[] infos = (command.contains(" //<->// ") ? command.split(" //<->// ") : command.split(" "));
         String way = infos[0].toUpperCase();
+        String[] parts;
         switch (type){
-            case LANG:
-                this.client.sendMessage(new Config().getLang());
-                break;
             case MAIL:
                 String uuid = infos[0];
-                this.client.sendMessage(new Mails().getMail(uuid));
+                parts = new Mails().getMail(uuid).split("//<->//");
+                for(String p : parts){this.client.sendMessage(p);}
                 break;
             case USER:
                 if(way.equals("NAME")){
@@ -46,7 +45,7 @@ public class Request {
                         this.client.sendMessage("ERROR");
                         return;
                     }
-                    String[] parts =  new Users().getUserByName(infos[1], infos[2]).split("//<->//");
+                    parts =  new Users().getUserByName(infos[1], infos[2]).split("//<->//");
                     for(String p : parts){this.client.sendMessage(p);}
                     return;
                 }
@@ -55,32 +54,22 @@ public class Request {
                         this.client.sendMessage("ERROR");
                         return;
                     }
-                    String[] parts = new Users().getUserByUUID(infos[1]).split("//<->//");
+                    parts = new Users().getUserByUUID(infos[1]).split("//<->//");
                     for(String p : parts){this.client.sendMessage(p);}
                     return;
                 }
 
                 this.client.sendMessage("ERROR");
                 break;
-            case GROUPS:
-                this.client.sendMessage(new Groups().getGroups());
-                break;
             case MAILS:
                 if(infos.length != 2 || (!infos[0].equalsIgnoreCase("SENDER") && !infos[0].equalsIgnoreCase("RECEIVER"))){
                     this.client.sendMessage("ERROR");
                     return;
                 }
-
-                this.client.sendMessage(new Mails().getMails(infos[1], (infos[0].equalsIgnoreCase("SENDER"))));
-                break;
-            case USERS:
-                if(infos.length != 1 || !new Groups().getGroups().contains(infos[0])){
-                    this.client.sendMessage("ERROR");
-                    return;
-                }
-                String[] usersPart = new Users().getUsers(infos[0]).split("<-->");
-                for(String user : usersPart){
-                    for(String part : user.split("//<->//")){
+                String[] mailsPart = new Mails().getMails(infos[1], (infos[0].equalsIgnoreCase("SENDER"))).split("<-->");
+                this.client.sendMessage(mailsPart[0]);
+                for(int i = 1 ; i != mailsPart.length ; i++){
+                    for(String part : mailsPart[i].split("//<->//")){
                         this.client.sendMessage(part);
                     }
                 }
@@ -104,10 +93,6 @@ public class Request {
             case USER:
                 if(infos.length != 4){return;}
                 new Users().createUser(infos[0], infos[1], infos[2], infos[3]);
-                break;
-            case GROUP:
-                if(infos.length != 1){return;}
-                new Groups().createGroup(infos[0]);
                 break;
             case MAIL:
                 if(infos.length != 6){return;}
@@ -133,10 +118,6 @@ public class Request {
             case USER:
                 new Users().deleteUser(infos[0]);
                 break;
-            case GROUP:
-                new Groups().deleteGroup(infos[0]);
-                break;
-
         }
     }
 
@@ -144,17 +125,15 @@ public class Request {
         String[] infos = (command.contains(" //<->// ") ? command.split(" //<->// ") : null);
         if(infos == null){return;}
         switch (type){
-            case LANG:
-                if(infos[0].length() != 2){return;}
-                new Config().setLang(infos[0]);
-                break;
             case USER:
                 if(infos.length != 5){return;}
                 new Users().modifyUser(infos[0], infos[1], infos[2], infos[3], infos[4]);
                 break;
             case DATABASE:
                 if(infos.length != 3){return;}
-                new Config().modifyDataBase(infos[0], infos[1], infos[2]);
+                DataBase db = DataBase.getInstance();
+                if(db.isConnected()){db.closeDBCon();}
+                db.modifyDB(infos[0], infos[1], infos[2]);
                 break;
         }
     }
