@@ -13,5 +13,7 @@
     "destinator": "Destinataire",
     "mailObject": "Objet du Mail",
     "mailContent": "Ecrivez ce que vous rêvez d'envoyer",
-    "send": "Envoyer"
+    "send": "Envoyer",
+    "unavailable": "Indisponible",
+    "unavailableMessage": "Le Service est actuellement indisponible..."
 }

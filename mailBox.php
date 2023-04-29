@@ -8,7 +8,22 @@ $languageManager = new LanguageManager();
 session_start();
 
 if(!$socketManager->isDBConnected()){
-    include('page/unavailable/unavailable.html');
+    $file = fopen("page/unavailable/unavailable.html","r");
+    $var = array(
+        array("UNAVAILABLE", "unavailable"),
+        array("SORRYUNAV", "unavailableMessage")
+    );
+  
+    while(!feof($file))  {
+        $result = fgets($file);
+        foreach($var as $keyVal){
+            $result = str_replace($keyVal[0], $languageManager->getFromLang($keyVal[1]), $result);
+        }
+        echo $result;
+    }
+    
+    fclose($file);
+    die(0);
 }
 
 while($socketManager->getUserManager() == null){$i = 0;}
