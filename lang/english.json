@@ -13,5 +13,7 @@
     "destinator": "Destinator",
     "mailObject": "E-Mail's Object",
     "mailContent": "Write something to send",
-    "send": "Send"
+    "send": "Send",
+    "unavailable": "Unavailable",
+    "unavailableMessage": "The Service is actualy Unavailable..."
 }
