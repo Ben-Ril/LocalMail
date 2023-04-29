@@ -2,17 +2,13 @@
 
 use managers\UserManager;
 use managers\MailManager;
-use managers\GroupManager;
 
 class SocketManager{
-    private UserManager $userManager;
-    public function getUserManager(): UserManager{return $this->userManager;}
+    private UserManager|null $userManager = null;
+    public function getUserManager(): UserManager|null{return $this->userManager;}
 
-    private MailManager $mailManager;
-    public function getMailManager(): MailManager{return $this->mailManager;}
-
-    private GroupManager $groupManager;
-    public function getGroupManager(): GroupManager{return $this->groupManager;}
+    private MailManager|null $mailManager = null;
+    public function getMailManager(): MailManager|null{return $this->mailManager;}
 
     private $socket;
     private bool $error = false;
@@ -34,9 +30,10 @@ class SocketManager{
             return;
         }
 
-        $this->userManager = new UserManager($this);
-        $this->mailManager = new MailManager($this);
-        $this->groupManager = new GroupManager($this);
+        if($this->isDBConnected()){
+            $this->userManager = new UserManager($this);
+            $this->mailManager = new MailManager($this);
+        }
     }
 
     public function isDBConnected(): bool {
@@ -47,20 +44,28 @@ class SocketManager{
 
     public function sendMessage(string $message): void {
         if($this->isError()){return;}
-        socket_write($this->socket, $message, strlen($message));
+        socket_write($this->socket, $message . "\n", strlen($message . "\n"));
     }
 
     public function readMessage(int $linesNumber): array | string {
         if($this->isError() || $linesNumber <= 0){return "ERROR";}
-
+        if($linesNumber == 1){return socket_read($this->socket, 16384);}
         $message = "";
-        foreach (range(0, $linesNumber) as $lineNumber) {
+        foreach (range(1, $linesNumber) as $lineNumber) {
             $read = socket_read($this->socket, 16384);
-            if($linesNumber == 1 && $read == "ERROR"){
+            if($lineNumber == 1 && $read == "ERROR"){
                 return "ERROR";
             }
-            $message .= "\n" . $read;
+            $message .= $read . "\n";
         }
         return explode("\n", $message);
+    }
+
+    public function setDataBase(string $url, string $username, string $password): void{
+        $this->sendMessage("MODIFY DATABASE " . $url . " " . $username . " " . $password);
+    }
+    public function getDataBaseURL(): string{
+        $this->sendMessage("GET DATABASE");
+        return $this->readMessage(1);
     }
 }
