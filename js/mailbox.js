@@ -37,3 +37,9 @@ function sendMail(){
     xmlhttp.open("GET", "../php/authentification.php?" + "receiver="+ receiver + "&object=" + object +"&mailContent"+ mailContent + "$sendMail=true", true);
     xmlhttp.send();
 }
+
+function disconnect(){
+    var xmlhttp = new XMLHttpRequest();
+    xmlhttp.open("GET", "mailbox.php?disconnect=true", true);
+    xmlhttp.send();
+}
