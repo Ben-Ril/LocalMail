@@ -1,0 +1,14 @@
+C:\Users\bogda\OneDrive\Bureau\LocalMail\LocalMail\LocalMailInstaller\bin\Debug\LocalMail Installer.exe.config
+C:\Users\bogda\OneDrive\Bureau\LocalMail\LocalMail\LocalMailInstaller\bin\Debug\LocalMail Installer.exe
+C:\Users\bogda\OneDrive\Bureau\LocalMail\LocalMail\LocalMailInstaller\bin\Debug\LocalMail Installer.pdb
+C:\Users\bogda\OneDrive\Bureau\LocalMail\LocalMail\LocalMailInstaller\obj\Debug\LocalMailInstaller.csproj.AssemblyReference.cache
+C:\Users\bogda\OneDrive\Bureau\LocalMail\LocalMail\LocalMailInstaller\obj\Debug\LocalMailInstaller.csproj.SuggestedBindingRedirects.cache
+C:\Users\bogda\OneDrive\Bureau\LocalMail\LocalMail\LocalMailInstaller\obj\Debug\LocalMailInstaller.Properties.Resources.resources
+C:\Users\bogda\OneDrive\Bureau\LocalMail\LocalMail\LocalMailInstaller\obj\Debug\LocalMailInstaller.csproj.GenerateResource.cache
+C:\Users\bogda\OneDrive\Bureau\LocalMail\LocalMail\LocalMailInstaller\obj\Debug\LocalMailInstaller.csproj.CoreCompileInputs.cache
+C:\Users\bogda\OneDrive\Bureau\LocalMail\LocalMail\LocalMailInstaller\obj\Debug\LocalMail Installer.exe
+C:\Users\bogda\OneDrive\Bureau\LocalMail\LocalMail\LocalMailInstaller\obj\Debug\LocalMail Installer.pdb
+C:\Users\bogda\OneDrive\Bureau\LocalMail\LocalMail\LocalMailInstaller\bin\Debug\fr\LocalMail Installer.resources.dll
+C:\Users\bogda\OneDrive\Bureau\LocalMail\LocalMail\LocalMailInstaller\obj\Debug\LocalMailInstaller.Properties.lang.resources
+C:\Users\bogda\OneDrive\Bureau\LocalMail\LocalMail\LocalMailInstaller\obj\Debug\LocalMailInstaller.Properties.lang.fr.resources
+C:\Users\bogda\OneDrive\Bureau\LocalMail\LocalMail\LocalMailInstaller\obj\Debug\fr\LocalMail Installer.resources.dll
