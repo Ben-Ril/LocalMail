@@ -15,7 +15,7 @@ function sendStatus(status){
     };
 
       
-    xmlhttp.open("GET", "../php/authentification.php?" + "boxStatus="+ status + "$sendMail=false", true);
+    xmlhttp.open("GET", "../php/authentification.php?" + "boxStatus="+ status, true);
     xmlhttp.send();
 }
 
