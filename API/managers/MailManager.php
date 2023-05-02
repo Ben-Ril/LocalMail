@@ -29,7 +29,7 @@ class MailManager{
             $attachmentsList = substr($attachmentsList, 0, -4);
         }else{$attachmentsList = "none";}
 
-        $this->socketManager->sendMessage("CREATE MAIL " . $senderUUID . " +<->+ " . $receivers . " +<->+ " . $object . " +<->+ " . $content . " +<->+ " . $date . " +<->+ " . $attachmentsList);
+        $this->socketManager->sendMessage("CREATE MAIL " . $senderUUID . " //<->// " . $receivers . " //<->// " . $object . " //<->// " . $content . " //<->// " . $date . " //<->// " . $attachmentsList);
         return $this->getMail($this->socketManager->readMessage(1));
     }
 
