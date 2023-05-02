@@ -15,7 +15,7 @@ function sendStatus(status){
     };
 
       
-    xmlhttp.open("GET", "../php/authentification.php?" + "boxStatus="+ status, true);
+    xmlhttp.open("GET", "mailGateway.php?" + "boxStatus="+ status, true);
     xmlhttp.send();
 }
 
@@ -33,7 +33,7 @@ function sendMail(){
     xmlhttp.onload = function(){
         let isSent = this.responseText;
     }
-    xmlhttp.open("GET", "../php/authentification.php?" + "receiver="+ receiver + "&object=" + object +"&mailContent"+ mailContent + "$sendMail=true", true);
+    xmlhttp.open("GET", "mailBox.php?" + "receiver="+ receiver + "&object=" + object +"&mailContent"+ mailContent + "$sendMail=true", true);
     xmlhttp.send();
 }
 
