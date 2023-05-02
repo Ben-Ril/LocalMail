@@ -1,9 +1,9 @@
 function sended(){
-    sendStatus("sended");
+    sendStatus(false);
 }
 
 function received(){
-    sendStatus("received");
+    sendStatus(true);
 }
 
 function sendStatus(status){
@@ -14,9 +14,8 @@ function sendStatus(status){
         }
     };
 
-    let boxStatus = str;
       
-    xmlhttp.open("GET", "../php/authentification.php?" + "boxStatus="+ boxStatus + "$sendMail=false", true);
+    xmlhttp.open("GET", "../php/authentification.php?" + "boxStatus="+ status + "$sendMail=false", true);
     xmlhttp.send();
 }
 
