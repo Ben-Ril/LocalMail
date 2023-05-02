@@ -101,5 +101,26 @@ if($_SERVER["REQUEST_METHOD"] == "GET"){
         $_SESSION["uuid"] = "";
         header("location: mailbox.php");
     }
+    if (isset($_GET["sendMail"])){
+        $receiversInput = $_GET["receiver"];
+        $receiversOutput = explode(",", $receiversInput);
+        $receiversUUID = array();
+        foreach($receiversOutput as $i){
+            $i = explode("@", $i);
+            $i = explode(".", $i[0]);
+            $receiverUUID= $userManager->getUserByName($i[0],$i[1]);
+            array_push($receiversUUID, $receiverUUID);
+        }
+        foreach($receiversUUID as $i){
+            if($i==null){
+                echo("invalid receiver");
+            }
+        }
+        $senderUUID = $_SESSION["uuid"];
+        $object = $_GET["object"];
+        $content = $_GET["mailContent"];
+
+        $mail = $mailManager->createMail($senderUUID, $receiversUUID, $object, $content);
+    }
 }
 ?>
