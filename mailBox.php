@@ -105,22 +105,21 @@ if($_SERVER["REQUEST_METHOD"] == "GET"){
         $receiversInput = $_GET["receiver"];
         $receiversOutput = explode(",", $receiversInput);
         $receiversUUID = array();
-        foreach($receiversOutput as $i){
-            $i = explode("@", $i);
-            $i = explode(".", $i[0]);
-            $receiverUUID= $userManager->getUserByName($i[0],$i[1]);
-            array_push($receiversUUID, $receiverUUID);
-        }
-        foreach($receiversUUID as $i){
-            if($i==null){
-                echo("invalid receiver");
+        foreach($receiversOutput as $receiver){
+            $receiver = explode("@", $receiver);
+            $receiver = explode(".", $receiver[0]);
+            $r = $userManager->getUserByName($receiver[0],$receiver[1]);
+            if($r != null){
+                array_push($receiversUUID, $r->getUUID());
             }
         }
+        
         $senderUUID = $_SESSION["uuid"];
         $object = $_GET["object"];
         $content = $_GET["mailContent"];
 
         $mail = $mailManager->createMail($senderUUID, $receiversUUID, $object, $content);
     }
+
 }
 ?>
