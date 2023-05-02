@@ -12,8 +12,8 @@ class UserManager{
         $this->socketManager = $socketManager;
     }
 
-    public function createUser(string $name, string $firstname, string $password, string $group = "none", bool $isAdmin = false): User{
-        $this->socketManager->sendMessage("CREATE USER " . $name . " +<->+ " . $firstname . " +<->+ " . $password . " +<->+ " . $group . " +<->+ " . $isAdmin);
+    public function createUser(string $name, string $firstname, string $password, string $group = "none"): User{
+        $this->socketManager->sendMessage("CREATE USER " . $name . " +<->+ " . $firstname . " +<->+ " . $password . " +<->+ " . $group);
         return $this->getUserByName($name, $firstname);
     }
 
@@ -22,7 +22,7 @@ class UserManager{
     }
 
     public function modifyUser(User $user): void{
-        $this->socketManager->sendMessage("MODIFY USER " . $user->getUUID() . " +<->+ " . $user->getName() . " +<->+ " . $user->getFirstname() . " +<->+ " . $user->getPassword() . " +<->+ " . $user->getGroup() . " +<->+ " . $user->isAdmin());
+        $this->socketManager->sendMessage("MODIFY USER " . $user->getUUID() . " +<->+ " . $user->getName() . " +<->+ " . $user->getFirstname() . " +<->+ " . $user->getPassword() . " +<->+ " . $user->getGroup());
     }
 
     public function getUserByID(string $uuid): User|null{
