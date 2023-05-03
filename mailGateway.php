@@ -13,9 +13,9 @@ $userManager = $socketManager->getUserManager();
 session_start();
 
 if($_SERVER["REQUEST_METHOD"] == "GET"){
-    if (isset($_GET["boxStatus"])){
+    if (isset($_GET["boxStatus"]) && isset($_SESSION["connected"]) && isset($_SESSION["uuid"]) && $_SESSION["connected"] == true && $userManager->getUserByID($_SESSION["uuid"]) != null){
         $separator = "//<->//";
-        $mails = $mailManager->getMailsByUser($_GET["uuid"], $_GET["boxStatus"] == "true");
+        $mails = $mailManager->getMailsByUser($_SESSION["uuid"], $_GET["boxStatus"] == "true");
 
         if($mails != null && count($mails) != 0){
             $mailsArray = array();
