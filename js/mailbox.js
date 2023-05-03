@@ -20,7 +20,7 @@ function sendStatus(isReceiveBox){
                     // @mail
                     const sender = json[k]["sender"];
                     // String de @mails
-                    const receivers = json[k]["receivers"];
+                    const receivers = json[k]["receivers"].split(" ");
                     let date = new Date(json[k]["date"]);
                     day = `${date.getDay}/${date.getMonth}/${date.getFullYear} ${date.getHours}:${date.getMinutes}`;
                     const object = json[k]["object"];
