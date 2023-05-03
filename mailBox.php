@@ -53,6 +53,7 @@ if(isset($_SESSION["connected"]) && isset($_SESSION["uuid"]) && $_SESSION["conne
     }
     
     fclose($file);
+    
 }else{
     $file = fopen("page/authentification/authentification.html", "r");
     $var = array(
@@ -83,6 +84,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 
         $user = $userManager->getUserByName($name, $firstname);
         if($user === null){
+            $socketManager->disconnect();
             header("location: mailbox.php");
             return;
         }
@@ -90,6 +92,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
         if($user->getPassword() === $password && $user->getGroup() === $group){
             $_SESSION["connected"] = true;
             $_SESSION["uuid"] = $user->getUUID();
+            $socketManager->disconnect();
             header("location: mailbox.php");
         }
     }
@@ -98,6 +101,7 @@ if($_SERVER["REQUEST_METHOD"] == "GET"){
     if(isset($_GET['disconnect'])){
         $_SESSION["connected"] = false;
         $_SESSION["uuid"] = "";
+        $socketManager->disconnect();
         header("location: mailbox.php");
     }
     if (isset($_GET["sendMail"])){
