@@ -26,55 +26,51 @@ if(!$socketManager->isDBConnected()){
     die(0);
 }
 
-if($_SERVER["REQUEST_METHOD"] != "POST" && $_SERVER["REQUEST_METHOD"] != "GET"){
-    while($socketManager->getUserManager() == null){$i = 0;}
-    $userManager = $socketManager->getUserManager();
+while($socketManager->getUserManager() == null){$i = 0;}
+$userManager = $socketManager->getUserManager();
 
-    if(isset($_SESSION["connected"]) && isset($_SESSION["uuid"]) && $_SESSION["connected"] === true && $userManager->getUserByID($_SESSION["uuid"]) != null){
-        $file = fopen("page/mailBox/mailBox.html","r");
-        $var = array(
-            array("OMAILBOX", "mailbox"),
-            array("OSEARCH", "search"),
-            array("ONEW_MAIL", "newMail"),
-            array("OSENDED_MAIL", "sendedMail"),
-            array("ORECEIVED_MAIL", "receivedMail"),
-            array("OLOGOUT", "logout"),
-            array("ODESTINATOR", "destinator"),
-            array("OOBJECT", "mailObject"),
-            array("OMAIL_MESSAGE_CONTENT", "mailContent"),
-            array("OSEND", "send")
-        );
-    
-        while(!feof($file))  {
-            $result = fgets($file);
-            foreach($var as $keyVal){
-                $result = str_replace($keyVal[0], $languageManager->getFromLang($keyVal[1]), $result);
-            }
-            echo $result;
-        }
-        
-        fclose($file);
-        $socketManager->disconnect();
-    }else{
-        $file = fopen("page/authentification/authentification.html", "r");
-        $var = array(
-            array("AUTHENTIFICATION", "authentification"),
-            array("MAIL", "mail"),
-            array("PASSWORD", "password"),
-            array("LOGIN", "login")
-        );
+if(isset($_SESSION["connected"]) && isset($_SESSION["uuid"]) && $_SESSION["connected"] === true && $userManager->getUserByID($_SESSION["uuid"]) != null){
+    $file = fopen("page/mailBox/mailBox.html","r");
+    $var = array(
+        array("OMAILBOX", "mailbox"),
+        array("OSEARCH", "search"),
+        array("ONEW_MAIL", "newMail"),
+        array("OSENDED_MAIL", "sendedMail"),
+        array("ORECEIVED_MAIL", "receivedMail"),
+        array("OLOGOUT", "logout"),
+        array("ODESTINATOR", "destinator"),
+        array("OOBJECT", "mailObject"),
+        array("OMAIL_MESSAGE_CONTENT", "mailContent"),
+        array("OSEND", "send")
+    );
 
-        while(!feof($file))  {
-            $result = fgets($file);
-            foreach($var as $keyVal){
-                $result = str_replace($keyVal[0], $languageManager->getFromLang($keyVal[1]), $result);
-            }
-            echo $result;
+    while(!feof($file))  {
+        $result = fgets($file);
+        foreach($var as $keyVal){
+            $result = str_replace($keyVal[0], $languageManager->getFromLang($keyVal[1]), $result);
         }
-        
-        fclose($file);
-        $socketManager->disconnect();
+        echo $result;
     }
+    
+    fclose($file);
+}else{
+    $file = fopen("page/authentification/authentification.html", "r");
+    $var = array(
+        array("AUTHENTIFICATION", "authentification"),
+        array("MAIL", "mail"),
+        array("PASSWORD", "password"),
+        array("LOGIN", "login")
+    );
+
+    while(!feof($file))  {
+        $result = fgets($file);
+        foreach($var as $keyVal){
+            $result = str_replace($keyVal[0], $languageManager->getFromLang($keyVal[1]), $result);
+        }
+        echo $result;
+    }
+    
+    fclose($file);
 }
 
 if($_SERVER["REQUEST_METHOD"] == "POST"){
@@ -87,7 +83,6 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 
         $user = $userManager->getUserByName($name, $firstname);
         if($user === null){
-            $socketManager->disconnect();
             header("location: mailbox.php");
             return;
         }
@@ -95,7 +90,6 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
         if($user->getPassword() === $password && $user->getGroup() === $group){
             $_SESSION["connected"] = true;
             $_SESSION["uuid"] = $user->getUUID();
-            $socketManager->disconnect();
             header("location: mailbox.php");
         }
     }
@@ -104,7 +98,6 @@ if($_SERVER["REQUEST_METHOD"] == "GET"){
     if(isset($_GET['disconnect'])){
         $_SESSION["connected"] = false;
         $_SESSION["uuid"] = "";
-        $socketManager->disconnect();
         header("location: mailbox.php");
     }
     if (isset($_GET["sendMail"])){
@@ -125,8 +118,9 @@ if($_SERVER["REQUEST_METHOD"] == "GET"){
         $content = $_GET["mailContent"];
 
         $mail = $mailManager->createMail($senderUUID, $receiversUUID, $object, $content);
-        $socketManager->disconnect();
     }
 
 }
+
+$socketManager->disconnect();
 ?>
