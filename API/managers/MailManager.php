@@ -41,7 +41,7 @@ class MailManager{
     public function getMailsByUser(string $userUUID, bool $sender): array|null{
         if($this->socketManager->getUserManager()->getUserByID($userUUID) == null){return null;}
 
-        $this->socketManager->sendMessage("GET MAILS " . ($sender ? "SENDER" : "RECEIVER") . $userUUID);
+        $this->socketManager->sendMessage("GET MAILS " . ($sender ? "SENDER" : "RECEIVER") . " " . $userUUID);
         $mailNumber = intval($this->socketManager->readMessage(1));
 
         if($mailNumber == null || $mailNumber == 0){return null;}

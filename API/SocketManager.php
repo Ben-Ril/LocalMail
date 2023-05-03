@@ -72,4 +72,8 @@ class SocketManager{
         $this->sendMessage("GET DATABASE");
         return $this->readMessage(1);
     }
+
+    public function disconnect(): void{
+        socket_close($this->socket);
+    }
 }
