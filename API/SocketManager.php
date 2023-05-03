@@ -75,6 +75,7 @@ class SocketManager{
 
     public function disconnect(): void{
         if(!$this->error){
+            $this->sendMessage("CLOSE");
             socket_close($this->socket);
             $this->error = true;
         }
