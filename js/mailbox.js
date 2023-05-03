@@ -1,28 +1,33 @@
 function sended(){
-    sendStatus(false);
-}
-
-function received(){
     sendStatus(true);
 }
 
-function sendStatus(isReceiveBox){
+function received(){
+    sendStatus(false);
+}
+
+function sendStatus(isSendBox){
     var xmlhttp = new XMLHttpRequest();
     xmlhttp.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
             const response = this.responseText;
+            const mailListSection = document.getElementById("mailListSection");
+            while(mailListSection.firstChild){
+                mailListSection.removeChild(mailListSection.firstChild);
+            }
+
             if(response != "NO MAIL"){
                 const json = JSON.parse(response);
-                const mailListSection = document.getElementById("mailListSection");
-                mailListSection.innerHTML = ""; 
+                
                 Object.keys(json).forEach(function(k){
                     const uuid = json[k]["uuid"];
                     // @mail
                     const sender = json[k]["sender"];
                     // String de @mails
-                    const receivers = json[k]["receivers"].split(" ");
-                    let date = new Date(json[k]["date"]);
-                    day = `${date.getDay}/${date.getMonth}/${date.getFullYear} ${date.getHours}:${date.getMinutes}`;
+                    let receivers = json[k]["receivers"];
+                    receivers = (receivers.includes(" ") ? receivers.split(" ") : receivers);
+                    let date = new Date(Number(json[k]["date"])*1000);
+                    date = date.toLocaleString();
                     const object = json[k]["object"];
                     const content = json[k]["content"];
 
@@ -45,21 +50,24 @@ function sendStatus(isReceiveBox){
                     mailDate.textContent = date;
 
                     mailContentPreview.className = "mailContentPreview mailP";
-                    mailContentPreview.textContent = (content.length() > 100 ? String.prototype.substring(0,100,content) + "..." : content);
+                    mailContentPreview.textContent = (content.length > 100 ? String.prototype.substring(0,100,content) + "..." : content);
 
                     mailInerSection.appendChild(mailObject);
                     mailInerSection.appendChild(mailSender);
                     mailInerSection.appendChild(mailDate);
 
-                    mailListSection.appendChild(mailInerSection);
-                    mailListSection.appendChild(mailContentPreview);
+                    mail.appendChild(mailInerSection);
+                    mail.appendChild(mailContentPreview);
+
+                    mailListSection.appendChild(mail);
+                    place();
                 });
             }
         }
     };
 
       
-    xmlhttp.open("GET", "mailGateway.php?" + "boxStatus="+ isReceiveBox, true);
+    xmlhttp.open("GET", "mailGateway.php?" + "boxStatus="+ isSendBox, true);
     xmlhttp.send();
 }
 
