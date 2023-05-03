@@ -30,7 +30,7 @@ public class Mails {
     public String getMails(String userUUID, boolean isSender){
         if(new Users().getUserByUUID(userUUID).equals("ERROR")){return "ERROR";}
 
-        ResultSet resultSet = db.executeQueryCond(userUUID + "Mails", "sended", isSender?"1":"0");
+        ResultSet resultSet = db.executeQueryCond(userUUID + "mails", "sended", isSender?"1":"0");
         StringBuilder allMails = new StringBuilder();
         try {
             if(resultSet == null || !resultSet.next()){return "ERROR";}
@@ -52,13 +52,13 @@ public class Mails {
 
         String uuid = generateMailUUID();
 
-        db.executeStatement("INSERT INTO " + senderUUID + "Mails VALUES ('" + date + "', '" + uuid + "', 1)");
+        db.executeStatement("INSERT INTO " + senderUUID + "mails VALUES ('" + date + "', '" + uuid + "', 1)");
 
         StringBuilder receivers = new StringBuilder();
         for(String receiver : receiversUUIDs){
             if(new Users().getUserByUUID(receiver).equals("ERRROR")){continue;}
             receivers.append(receiver).append("<->");
-            db.executeStatement("INSERT INTO " + receiver + "Mails VALUES ('" + date + "', '" + uuid + "', 0)");
+            db.executeStatement("INSERT INTO " + receiver + "mails VALUES ('" + date + "', '" + uuid + "', 0)");
         }
         StringBuilder attachments = new StringBuilder();
         for(String att : attachment){
