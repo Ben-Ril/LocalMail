@@ -18,18 +18,19 @@ if($_SERVER["REQUEST_METHOD"] == "GET"){
         $mails = $mailManager->getMailsByUser($_GET["uuid"], $_GET["boxStatus"] == "true");
 
         if($mails != null && count($mails) != 0){
+            $mailsArray = array();
             foreach($mails as $mail){
                 $mailUUID = $mail->getMailUUID();
                 $mailSender = $mail->getSenderUUID();
-                $receivers = "";
-                foreach($mail->getReceiversUUIDs() as $receiverUUID){$receivers = $receivers . $receiverUUID . "<-->"; }
-                $receivers = substr_replace($receivers, "", -4, strlen($receivers));
+                $receivers = $mail->getReceiversUUIDs();
                 $dateTimestamp = $mail->getDateTimestamp();
                 $object = $mail->getObject();
                 $content = $mail->getContent();
 
-                echo $mailUUID . $separator . $mailSender . $separator . $receivers . $separator . $dateTimestamp . $separator . $object . $separator . $content . "<br>";
+                $mailArray = array("uuid" => $mailUUID, "sender" => $mailSender, "receivers" => $receivers, "date" => $dateTimestamp, "object" => $object, "content" => $content);
+                array_push($mailsArray, $mailArray);
             }
+            echo json_encode($mailArray);
         }else{echo "NO MAIL";}
     }
 }
