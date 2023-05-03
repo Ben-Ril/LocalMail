@@ -21,8 +21,17 @@ if($_SERVER["REQUEST_METHOD"] == "GET"){
             $mailsArray = array();
             foreach($mails as $mail){
                 $mailUUID = $mail->getMailUUID();
-                $mailSender = $mail->getSenderUUID();
-                $receivers = $mail->getReceiversUUIDs();
+                $sender = $userManager->getUserByID($mail->getSenderUUID());
+                $mailSender = ($sender == null ? "ERROR" : $sender->getFirstname() . "." . $sender->getName() . "@" . $sender->getGroup());
+                $receivers = "";
+                foreach($mail->getReceiversUUIDs() as $rUUID){
+                    $ru = $userManager->getUserByID($rUUID);
+                    if($ru != null){
+                        $receivers = $receivers . $ru->getFirstname() . "." . $ru->getName() . "@" . $ru->getGroup() . " ";
+                    }
+                }
+                $receivers = substr($receivers, 0 , -1);
+
                 $dateTimestamp = $mail->getDateTimestamp();
                 $object = $mail->getObject();
                 $content = $mail->getContent();
