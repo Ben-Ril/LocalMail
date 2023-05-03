@@ -53,10 +53,10 @@ class SocketManager{
 
     public function readMessage(int $linesNumber): array | string {
         if($this->isError() || $linesNumber <= 0){return "ERROR";}
-        if($linesNumber == 1){return socket_read($this->socket, 16384);}
+        if($linesNumber == 1){return @socket_read($this->socket, 16384);}
         $message = "";
         foreach (range(1, $linesNumber) as $lineNumber) {
-            $read = socket_read($this->socket, 16384);
+            $read = @socket_read($this->socket, 16384);
             if($lineNumber == 1 && $read == "ERROR"){
                 return "ERROR";
             }
@@ -74,6 +74,9 @@ class SocketManager{
     }
 
     public function disconnect(): void{
-        socket_close($this->socket);
+        if(!$this->error){
+            socket_close($this->socket);
+            $this->error = true;
+        }
     }
 }
