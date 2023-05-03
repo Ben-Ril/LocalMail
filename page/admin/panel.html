@@ -10,10 +10,10 @@
         <section id="createUser" class="containers">
             <form>
                 <p class="form">CREATE_USER</p>
-                <input type="text" placeholder="NAME" class="form">
-                <input type="text" placeholder="FIRSTNAME" class="form">
-                <input type="text" placeholder="PASSWORD" class="form">
-                <input type="text" placeholder="GROUP" class="form">
+                <input type="text" placeholder="NAME" class="form" id="createName">
+                <input type="text" placeholder="FIRSTNAME" class="form" id="createFirstname">
+                <input type="text" placeholder="PASSWORD" class="form" id="createPassword">
+                <input type="text" placeholder="GROUP" class="form" id="createGroup">
                 <button class="form">CREATE</button>
             </form>
         </section>
@@ -21,11 +21,11 @@
         <section id="modifyUser" class="containers">
             <form>
                 <p class="form">MODIFY USER</p>
-                <input type="text" placeholder="MAIL" class="form">
-                <input type="text" placeholder="NEW_NAME" class="form">
-                <input type="text" placeholder="NEW_FIRSTNAME" class="form">
-                <input type="text" placeholder="NEW__PASSWORD" class="form">
-                <input type="text" placeholder="NEW_GROUP" class="form">
+                <input type="text" placeholder="MAIL" class="form" id="modifyMail">
+                <input type="text" placeholder="NEW_NAME" class="form" id="modifyName">
+                <input type="text" placeholder="NEW_FIRSTNAME" class="form" id="modifyFirstname">
+                <input type="text" placeholder="NEW__PASSWORD" class="form" id="mofidyPassword">
+                <input type="text" placeholder="NEW_GROUP" class="form" id="modifyGroup">
                 <button class="form">SAVE_CHANGES</button>
             </form>
         </section>
@@ -33,7 +33,7 @@
         <section id="showUserInfo" class="containers">
             <form>
                 <p class="form">SHOW_INFO</p>
-                <input type="text" placeholder="MAIL" class="form">
+                <input type="text" placeholder="MAIL" class="form" id="showMail">
                 <p class="form">name :</p>
                 <p class="form">firstname :</p>
                 <p class="form">password :</p>
@@ -45,9 +45,9 @@
         <section>
             <form>
                 <p class="form">CHANGE_DB_INFO</p>
-                <input type="text" placeholder="DB_URL" class="form">
-                <input type="text" placeholder="DB_USERNAME" class="form">
-                <input type="text" placeholder="DB_PASSWORD" class="form">
+                <input type="text" placeholder="DB_URL" class="form" id="dbUrl">
+                <input type="text" placeholder="DB_USERNAME" class="form" id="dbUsername">
+                <input type="text" placeholder="DB_PASSWORD" class="form" id="dbPassword">
                 <button class="form">SEND</button>
             </form>
         </section>
