@@ -58,8 +58,7 @@ function sendStatus(isReceiveBox){
         }
     };
 
-      
-    xmlhttp.open("GET", "mailGateway.php?" + "boxStatus="+ isReceiveBox, true);
+    xmlhttp.open("GET", "mailGateway.php?" + "isReceiver="+ (isReceiveBox ? "true" : "false"), true);
     xmlhttp.send();
 }
 
