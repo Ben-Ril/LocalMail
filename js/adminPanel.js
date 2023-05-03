@@ -19,6 +19,7 @@ function createUser(){
 }
 
 function modifyUser(){
+    let modifyMail = document.getElementById("modifyMail").value;
     let modifyName = document.getElementById("modifyName").value;
     let modifyFirstname = document.getElementById("modifyFirstname").value;
     let modifyPassword = document.getElementById("modifyPassword").value;
@@ -31,18 +32,20 @@ function modifyUser(){
     }
     };
 
-    xmlhttp.open("GET", "adminPanel.php?" +"modifyUser=true" + "&modifyName=" + modifyName + "&mofifyFirstname=" + modifyFirstname + "&modifyPassword" + modifyPassword + "&modifyGroup=" + modifyGroup, true);
+    xmlhttp.open("GET", "adminPanel.php?" + "modifyMail=" + modifyMail + "&modifyUser=true" + "&modifyName=" + modifyName + "&mofifyFirstname=" + modifyFirstname + "&modifyPassword" + modifyPassword + "&modifyGroup=" + modifyGroup, true);
     xmlhttp.send();
 }
 
 function showInfo(){
+    let showMail = document.getElementById("showMail").value;
+
     var xmlhttp = new XMLHttpRequest();
     xmlhttp.onreadystatechange = function() {
     if (this.readyState == 4 && this.status == 200) {
         alert(this.responseText);
     }
     };
-    xmlhttp.open("GET", "adminPanel.php?" + "showInfo=true", true);
+    xmlhttp.open("GET", "adminPanel.php?" + "showInfo=true" + "&showMail=" + showMail, true);
     xmlhttp.send();
 }
 
