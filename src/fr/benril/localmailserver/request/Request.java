@@ -67,8 +67,8 @@ public class Request {
                     return;
                 }
                 String[] mailsPart = new Mails().getMails(infos[1], (infos[0].equalsIgnoreCase("SENDER"))).split("<-->");
-                this.client.sendMessage(mailsPart[0]);
-                for(int i = 1 ; i != mailsPart.length ; i++){
+                this.client.sendMessage(mailsPart[mailsPart.length-1]);
+                for(int i = 0 ; i != mailsPart.length-1 ; i++){
                     for(String part : mailsPart[i].split("//<->//")){
                         this.client.sendMessage(part);
                     }

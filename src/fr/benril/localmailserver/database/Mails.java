@@ -29,20 +29,20 @@ public class Mails {
 
     public String getMails(String userUUID, boolean isSender){
         if(new Users().getUserByUUID(userUUID).equals("ERROR")){return "ERROR";}
-
         ResultSet resultSet = db.executeQueryCond(userUUID + "mails", "sended", isSender?"1":"0");
         StringBuilder allMails = new StringBuilder();
         try {
-            if(resultSet == null || !resultSet.next()){return "ERROR";}
+            if(resultSet == null){return "ERROR";}
 
             int mailNumber = 0;
 
             while (resultSet.next()) {
-                allMails.append(getMail(resultSet.getString("uuid"))).append("<-->");
+                allMails.append(getMail(resultSet.getString("mailUUID"))).append("<-->");
                 mailNumber++;
             }
-            return mailNumber + "\n" + allMails;
+            return (mailNumber == 0 ? "ERROR" : allMails.toString() + mailNumber);
         }catch (SQLException sqle){
+            sqle.printStackTrace();
             return "ERROR";
         }
     }
