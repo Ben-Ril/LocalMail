@@ -1,7 +1,12 @@
-window.addEventListener("load", place);
+window.addEventListener("load", onload);
 window.addEventListener("resize", place);
 
 var isMenuOpen = false;
+
+function onload(){
+    received();
+    place();
+}
 
 function place(){
     const windowsHeight = window.innerHeight;
