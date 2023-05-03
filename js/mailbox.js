@@ -6,16 +6,17 @@ function received(){
     sendStatus(true);
 }
 
-function sendStatus(status){
+function sendStatus(isReceiveBox){
     var xmlhttp = new XMLHttpRequest();
     xmlhttp.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
-            alert(this.responseText);
+            const response = this.responseText;
+            alert(response);
         }
     };
 
       
-    xmlhttp.open("GET", "mailGateway.php?" + "boxStatus="+ status, true);
+    xmlhttp.open("GET", "mailGateway.php?" + "boxStatus="+ isReceiveBox, true);
     xmlhttp.send();
 }
 
