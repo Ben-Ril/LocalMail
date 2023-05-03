@@ -20,7 +20,9 @@ public class ClientManager implements Runnable {
     public void run() {
         try{
             if(!isConnected()){
+                client.close();
                 Server.getInstance().removeClient(this);
+                Thread.currentThread().stop();
                 return;
             }
 
@@ -35,7 +37,12 @@ public class ClientManager implements Runnable {
             if(message.equalsIgnoreCase("IS DB CONNECTED")){
                 String response = (DataBase.getInstance().isConnected() ? "YES" : "NO");
                 sendMessage(response);
-            }else {
+            }else if(message.equalsIgnoreCase("CLOSE")) {
+                client.close();
+                Server.getInstance().removeClient(this);
+                Thread.currentThread().stop();
+                return;
+            }else{
                 if(DataBase.getInstance().isConnected()){
                     String[] request = message.split(" ");
                     if(request.length > 1){
