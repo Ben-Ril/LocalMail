@@ -11,7 +11,50 @@ function sendStatus(isReceiveBox){
     xmlhttp.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
             const response = this.responseText;
-            alert(response);
+            if(response != "NO MAIL"){
+                const json = JSON.parse(response);
+                const mailListSection = document.getElementById("mailListSection");
+                mailListSection.innerHTML = ""; 
+                Object.keys(json).forEach(function(k){
+                    const uuid = json[k]["uuid"];
+                    // @mail
+                    const sender = json[k]["sender"];
+                    // String de @mails
+                    const receivers = json[k]["receivers"];
+                    let date = new Date(json[k]["date"]);
+                    day = `${date.getDay}/${date.getMonth}/${date.getFullYear} ${date.getHours}:${date.getMinutes}`;
+                    const object = json[k]["object"];
+                    const content = json[k]["content"];
+
+                    const mail = document.createElement("section");
+                    const mailInerSection = document.createElement("section");
+                    const mailObject = document.createElement("p");
+                    const mailSender = document.createElement("p");
+                    const mailDate = document.createElement("p");
+                    const mailContentPreview = document.createElement("p");
+
+                    mail.className = "mail";
+                    
+                    mailObject.className = "mailObject mailP";
+                    mailObject.textContent = object;
+
+                    mailSender.className = "senderMail mailP";
+                    mailSender.textContent = sender;
+
+                    mailDate.className = "mailDate mailP";
+                    mailDate.textContent = date;
+
+                    mailContentPreview.className = "mailContentPreview mailP";
+                    mailContentPreview.textContent = (content.length() > 100 ? String.prototype.substring(0,100,content) + "..." : content);
+
+                    mailInerSection.appendChild(mailObject);
+                    mailInerSection.appendChild(mailSender);
+                    mailInerSection.appendChild(mailDate);
+
+                    mailListSection.appendChild(mailInerSection);
+                    mailListSection.appendChild(mailContentPreview);
+                });
+            }
         }
     };
 
