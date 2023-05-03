@@ -1,9 +1,9 @@
-window.addEventListener("load", onLoad);
+window.addEventListener("load", onload);
 window.addEventListener("resize", place);
 
 var isMenuOpen = false;
 
-function onLoad(){
+function onload(){
     received();
     place();
 }
