@@ -39,7 +39,7 @@ if($_SERVER["REQUEST_METHOD"] == "GET"){
                 $mailArray = array("uuid" => $mailUUID, "sender" => $mailSender, "receivers" => $receivers, "date" => $dateTimestamp, "object" => $object, "content" => $content);
                 array_push($mailsArray, $mailArray);
             }
-            echo json_encode($mailArray);
+            echo json_encode($mailsArray);
         }else{echo "NO MAIL";}
     }
 }
