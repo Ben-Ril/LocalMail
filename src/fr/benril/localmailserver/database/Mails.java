@@ -27,10 +27,10 @@ public class Mails {
         }
     }
 
-    public String getMails(String userUUID, boolean isSended){
+    public String getMails(String userUUID, boolean isSender){
         if(new Users().getUserByUUID(userUUID).equals("ERROR")){return "ERROR";}
 
-        ResultSet resultSet = db.executeQueryCond(userUUID + "Mails", "isSended", isSended?"1":"0");
+        ResultSet resultSet = db.executeQueryCond(userUUID + "Mails", "sended", isSender?"1":"0");
         StringBuilder allMails = new StringBuilder();
         try {
             if(resultSet == null || !resultSet.next()){return "ERROR";}
