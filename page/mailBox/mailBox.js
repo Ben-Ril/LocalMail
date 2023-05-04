@@ -3,12 +3,12 @@ window.addEventListener("resize", place);
 
 var isMenuOpen = false;
 
-function onload(){
+async function onload(){
+    await place();
     received();
-    place();
 }
 
-function place(){
+async function place(){
     const windowsHeight = window.innerHeight;
     const windowsWidth = window.innerWidth;
     const isHorizontal = windowsWidth >= windowsHeight;
@@ -59,8 +59,6 @@ function place(){
         icon.style.marginLeft = navMenuIconMargin + "px";
         icon.style.marginRight = icon.style.marginLeft;
     });
-    
-    
 
     contentSection.style.widows = windowsWidth + "px";
     contentSection.style.height = contentHeight + "px";
