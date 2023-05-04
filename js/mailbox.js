@@ -8,17 +8,21 @@ function received(){
 
 function sendStatus(isSendBox){
     var xmlhttp = new XMLHttpRequest();
-    xmlhttp.onreadystatechange = function() {
-        if (this.readyState == 4 && this.status == 200) {
+    xmlhttp.open("GET", "mailGateway.php?" + "boxStatus="+ isSendBox, true);
+    xmlhttp.timeout = 10;
+
+    xmlhttp.onreadystatechange = function(){
+        if(xmlhttp.readyState == 4 && xmlhttp.status==200){
             const response = this.responseText;
             const mailListSection = document.getElementById("mailListSection");
             while(mailListSection.firstChild){
                 mailListSection.removeChild(mailListSection.firstChild);
             }
 
-            if(response != "NO MAIL"){
+            if(response != "NO MAIL" && response != "ERROR"){
+                alert(response);
                 const json = JSON.parse(response);
-                
+                    
                 Object.keys(json).forEach(function(k){
                     const uuid = json[k]["uuid"];
                     // @mail
@@ -39,7 +43,7 @@ function sendStatus(isSendBox){
                     const mailContentPreview = document.createElement("p");
 
                     mail.className = "mail";
-                    
+                        
                     mailObject.className = "mailObject mailP";
                     mailObject.textContent = object;
 
@@ -64,10 +68,8 @@ function sendStatus(isSendBox){
                 });
             }
         }
-    };
+    }
 
-      
-    xmlhttp.open("GET", "mailGateway.php?" + "boxStatus="+ isSendBox, true);
     xmlhttp.send();
 }
 
