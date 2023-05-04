@@ -12,9 +12,9 @@ function createUser(){
     };
 
     if (createGroup != ""){
-        xmlhttp.open("GET", "adminPanel.php?"+ "createUser=true" + "&createName=" + createName + "&createFirstname=" + createFirstname + "&createPassword=" + createPassword + "&createGroup=" + createGroup, true);
+        xmlhttp.open("GET", "adminPanel.php?" + "createName=" + createName + "&createFirstname=" + createFirstname + "&createPassword=" + createPassword + "&createGroup=" + createGroup, true);
     }
-    else{xmlhttp.open("GET", "adminPanel.php?"+ "createUser= true" + "&createName=" + createName + "&createFirstname=" + createFirstname + "&createPassword=" + createPassword, true);}
+    else{xmlhttp.open("GET", "adminPanel.php?" + "createName=" + createName + "&createFirstname=" + createFirstname + "&createPassword=" + createPassword, true);}
     xmlhttp.send();
 }
 
@@ -32,7 +32,7 @@ function modifyUser(){
     }
     };
 
-    xmlhttp.open("GET", "adminPanel.php?" + "modifyMail=" + modifyMail + "&modifyUser=true" + "&modifyName=" + modifyName + "&mofifyFirstname=" + modifyFirstname + "&modifyPassword" + modifyPassword + "&modifyGroup=" + modifyGroup, true);
+    xmlhttp.open("GET", "adminPanel.php?" + "modifyMail=" + modifyMail + "&modifyName=" + modifyName + "&mofifyFirstname=" + modifyFirstname + "&modifyPassword" + modifyPassword + "&modifyGroup=" + modifyGroup, true);
     xmlhttp.send();
 }
 
@@ -45,7 +45,7 @@ function showInfo(){
         alert(this.responseText);
     }
     };
-    xmlhttp.open("GET", "adminPanel.php?" + "showInfo=true" + "&showMail=" + showMail, true);
+    xmlhttp.open("GET", "adminPanel.php?" + "showMail=" + showMail, true);
     xmlhttp.send();
 }
 
@@ -60,6 +60,6 @@ function changeDb(){
         alert(this.responseText);
     }
     };
-    xmlhttp.open("GET", "adminPanel.php?" + "changeDb=true" + "&dbUrl=" + dbUrl + "&dbUsername=" + dbUsername + "&dbPassword=" + dbPassword, true);
+    xmlhttp.open("GET", "adminPanel.php?" + "&dbUrl=" + dbUrl + "&dbUsername=" + dbUsername + "&dbPassword=" + dbPassword, true);
     xmlhttp.send();
 }
