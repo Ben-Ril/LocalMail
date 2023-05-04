@@ -7,7 +7,7 @@ function createUser(){
     var xmlhttp = new XMLHttpRequest();
     xmlhttp.onreadystatechange = function() {
     if (this.readyState == 4 && this.status == 200) {
-        alert(this.responseText);
+        const response = this.responseText;
     }
     };
 
@@ -16,6 +16,8 @@ function createUser(){
     }
     else{xmlhttp.open("GET", "adminPanel.php?" + "createName=" + createName + "&createFirstname=" + createFirstname + "&createPassword=" + createPassword, true);}
     xmlhttp.send();
+
+    if(response != ""){alert(response);}
 }
 
 function modifyUser(){
@@ -28,12 +30,15 @@ function modifyUser(){
     var xmlhttp = new XMLHttpRequest();
     xmlhttp.onreadystatechange = function() {
     if (this.readyState == 4 && this.status == 200) {
-        alert(this.responseText);
+        const response = this.responseText;
     }
     };
 
     xmlhttp.open("GET", "adminPanel.php?" + "modifyMail=" + modifyMail + "&modifyName=" + modifyName + "&mofifyFirstname=" + modifyFirstname + "&modifyPassword" + modifyPassword + "&modifyGroup=" + modifyGroup, true);
     xmlhttp.send();
+
+    //pas certain de ça
+    if(response != ""){alert(response);}
 }
 
 function showInfo(){
@@ -42,11 +47,16 @@ function showInfo(){
     var xmlhttp = new XMLHttpRequest();
     xmlhttp.onreadystatechange = function() {
     if (this.readyState == 4 && this.status == 200) {
-        alert(this.responseText);
+        const response = this.responseText;
     }
     };
     xmlhttp.open("GET", "adminPanel.php?" + "showMail=" + showMail, true);
     xmlhttp.send();
+
+    if(response != ""){
+        let info = response.split(",");
+    }
+    if(response == "invalid_user"){alert(response);}
 }
 
 function changeDb(){
@@ -57,7 +67,7 @@ function changeDb(){
     var xmlhttp = new XMLHttpRequest();
     xmlhttp.onreadystatechange = function() {
     if (this.readyState == 4 && this.status == 200) {
-        alert(this.responseText);
+        const response = this.responseText;
     }
     };
     xmlhttp.open("GET", "adminPanel.php?" + "&dbUrl=" + dbUrl + "&dbUsername=" + dbUsername + "&dbPassword=" + dbPassword, true);
