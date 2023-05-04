@@ -12,7 +12,7 @@ function createUser(){
     };
 
     if (createGroup != ""){
-        xmlhttp.open("GET", "adminPanel.php?"+ "createUser=true" + "&createName=" + createName + "&createFirstname=" + createFirstname + "&createPassword=" + createPassword + "&creatGroup=" + createGroup, true);
+        xmlhttp.open("GET", "adminPanel.php?"+ "createUser=true" + "&createName=" + createName + "&createFirstname=" + createFirstname + "&createPassword=" + createPassword + "&createGroup=" + createGroup, true);
     }
     else{xmlhttp.open("GET", "adminPanel.php?"+ "createUser= true" + "&createName=" + createName + "&createFirstname=" + createFirstname + "&createPassword=" + createPassword, true);}
     xmlhttp.send();
