@@ -27,6 +27,6 @@ class Mail{
 
     public function getObject(): string{return $this->object;}
     public function getContent(): string{return $this->content;}
-    public function getDateTimestamp(): string{return $this->getDateTimestamp();}
+    public function getDateTimestamp(): string{return $this->dateTimestamp;}
     public function getAttachment(): array{return $this->attachment;}
 }
