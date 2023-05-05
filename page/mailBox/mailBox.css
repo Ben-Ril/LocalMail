@@ -10,6 +10,7 @@ img.iconImage {
 header {
   display: flex;
   text-align: center;
+  background-color: rgb(50,50,50);
 }
 
 input#searchInput {
@@ -25,7 +26,7 @@ section#contentSection {
 }
 
 section#navMenu {
-  background-color: aqua;
+  background-color: rgb(50,50,50);
 }
 
 ul#navMenuList {
@@ -81,4 +82,11 @@ section#newMailSection {
 
 textarea:enabled {
   outline: none;
+}
+
+section#mailView{
+  position: absolute;
+  text-align: center;
+  background-color: white;
+  display: none;
 }
