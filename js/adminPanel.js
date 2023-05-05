@@ -32,6 +32,11 @@ function modifyUser(){
 }
 
 function showInfo(){
+    let showName = document.getElementById("showName");
+    let showFirstname = document.getElementById("showFirstname");
+    let showPassword = document.getElementById("showPassword");
+    let showUUID = document.getElementById("showUUID");
+    let showGroup = document.getElementById("showGroup");
     let response = "";
     let showMail = document.getElementById("showMail").value;
 
@@ -46,6 +51,12 @@ function showInfo(){
 
     if(response != ""){
         let info = response.split(",");
+        showName.textContent = "name : " + info[0];
+        showFirstname.textContent = "firstname : " + info[1];
+        showPassword.textContent = "password : " + info[2];
+        showUUID.textContent = "UUID : " + info[3];
+        showGroup.textContent = "Group : " + info[4];
+
     }
     if(response == "invalid_user"){alert(response);}
 }
