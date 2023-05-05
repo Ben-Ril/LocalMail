@@ -5,6 +5,7 @@
         <title>ADMIN PANEL</title>
         <meta charset="utf-8">
         <link href="panel.css" rel="stylesheet" type="text/css">
+        <script type="text/javascript" src="./js/adminPanel.js"></script>
     </head>
     <body>
         <section id="createUser" class="containers">
@@ -14,7 +15,7 @@
                 <input type="text" placeholder="FIRSTNAME" class="form" id="createFirstname">
                 <input type="text" placeholder="PASSWORD" class="form" id="createPassword">
                 <input type="text" placeholder="GROUP" class="form" id="createGroup">
-                <button class="form">CREATE</button>
+                <button class="form" onclick="createUser()">CREATE</button>
             </form>
         </section>
 
@@ -26,7 +27,7 @@
                 <input type="text" placeholder="NEW_FIRSTNAME" class="form" id="modifyFirstname">
                 <input type="text" placeholder="NEW__PASSWORD" class="form" id="mofidyPassword">
                 <input type="text" placeholder="NEW_GROUP" class="form" id="modifyGroup">
-                <button class="form">SAVE_CHANGES</button>
+                <button class="form" onclick="modifyUser()">SAVE_CHANGES</button>
             </form>
         </section>
 
@@ -40,7 +41,7 @@
                 <p class="form" id="showUUID">UUID :</p>                
                 <p class="form" id="showGroup">group :</p>
 
-                <button class="form">SHOW</button>
+                <button class="form" onclick="showInfo()">SHOW</button>
             </form>
         </section>
 
@@ -50,7 +51,7 @@
                 <input type="text" placeholder="DB_URL" class="form" id="dbUrl">
                 <input type="text" placeholder="DB_USERNAME" class="form" id="dbUsername">
                 <input type="text" placeholder="DB_PASSWORD" class="form" id="dbPassword">
-                <button class="form">SEND</button>
+                <button class="form" onclick="changeDb()">SEND</button>
             </form>
         </section>
 
