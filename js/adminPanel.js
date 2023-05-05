@@ -51,7 +51,6 @@ function showInfo(){
 }
 
 function changeDb(){
-    let response = "";
     let dbUrl = document.getElementById("dbUrl").value;
     let dbUsername = document.getElementById("dbUsername").value;
     let dbPassword = document.getElementById("dbPassword").value;
