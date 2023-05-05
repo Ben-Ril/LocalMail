@@ -97,3 +97,7 @@ function disconnect(){
     xmlhttp.send();
     location.reload();
 }
+
+function openMailView(mailUUID){
+
+}
