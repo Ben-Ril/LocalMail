@@ -44,6 +44,7 @@ function sendStatus(isSendBox){
                     mail.setAttribute("content", content);
                     mail.setAttribute("sender", sender);
                     mail.setAttribute("receivers", receivers);
+                    mail.onclick = openMailView(mail);
                         
                     mailObject.className = "mailObject mailP";
                     mailObject.textContent = object;
@@ -104,4 +105,5 @@ function openMailView(mail){
     document.getElementById("mailViewMails").textContent = mail.getAttribute("sender") + " > " + mail.getAttribute("receivers");
     document.getElementById("mailViewTitle").textContent = mail.getAttribute("object");
     document.getElementById("mailViewContent").textContent = mail.getAttribute("content");
+    mailView.style.visibility = "block";
 }
