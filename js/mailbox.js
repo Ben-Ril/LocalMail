@@ -25,11 +25,8 @@ function sendStatus(isSendBox){
                     
                 Object.keys(json).forEach(function(k){
                     const uuid = json[k]["uuid"];
-                    // @mail
                     const sender = json[k]["sender"];
-                    // String de @mails
-                    let receivers = json[k]["receivers"];
-                    receivers = (receivers.includes(" ") ? receivers.split(" ") : receivers);
+                    const receivers = json[k]["receivers"];
                     let date = new Date(Number(json[k]["date"])*1000);
                     date = date.toLocaleString();
                     const object = json[k]["object"];
@@ -43,6 +40,10 @@ function sendStatus(isSendBox){
                     const mailContentPreview = document.createElement("p");
 
                     mail.className = "mail";
+                    mail.setAttribute("object", object);
+                    mail.setAttribute("content", content);
+                    mail.setAttribute("sender", sender);
+                    mail.setAttribute("receivers", receivers);
                         
                     mailObject.className = "mailObject mailP";
                     mailObject.textContent = object;
@@ -98,6 +99,9 @@ function disconnect(){
     location.reload();
 }
 
-function openMailView(mailUUID){
-
+function openMailView(mail){
+    let mailView = document.getElementById("mailView");
+    document.getElementById("mailViewMails").textContent = mail.getAttribute("sender") + " > " + mail.getAttribute("receivers");
+    document.getElementById("mailViewTitle").textContent = mail.getAttribute("object");
+    document.getElementById("mailViewContent").textContent = mail.getAttribute("content");
 }
