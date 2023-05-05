@@ -36,7 +36,17 @@ if($_SERVER["REQUEST_METHOD"] == "GET"){
             echo("invalid_user");
             exit();
         }
-        //changer les valeurs de user
+        
+        $list = array(
+            "name"=>($_GET["modifyName"] == "" ? $user->getName() : $_GET["modifyName"]),
+            "firstname"=>($_GET["modifyFirstname"] == "" ? $user->getFirstname() : $_GET["modifyFirstname"]),
+            "password"=>($_GET["modifyPassword"] == "" ? $user->getPassword() : $_GET["modifyPassword"]),
+            "group"=>($_GET["modifyGroup"] == "" ? $user->getGroup() : $_GET["modifyGroup"])
+        );
+        $user->setName($list["name"]);
+        $user->setFirstname($list["firstname"]);
+        $user->setPassword($list["password"]);
+        $user->setGroup($list["group"]);
         $userManager->modifyUser($user);
     }
 
@@ -50,7 +60,7 @@ if($_SERVER["REQUEST_METHOD"] == "GET"){
             echo("invalid_user");
             exit();
         }
-        //récup infos utilisateur puis json puis echo
+        echo($user->getName().",".$user->getFirstname().",".$user->getUUID().",".$user->getPassword().",".$user->getGroup());
     }
 
     if(isset($_GET["dbUrl"])){
