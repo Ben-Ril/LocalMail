@@ -5,20 +5,13 @@ function createUser(){
     let createGroup = document.getElementById("createGroup").value;
 
     var xmlhttp = new XMLHttpRequest();
-    xmlhttp.onreadystatechange = function() {
-    if (this.readyState == 4 && this.status == 200) {
-        alert(this.responseText);
-    }
-    };
-
-    if (createGroup != ""){
-        xmlhttp.open("GET", "adminPanel.php?"+ "createUser=true" + "&createName=" + createName + "&createFirstname=" + createFirstname + "&createPassword=" + createPassword + "&creatGroup=" + createGroup, true);
-    }
-    else{xmlhttp.open("GET", "adminPanel.php?"+ "createUser= true" + "&createName=" + createName + "&createFirstname=" + createFirstname + "&createPassword=" + createPassword, true);}
+    xmlhttp.open("GET", "adminPanel.php?" + "createName=" + createName + "&createFirstname=" + createFirstname + "&createPassword=" + createPassword + (createGroup != "" ? "&createGroup=" + createGroup : ""), true);
     xmlhttp.send();
 }
 
 function modifyUser(){
+    let response = "";
+
     let modifyMail = document.getElementById("modifyMail").value;
     let modifyName = document.getElementById("modifyName").value;
     let modifyFirstname = document.getElementById("modifyFirstname").value;
@@ -27,26 +20,45 @@ function modifyUser(){
 
     var xmlhttp = new XMLHttpRequest();
     xmlhttp.onreadystatechange = function() {
-    if (this.readyState == 4 && this.status == 200) {
-        alert(this.responseText);
-    }
+        if (this.readyState == 4 && this.status == 200) {
+            response = this.responseText;
+        }
     };
 
-    xmlhttp.open("GET", "adminPanel.php?" + "modifyMail=" + modifyMail + "&modifyUser=true" + "&modifyName=" + modifyName + "&mofifyFirstname=" + modifyFirstname + "&modifyPassword" + modifyPassword + "&modifyGroup=" + modifyGroup, true);
+    xmlhttp.open("GET", "adminPanel.php?" + "modifyMail=" + modifyMail + "&modifyName=" + modifyName + "&mofifyFirstname=" + modifyFirstname + "&modifyPassword" + modifyPassword + "&modifyGroup=" + modifyGroup, true);
     xmlhttp.send();
+
+    if(response != ""){alert(response);}
 }
 
 function showInfo(){
+    let showName = document.getElementById("showName");
+    let showFirstname = document.getElementById("showFirstname");
+    let showPassword = document.getElementById("showPassword");
+    let showUUID = document.getElementById("showUUID");
+    let showGroup = document.getElementById("showGroup");
+    let response = "";
     let showMail = document.getElementById("showMail").value;
 
     var xmlhttp = new XMLHttpRequest();
     xmlhttp.onreadystatechange = function() {
-    if (this.readyState == 4 && this.status == 200) {
-        alert(this.responseText);
-    }
+        if (this.readyState == 4 && this.status == 200) {
+            response = this.responseText;
+        }
     };
-    xmlhttp.open("GET", "adminPanel.php?" + "showInfo=true" + "&showMail=" + showMail, true);
+    xmlhttp.open("GET", "adminPanel.php?" + "showMail=" + showMail, true);
     xmlhttp.send();
+
+    if(response != ""){
+        let info = response.split(",");
+        showName.textContent = "name : " + info[0];
+        showFirstname.textContent = "firstname : " + info[1];
+        showPassword.textContent = "password : " + info[2];
+        showUUID.textContent = "UUID : " + info[3];
+        showGroup.textContent = "Group : " + info[4];
+
+    }
+    if(response == "invalid_user"){alert(response);}
 }
 
 function changeDb(){
@@ -55,11 +67,6 @@ function changeDb(){
     let dbPassword = document.getElementById("dbPassword").value;
 
     var xmlhttp = new XMLHttpRequest();
-    xmlhttp.onreadystatechange = function() {
-    if (this.readyState == 4 && this.status == 200) {
-        alert(this.responseText);
-    }
-    };
-    xmlhttp.open("GET", "adminPanel.php?" + "changeDb=true" + "&dbUrl=" + dbUrl + "&dbUsername=" + dbUsername + "&dbPassword=" + dbPassword, true);
+    xmlhttp.open("GET", "adminPanel.php?" + "&dbUrl=" + dbUrl + "&dbUsername=" + dbUsername + "&dbPassword=" + dbPassword, true);
     xmlhttp.send();
 }
