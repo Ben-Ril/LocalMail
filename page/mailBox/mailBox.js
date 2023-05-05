@@ -5,7 +5,7 @@ var isMenuOpen = false;
 
 async function onload(){
     await place();
-    //received();
+    received();
 }
 
 async function place(){
