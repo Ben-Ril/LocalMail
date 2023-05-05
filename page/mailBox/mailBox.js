@@ -5,7 +5,7 @@ var isMenuOpen = false;
 
 async function onload(){
     await place();
-    received();
+    //received();
 }
 
 async function place(){
@@ -41,6 +41,8 @@ async function place(){
     let newMailSection = document.getElementById("newMailSection");
     let newMailChilds = document.getElementsByClassName("newMailChild");
     let newMailMessageContent = document.getElementById("newMailMessageContent");
+
+    let mailView = document.getElementById("mailView");
     
     body.style.width = windowsWidth + "px";
     body.style.height = windowsHeight + "px";
@@ -88,6 +90,11 @@ async function place(){
     });
 
     newMailMessageContent.style.height = windowsHeight/2 - 2*windowsHeight/16 + "px";
+
+    mailView.style.width = windowsWidth/1.5 + "px";
+    mailView.style.height = windowsHeight/1.5 + "px";
+    mailView.style.top = (windowsHeight - windowsHeight/1.5)/2 + "px";
+    mailView.style.left = (windowsWidth - windowsWidth/1.5)/2 + "px";
 }
 
 function menuPressed(){
@@ -146,4 +153,9 @@ function menuPressed(){
             mail.style.width = newMailsWidth;
         })
     }
+}
+
+function closeMailView(){
+    let mailView = document.getElementById("mailView");
+    mailView.style.display = "none";
 }
