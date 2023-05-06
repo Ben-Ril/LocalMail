@@ -3,7 +3,7 @@
     <output-path>$PROJECT_DIR$/out/artifacts/LocalMail_jar</output-path>
     <root id="archive" name="LocalMail.jar">
       <element id="module-output" name="LocalMail" />
-      <element id="extracted-dir" path="$PROJECT_DIR$/../../../../../../Program Files (x86)/MySQL/Connector J 8.0/mysql-connector-j-8.0.32.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/../../../../../../Program Files (x86)/MySQL/Connector J 8.0/mysql-connector-j-8.0.33.jar" path-in-jar="/" />
     </root>
   </artifact>
 </component>

@@ -55,7 +55,7 @@ public class Users {
 
     public void modifyUser(String uuid, String name, String firstName, String password, String group){
         if(getUserByUUID(uuid).equalsIgnoreCase("ERROR")){return;}
-        db.executeStatement("UPDATE users SET name='" + name  + "', fistname='" + firstName + "', password='" + password + "', grp='" + group + "'");
+        db.executeStatement("UPDATE users SET name='" + name  + "', firstname='" + firstName + "', password='" + password + "', grp='" + group + "'");
     }
 
     private String generateUserUUID(){
