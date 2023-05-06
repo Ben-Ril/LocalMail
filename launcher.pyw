@@ -19,9 +19,9 @@ def phpServRestart(process, stop):
 
 def phpServ():
     try:
-        process = subprocess.Popen(['php', '-S', 'localhost:80', '-t', 'content/'], stdout=subprocess.PIPE, stderr=subprocess.STDOUT, text=True)
+        process = subprocess.Popen(['php', '-S', 'localhost:80', '-t', 'LocalMail/'], stdout=subprocess.PIPE, stderr=subprocess.STDOUT, text=True)
         stop = multiprocessing.Event()
-        shutdownProcess = multiprocessing.Process(target=phpServRestart, args=(process, stop,))
+        shutdownProcess = threading.Thread(target=phpServRestart, args=(process, stop,))
         for line in iter(process.stdout.readline, ''):
             line = line.rstrip()
             
@@ -30,13 +30,12 @@ def phpServ():
                     stop.set()
                     shutdownProcess.join()
                 stop = multiprocessing.Event()
-                shutdownProcess = multiprocessing.Process(target=phpServRestart, args=(process, stop,))
+                shutdownProcess = threading.Thread(target=phpServRestart, args=(process, stop,))
                 shutdownProcess.start()
             else:
                 stop.set()
-
-        process.wait()
-        multiprocessing.Process(target=phpServ).start()
+        process.wait(1)
+        threading.Thread(target=phpServ).start()
     except KeyboardInterrupt:
         sys.exit()
 
@@ -47,8 +46,8 @@ signal.signal(signal.SIGINT, signal_handler)
 
 def javaServ():
     try:
-        process = subprocess.Popen(['java', '-jar', 'LocalMail.jar'], stdout=subprocess.PIPE, stderr=subprocess.STDOUT, text=True)
-        while(process.poll() == None):
+        javaProcess = subprocess.Popen(['java', '-jar', 'server/LocalMail.jar'], stdout=subprocess.PIPE, stderr=subprocess.STDOUT, text=True)
+        while(javaProcess.poll() == None):
             continue
     except KeyboardInterrupt:
         sys.exit()
