@@ -98,7 +98,7 @@ function sendMail(){
     xmlhttp.onload = function(){
         let isSent = this.responseText;
     }*/
-    xmlhttp.open("GET", "mailBox.php?" + "receiver="+ receivers + "&object=" + object +"&mailContent"+ mailContent + "$sendMail=true", true);
+    xmlhttp.open("GET", "mailGateway.php?" + "receiver="+ receivers + "&object=" + object +"&mailContent"+ mailContent + "$sendMail=true", true);
     xmlhttp.send();
 }
 
