@@ -76,20 +76,29 @@ function sendStatus(isSendBox){
 }
 
 function sendMail(){
-    let receiver = document.getElementById("destinatorInput").value;
+    let receiversArray = document.getElementById("destinatorsInput").value.split();
+    let receivers = ""
+    Array.prototype.forEach(receiversArray, function(receiver){
+        while(receiver.startsWith(" ")){receiver = receiver.substr(1);}
+        while(receiver.endsWith(" ")){receiver = receiver.substr(0,receiver.length-1);}
+        if(receiver != ""){
+            receivers = receiver + "-%-";
+        }
+    });
+    receivers = receivers.substring(0,receivers.length-3);
     let object = document.getElementById("objectInput").value;
     let mailContent = document.getElementById("newMailMessageContent");
 
     var xmlhttp = new XMLHttpRequest();
-    xmlhttp.onreadystatechange = function() {
+    /*xmlhttp.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
             alert(this.responseText);
         }
     };
     xmlhttp.onload = function(){
         let isSent = this.responseText;
-    }
-    xmlhttp.open("GET", "mailBox.php?" + "receiver="+ receiver + "&object=" + object +"&mailContent"+ mailContent + "$sendMail=true", true);
+    }*/
+    xmlhttp.open("GET", "mailBox.php?" + "receiver="+ receivers + "&object=" + object +"&mailContent"+ mailContent + "$sendMail=true", true);
     xmlhttp.send();
 }
 
@@ -107,3 +116,5 @@ function openMailView(mail){
     document.getElementById("mailViewContent").textContent = mail.getAttribute("content");
     mailView.style.visibility = "block";
 }
+
+0616430027
