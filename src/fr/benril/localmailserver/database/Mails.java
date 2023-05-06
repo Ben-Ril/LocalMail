@@ -64,7 +64,7 @@ public class Mails {
         for(String att : attachment){
             attachments.append(att).append("<->");
         }
-        db.executeStatement("INSERT INTO mails VALUES('" + uuid + "', '" + senderUUID + "', '" + receivers + "', '" + object + "', '" + content + "', '" + date + "', '" + attachments + "')");
+        db.executeStatement("INSERT INTO mails VALUES('" + uuid + "', '" + senderUUID + "', '" + receivers.substring(0, receivers.length()-3) + "', '" + object + "', '" + content + "', '" + date + "', '" + attachments.substring(0, attachments.toString().length()-3) + "')");
         return uuid;
     }
 
