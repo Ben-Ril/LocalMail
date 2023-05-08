@@ -1,12 +1,7 @@
-window.addEventListener("load", onload);
+window.addEventListener("load", place);
 window.addEventListener("resize", place);
 
 var isMenuOpen = false;
-
-async function onload(){
-    await place();
-    received();
-}
 
 async function place(){
     const windowsHeight = window.innerHeight;
@@ -36,7 +31,7 @@ async function place(){
     let navMenu = document.getElementById("navMenu");
     let navMenuIcon = document.getElementsByClassName("navMenuIcon");
     let navMenuListNameElements = document.getElementsByClassName("navMenuListNameElement");
-    let mails = document.getElementsByClassName("mail");
+    let mailListSection = document.getElementById("mailListSection");
 
     let newMailSection = document.getElementById("newMailSection");
     let newMailChilds = document.getElementsByClassName("newMailChild");
@@ -77,10 +72,8 @@ async function place(){
         elem.style.marginTop = navMenuIconMargin + headerImageContentHeight/4 + "px";
     });
 
-    Array.prototype.forEach.call(mails, function(mail){
-        mail.style.padding = mailListPaddingLeft + "px";
-        mail.style.width = windowsWidth - Number(navMenu.style.width.split("p")[0]) - mailListPaddingLeft*2 + "px";
-    });
+    mailListSection.style.padding = mailListPaddingLeft + "px";
+    mailListSection.style.width = windowsWidth - Number(navMenu.style.width.split("p")[0]) - mailListPaddingLeft*2 + "px"
 
     newMailSection.style.width = windowsWidth/4 + "px";
     newMailSection.style.height = windowsHeight/2 + "px";
@@ -103,10 +96,10 @@ function menuPressed(){
     let navMenuListNameElements = document.getElementsByClassName("navMenuListNameElement");
     let navMenu = document.getElementById("navMenu");
     let menuImageButton = document.getElementById("menuImageButton");
-    let mails = document.getElementsByClassName("mail");
+    let mailListSection = document.getElementById("mailListSection");
 
     const navMenuDefaultWidth = Number(navMenu.style.width.split("p")[0]);
-    const newMailsWidth = (isMenuOpen ? Number(mails[0].style.width.split("p")[0]) - navMenuDefaultWidth*2.5 : Number(mails[0].style.width.split("p")[0]) + (navMenuDefaultWidth - navMenuDefaultWidth/3.5)) + "px";
+    const newMailsWidth = (isMenuOpen ? Number(mailListSection.style.width.split("p")[0]) - navMenuDefaultWidth*2.5 : Number(mailListSection.style.width.split("p")[0]) + (navMenuDefaultWidth - navMenuDefaultWidth/3.5)) + "px";
     if(isMenuOpen){
         Array.prototype.forEach.call(navMenuListNameElements, function(elem){
             elem.style.display = "block";
@@ -124,14 +117,10 @@ function menuPressed(){
 
         navMenu.style.width = navMenuDefaultWidth*3.5 + "px";
 
-        Array.prototype.forEach.call(mails, function(mail){
-            mail.animate({
-                width: [mail.style.width, newMailsWidth]
-            }, 200);
-
-            mail.style.width = newMailsWidth;
-        })
-
+        mailListSection.animate({
+            width: [mailListSection.style.width, newMailsWidth]
+        },200);
+        mailListSection.style.width = newMailsWidth;
     }else{
         Array.prototype.forEach.call(navMenuListNameElements, function(elem){
             elem.style.display = "none";
@@ -145,13 +134,10 @@ function menuPressed(){
 
         navMenu.style.width = navMenuDefaultWidth/3.5 + "px";
 
-        Array.prototype.forEach.call(mails, function(mail){
-            mail.animate({
-                width: [mail.style.width, newMailsWidth]
-            }, 200);
-
-            mail.style.width = newMailsWidth;
-        })
+        mailListSection.animate({
+            width: [mailListSection.style.width, newMailsWidth]
+        },200);
+        mailListSection.style.width = newMailsWidth;
     }
 }
 

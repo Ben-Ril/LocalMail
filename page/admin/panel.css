@@ -8,3 +8,8 @@ section{
     border: 2px solid black;
     border-radius: 10px;
 }
+
+section#showUserInfo section{
+    display: flex;
+    border: none;
+}

@@ -2,57 +2,65 @@
 
 <html>
     <head>
-        <title>ADMIN PANEL</title>
+        <title>ADMIN_PANEL</title>
         <meta charset="utf-8">
-        <link href="panel.css" rel="stylesheet" type="text/css">
+        <link href="./page/admin/panel.css" rel="stylesheet" type="text/css">
         <script type="text/javascript" src="./js/adminPanel.js"></script>
     </head>
     <body>
         <section id="createUser" class="containers">
-            <form>
-                <p class="form">CREATE_USER</p>
-                <input type="text" placeholder="NAME" class="form" id="createName">
-                <input type="text" placeholder="FIRSTNAME" class="form" id="createFirstname">
-                <input type="text" placeholder="PASSWORD" class="form" id="createPassword">
-                <input type="text" placeholder="GROUP" class="form" id="createGroup">
-                <button class="form" onclick="createUser()">CREATE</button>
-            </form>
+            <p class="form">CREATE_USER</p>
+            <input type="text" placeholder="ONAME" class="form" id="createName">
+            <input type="text" placeholder="OFIRSTNAME" class="form" id="createFirstname">
+            <input type="password" placeholder="OPASSWORD" class="form" id="createPassword">
+            <input type="text" placeholder="OGROUP" class="form" id="createGroup">
+            <button class="form" onclick="createUser()">CREATE</button>
         </section>
 
         <section id="modifyUser" class="containers">
-            <form>
-                <p class="form">MODIFY USER</p>
-                <input type="text" placeholder="MAIL" class="form" id="modifyMail">
-                <input type="text" placeholder="NEW_NAME" class="form" id="modifyName">
-                <input type="text" placeholder="NEW_FIRSTNAME" class="form" id="modifyFirstname">
-                <input type="text" placeholder="NEW__PASSWORD" class="form" id="mofidyPassword">
-                <input type="text" placeholder="NEW_GROUP" class="form" id="modifyGroup">
-                <button class="form" onclick="modifyUser()">SAVE_CHANGES</button>
-            </form>
+            <p class="form">MODIFY_USER</p>
+            <input type="text" placeholder="MAIL" class="form" id="modifyMail">
+            <input type="text" placeholder="NEW_NAME" class="form" id="modifyName">
+            <input type="text" placeholder="NEW_FIRSTNAME" class="form" id="modifyFirstname">
+            <input type="password" placeholder="NEW_PASSWORD" class="form" id="modifyPassword">
+            <input type="text" placeholder="NEW_GROUP" class="form" id="modifyGroup">
+            <button class="form" onclick="modifyUser()">SAVE</button>
         </section>
 
         <section id="showUserInfo" class="containers">
-            <form>
-                <p class="form">SHOW_INFO</p>
-                <input type="text" placeholder="MAIL" class="form" id="showMail">
-                <p class="form" id="showName">name :</p>
-                <p class="form" id="showFirstname">firstname :</p>
-                <p class="form" id="showPassword">password :</p>
-                <p class="form" id="showUUID">UUID :</p>                
-                <p class="form" id="showGroup">group :</p>
+            <p class="form">SHOW_INFOS</p>
+            <input type="text" placeholder="MAIL" class="form" id="showMail">
 
-                <button class="form" onclick="showInfo()">SHOW</button>
-            </form>
+            <section>
+                <p class="form">ONAME:</p>
+                <p class="form" id="showName"></p>
+            </section>
+            <section>
+                <p class="form">OFIRSTNAME:</p>
+                <p class="form" id="showFirstname"></p>
+            </section>
+            <section>
+                <p class="form">OPASSWORD:</p>
+                <p class="form" id="showPassword"></p>
+            </section>
+            <section>
+                <p class="form">UUID:</p>
+                <p class="form" id="showUUID"></p>
+            </section>
+            <section>
+                <p class="form">OGROUP:</p>
+                <p class="form" id="showGroup"></p>
+            </section>
+
+            <button class="form" onclick="showInfo()">SHOW</button>
         </section>
 
         <section>
-            <form>
-                <p class="form">CHANGE_DB_INFO</p>
-                <input type="text" placeholder="DB_URL" class="form" id="dbUrl">
-                <input type="text" placeholder="DB_USERNAME" class="form" id="dbUsername">
-                <input type="text" placeholder="DB_PASSWORD" class="form" id="dbPassword">
-                <button class="form" onclick="changeDb()">SEND</button>
-            </form>
+            <p class="form">CHANGE_DB_INFO</p>
+            <input type="text" placeholder="URL" class="form" id="dbUrl">
+            <input type="text" placeholder="USERNAME" class="form" id="dbUsername">
+            <input type="text" placeholder="OPASSWORD" class="form" id="dbPassword">
+            <button class="form" onclick="changeDb()">SEND</button>
         </section>
 
     </body>

@@ -40,10 +40,6 @@ li.navMenuListElement section {
   text-align: left;
 }
 
-section#mailListSection {
-  
-}
-
 section.mail section {
   display: inline-flex;
 }
