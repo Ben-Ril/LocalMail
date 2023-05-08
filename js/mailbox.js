@@ -20,7 +20,6 @@ function sendStatus(isSendBox){
             }
 
             if(response != "NO MAIL" && response != "ERROR"){
-                alert(response);
                 const json = JSON.parse(response);
                     
                 Object.keys(json).forEach(function(k){
@@ -44,7 +43,7 @@ function sendStatus(isSendBox){
                     mail.setAttribute("content", content);
                     mail.setAttribute("sender", sender);
                     mail.setAttribute("receivers", receivers);
-                    mail.onclick = openMailView(mail);
+                    mail.setAttribute("onclick", "openMailView(this)");
                         
                     mailObject.className = "mailObject mailP";
                     mailObject.textContent = object;
@@ -78,7 +77,7 @@ function sendStatus(isSendBox){
 function sendMail(){
     let receiversArray = document.getElementById("destinatorsInput").value.split();
     let receivers = ""
-    Array.prototype.forEach(receiversArray, function(receiver){
+    Array.prototype.forEach.call(receiversArray, function(receiver){
         while(receiver.startsWith(" ")){receiver = receiver.substr(1);}
         while(receiver.endsWith(" ")){receiver = receiver.substr(0,receiver.length-1);}
         if(receiver != ""){
@@ -87,18 +86,27 @@ function sendMail(){
     });
     receivers = receivers.substring(0,receivers.length-3);
     let object = document.getElementById("objectInput").value;
-    let mailContent = document.getElementById("newMailMessageContent");
+    let mailContent = document.getElementById("newMailMessageContent").value;
+
+    if(receivers.length == 0 || object.length == 0 || mailContent.length == 0){
+        alert("invalid mail");
+    }
 
     var xmlhttp = new XMLHttpRequest();
-    /*xmlhttp.onreadystatechange = function() {
+    xmlhttp.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
-            alert(this.responseText);
+            let response = this.responseText;
+            if(response == "NO VALID RECEIVERS"){
+                alert(response);
+            }else if(response.startsWith("INVALID MAILS")){
+                const invalidMails = response.replace("INVALID MAILS", "").split("/");
+                Array.prototype.forEach.call(invalidMails, function(im){
+                    alert(im);
+                });
+            }else {alert(response);}
         }
     };
-    xmlhttp.onload = function(){
-        let isSent = this.responseText;
-    }*/
-    xmlhttp.open("GET", "mailGateway.php?" + "receiver="+ receivers + "&object=" + object +"&mailContent"+ mailContent + "$sendMail=true", true);
+    xmlhttp.open("GET", "mailGateway.php?sendMail=true&receivers="+ receivers + "&object=" + object +"&mailContent="+ mailContent, true);
     xmlhttp.send();
 }
 
@@ -111,10 +119,8 @@ function disconnect(){
 
 function openMailView(mail){
     let mailView = document.getElementById("mailView");
-    document.getElementById("mailViewMails").textContent = mail.getAttribute("sender") + " > " + mail.getAttribute("receivers");
+    document.getElementById("mailViewMails").textContent = mail.getAttribute("sender") + ">>  " + mail.getAttribute("receivers");
     document.getElementById("mailViewTitle").textContent = mail.getAttribute("object");
     document.getElementById("mailViewContent").textContent = mail.getAttribute("content");
-    mailView.style.visibility = "block";
+    mailView.style.display = "block";
 }
-
-0616430027
