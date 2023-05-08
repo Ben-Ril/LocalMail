@@ -34,7 +34,7 @@ class MailManager{
     }
 
     public function getMail(string $uuid): Mail|null{
-        $this->socketManager->sendMessage("GET USER UUID " . $uuid);
+        $this->socketManager->sendMessage("GET MAIL " . $uuid);
         return $this->getBackMail();
     }
 

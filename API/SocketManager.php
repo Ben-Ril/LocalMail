@@ -64,9 +64,9 @@ class SocketManager{
         }
         return explode("\n", $message);
     }
-
-    public function setDataBase(string $url, string $username, string $password): void{
-        $this->sendMessage("MODIFY DATABASE " . $url . " " . $username . " " . $password);
+    
+    public function restartDB():void {
+        $this->sendMessage("RECONNECT");
     }
     public function getDataBaseURL(): string{
         $this->sendMessage("GET DATABASE");
