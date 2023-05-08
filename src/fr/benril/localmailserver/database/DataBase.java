@@ -2,8 +2,6 @@ package fr.benril.localmailserver.database;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileWriter;
-import java.io.IOException;
 import java.sql.*;
 import java.util.Random;
 import java.util.Scanner;
@@ -16,7 +14,6 @@ public class DataBase {
     public static DataBase getInstance() {return instance;}
 
     private Connection con;
-    public Connection getCon() {return con;}
 
     public DataBase(){
         instance = this;
