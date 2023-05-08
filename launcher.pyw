@@ -19,7 +19,7 @@ def phpServRestart(process, stop):
 
 def phpServ():
     try:
-        process = subprocess.Popen(['php', '-S', 'localhost:80', '-t', 'LocalMail/'], stdout=subprocess.PIPE, stderr=subprocess.STDOUT, text=True)
+        process = subprocess.Popen(['php', '-S', '0.0.0.0:80', '-t', 'LocalMail/'], stdout=subprocess.PIPE, stderr=subprocess.STDOUT, text=True)
         stop = multiprocessing.Event()
         shutdownProcess = threading.Thread(target=phpServRestart, args=(process, stop,))
         for line in iter(process.stdout.readline, ''):
@@ -37,12 +37,8 @@ def phpServ():
         process.wait(1)
         threading.Thread(target=phpServ).start()
     except KeyboardInterrupt:
+        process.kill()
         sys.exit()
-
-def signal_handler(signal, frame):
-    sys.exit(0)
-
-signal.signal(signal.SIGINT, signal_handler)
 
 def javaServ():
     try:
@@ -50,14 +46,31 @@ def javaServ():
         while(javaProcess.poll() == None):
             continue
     except KeyboardInterrupt:
+        javaProcess.kill();
         sys.exit()
         return
 
+php = None
+java = None
+
 if __name__ == '__main__':
-    multiprocessing.Process(target=phpServ).start()
-    multiprocessing.Process(target=javaServ).start()
+    php = multiprocessing.Process(target=phpServ)
+    php.start()
+    java = multiprocessing.Process(target=javaServ)
+    java.start()
     try:
         while True:
             time.sleep(1)
     except KeyboardInterrupt:
+        php.terminate()
+        java.terminate()
         pass
+
+def signal_handler(signal, frame):
+    if(php is not None):
+        php.terminate()
+    if(java is not None):
+        java.terminate()
+    sys.exit(0)
+
+signal.signal(signal.SIGINT, signal_handler)
