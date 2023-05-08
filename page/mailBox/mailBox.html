@@ -23,16 +23,16 @@
                             <p class="navMenuListNameElement">ONEW_MAIL</p>
                         </section>
                     </li>
-                    <li class="navMenuListElement" onclick="">
-                        <section>
-                            <img class="iconImage navMenuIcon" src="./image/sendbox_icon.png" alt="OSENDED_MAIL">
-                            <p class="navMenuListNameElement">OSENDED_MAIL</p>
-                        </section>
-                    </li>
-                    <li class="navMenuListElement" onclick="">
+                    <li class="navMenuListElement" onclick="received()">
                         <section>
                             <img class="iconImage navMenuIcon" src="./image/receivebox_icon.png" alt="ORECEIVED_MAIL">
                             <p class="navMenuListNameElement">ORECEIVED_MAIL</p>
+                        </section>
+                    </li>
+                    <li class="navMenuListElement" onclick="sended()">
+                        <section>
+                            <img class="iconImage navMenuIcon" src="./image/sendbox_icon.png" alt="OSENDED_MAIL">
+                            <p class="navMenuListNameElement">OSENDED_MAIL</p>
                         </section>
                     </li>
                     <li class="navMenuListElement" onclick="disconnect()">
@@ -45,15 +45,7 @@
             </section>
 
             <section id="mailListSection">
-                <section class="mail">
-                    <section>
-                        <p class="mailObject mailP">MAIL_OBJECT</p>
-                        <p class="senderMail mailP">SENDER_MAIL</p>
-                        <p class="mailDate mailP">DATE</p>
-                    </section>
-                    
-                    <p class="mailContentPreview mailP">MAIL_CONTENT_PREVIEW</p>
-                </section>
+                
             </section>
 
             <section id="newMailSection">
