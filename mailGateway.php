@@ -42,23 +42,35 @@ if($_SERVER["REQUEST_METHOD"] == "GET"){
             echo json_encode($mailsArray);
         }else{echo "NO MAIL";}
     }else if (isset($_GET["sendMail"])){
-        $receiversInput = $_GET["receiver"];
-        $receiversOutput = explode("-%-", $receiversInput);
-        $receiversUUID = array();
-        foreach($receiversOutput as $receiver){
-            $receiver = explode("@", $receiver);
-            $receiver = explode(".", $receiver[0]);
-            $r = $userManager->getUserByName($receiver[0],$receiver[1]);
-            if($r != null){
-                array_push($receiversUUID, $r->getUUID());
-            }
+        $receivers = $_GET["receivers"];
+        $receiversArray = explode("-%-", $receivers);
+        $receiversUUIDs = array();
+        $nonValidReceivers = array();
+        foreach($receiversArray as $receiverMail){
+            $firstname = explode(".", explode("@", $receiverMail)[0])[0];
+            $name = explode(".", explode("@", $receiverMail)[0])[1];
+            $group = explode("@", $receiverMail)[1];
+
+            $r = $userManager->getUserByName($name, $firstname);
+
+            if($r != null && !in_array($r->getUUID(), $receiversUUIDs)){
+                array_push($receiversUUIDs, $r->getUUID());
+            }else{array_push($nonValidReceivers, $receiverMail);}
         }
         
+        if(count($receiversUUIDs) == 0){
+            $socketManager->disconnect();
+            die("NO VALID RECEIVERS");
+        }
         $senderUUID = $_SESSION["uuid"];
         $object = $_GET["object"];
         $content = $_GET["mailContent"];
 
-        $mail = $mailManager->createMail($senderUUID, $receiversUUID, $object, $content);
+        $mail = $mailManager->createMail($senderUUID, $receiversUUIDs, $object, $content);
+        if(count($nonValidReceivers) != 0){
+            echo "INVALID MAILS";
+            foreach($nonValidReceivers as $nvr){echo $nvr . "/";}
+        }else {echo "ALL GOOD";}
     }
 }
 

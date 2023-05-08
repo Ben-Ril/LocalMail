@@ -15,5 +15,20 @@
     "mailContent": "Write something to send",
     "send": "Send",
     "unavailable": "Unavailable",
-    "unavailableMessage": "The Service is actualy Unavailable..."
+    "unavailableMessage": "The Service is actualy Unavailable...",
+    "adminPanel": "Admin Panel",
+    "adminPanelConnection": "Admin Panel Connection",
+    "createUser": "Create User",
+    "modifyUser": "Modify User",
+    "save": "Save",
+    "showInfos": "Show Infos",
+    "name": "Name",
+    "firstname": "Firstname",
+    "group": "Group",
+    "show": "Show",
+    "changeDBInfos": "Modify Database's Informations",
+    "newName": "New Name",
+    "newFirstname": "New Firstname",
+    "newPassword": "New Password",
+    "newGroup": "New Group"
 }
