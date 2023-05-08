@@ -129,12 +129,6 @@ public class Request {
                 if(infos.length != 5){return;}
                 new Users().modifyUser(infos[0], infos[1], infos[2], infos[3], infos[4]);
                 break;
-            case DATABASE:
-                if(infos.length != 3){return;}
-                DataBase db = DataBase.getInstance();
-                if(db.isConnected()){db.closeDBCon();}
-                db.modifyDB(infos[0], infos[1], infos[2]);
-                break;
         }
     }
 }

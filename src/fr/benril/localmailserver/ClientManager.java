@@ -34,7 +34,10 @@ public class ClientManager implements Runnable {
             while((message = reader.readLine()) == null){i++;}
             dbVerif(message);
 
-            if(message.equalsIgnoreCase("IS DB CONNECTED")){
+            if(message.equalsIgnoreCase("RECONNECT")){
+                if(DataBase.getInstance().isConnected()){DataBase.getInstance().closeDBCon();}
+                new DataBase();
+            }else if(message.equalsIgnoreCase("IS DB CONNECTED")){
                 String response = (DataBase.getInstance().isConnected() ? "YES" : "NO");
                 sendMessage(response);
             }else if(message.equalsIgnoreCase("CLOSE")) {
@@ -60,11 +63,6 @@ public class ClientManager implements Runnable {
     private void dbVerif(String message) throws IOException {
         if(!DataBase.getInstance().isConnected()){
             if(message.length() != 0){
-                if(message.toUpperCase().startsWith("MODIFY DATABASE") && message.split(" ").length == 5){
-                    String[] explode = message.split(" ");
-                    String info = message.replace(explode[0] + " ", "").replace(explode[1] + " ", "");
-                    new Request(RequestAction.MODIFY, RequestType.DATABASE, info, this);
-                }
                 if(message.equalsIgnoreCase("RECONNECT")){
                     new DataBase();
                 }

@@ -21,7 +21,7 @@ public class DataBase {
     public DataBase(){
         instance = this;
         try{
-            File configDBFile = new File("./db");
+            File configDBFile = new File("./config");
             if(!configDBFile.exists()){
                 System.out.println("The installation of LocalMail is incomplete");
                 System.exit(0);
@@ -32,8 +32,8 @@ public class DataBase {
             while(scan.hasNextLine()){
                 String line = scan.nextLine();
                 if(line.startsWith("url=")){this.dbURL = line.replace("url=", "");}
-                if(line.startsWith("username=")){dbUser = line.replace("username=", "");}
-                if(line.startsWith("password=")){dbPassword = line.replace("password=", "");}
+                if(line.startsWith("dbusername=")){dbUser = line.replace("dbusername=", "");}
+                if(line.startsWith("dbpassword=")){dbPassword = line.replace("dbpassword=", "");}
             }
 
             if(dbUser == null || this.dbURL == null || dbUser.equals("") || this.dbURL.equals("")){
@@ -102,17 +102,4 @@ public class DataBase {
         try{return !con.isClosed();}catch (SQLException ignored){return false;}
     }
     public void closeDBCon() {try{con.close();}catch (SQLException ignored){}}
-
-    public void modifyDB(String url, String username, String password){
-        String toWrite = "url=" + url + "\nusername=" + username + "\npassword=" + password;
-        try{
-            File configDBFile = new File("./db");
-            if(!configDBFile.exists()){configDBFile.createNewFile();}
-            FileWriter fw = new FileWriter(configDBFile);
-            fw.write(toWrite);
-            fw.flush();
-            fw.close();
-        }catch (IOException ignored){}
-
-    }
 }
