@@ -47,7 +47,7 @@ dbusername=SQL_DB_USERNAME
 dbpassword=SQL_DB_PASSWORD
 lang=english (or francais)
 ```
-The lines order don't matter
+The lines order doesn't matter
 
 ### Start LocalMail
 
